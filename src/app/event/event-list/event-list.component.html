@@ -1,0 +1,15 @@
+<ActionBar title="FDN Event App" class="action-bar"></ActionBar>
+<GridLayout tkExampleTitle tkToggleNavButton>
+    <RadListView [items]="events" (itemTap)="onEventTap($event)">
+        <ng-template tkListItemTemplate let-item="item">
+            <CardView class="card" margin="10" elevation="40" radius="10" ios:shadowRadius="3">
+                <StackLayout class="card-layout" orientation="vertical">
+                    <Label class="h2" textWrap="true" [text]="item.title"></Label>
+                    <Label class="body" textWrap="true" [text]="item.description"></Label>
+                    <StackLayout class="hr-light m-10"></StackLayout>
+                    <Label class="pull-right font-italic" [text]="item.start | date:'dd.MM.y'"></Label>
+                </StackLayout>
+            </CardView>
+        </ng-template>
+    </RadListView>
+</GridLayout>

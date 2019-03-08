@@ -1,0 +1,11 @@
+.card {
+    background-color: #ffffff;
+    color: #4d4d4d;
+    margin: 15 15 0;
+}
+.card-layout {
+    padding: 20;
+}
+.card-layout .h1 {
+    margin-bottom: 15;
+}
