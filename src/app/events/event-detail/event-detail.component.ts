@@ -16,6 +16,7 @@ import { EventService } from '../shared/event.service';
 export class EventDetailComponent implements OnInit {
 
   private _event: Event;
+  private _loading = true;
 
   constructor(
     private _routerExtensions: RouterExtensions,
@@ -40,6 +41,7 @@ export class EventDetailComponent implements OnInit {
           .subscribe(
             event => {
               console.log(event)
+              this._loading = false;
               this._event = event
             },
             err => console.log(err)
@@ -49,6 +51,10 @@ export class EventDetailComponent implements OnInit {
 
   get event(): Event {
     return this._event;
+  }
+
+  get loading(): boolean {
+    return this._loading;
   }
 
   onBackButtonTap(): void {

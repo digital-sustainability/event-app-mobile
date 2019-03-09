@@ -8,5 +8,5 @@ export interface Event {
     end: string | Date,
     location: string,
     image_path: string,
-    sessions: any[]
+    session: any[]
 }
