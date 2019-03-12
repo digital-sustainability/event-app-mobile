@@ -7,9 +7,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { EventListComponent } from './events/event-list/event-list.component';
 import { EventDetailComponent } from './events/event-detail/event-detail.component';
+import { ActionBarComponent } from './shared/action-bar/action-bar.component';
+import { SessionDetailComponent } from './sessions/session-detail/session-detail.component';
 
 import { EventService } from './events/shared/event.service';
-import { ActionBarComponent } from './shared/action-bar/action-bar.component';
+import { SessionService } from './sessions/shared/session.service';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -31,10 +33,12 @@ import { ActionBarComponent } from './shared/action-bar/action-bar.component';
         AppComponent,
         EventListComponent,
         EventDetailComponent,
+        SessionDetailComponent,
         ActionBarComponent,
     ],
     providers: [
-        EventService
+        EventService,
+        SessionService,
     ],
     schemas: [
         NO_ERRORS_SCHEMA

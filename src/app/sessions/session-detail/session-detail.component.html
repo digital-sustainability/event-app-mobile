@@ -1,0 +1,7 @@
+<ns-action-bar title="Session Detail"></ns-action-bar>
+<StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
+    <ActivityIndicator  class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
+</StackLayout>
+<StackLayout visibility="{{ loading ? 'collapsed' : 'visible'  }}">
+    <Label text="All ok"></Label>
+</StackLayout>

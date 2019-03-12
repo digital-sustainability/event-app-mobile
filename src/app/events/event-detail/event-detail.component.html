@@ -1,11 +1,12 @@
 <ns-action-bar [title]=eventTitle></ns-action-bar>
-<StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}">
+<StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
     <ActivityIndicator  class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
 </StackLayout>
 <StackLayout visibility="{{ loading ? 'collapsed' : 'visible'  }}">
     <ScrollView height="100%">
         <StackLayout >
             <!-- src="https://cdn4.explainthatstuff.com/www-conceptual-representation.png" -->
+            <!-- TODO: Add *ngIf for default img and real img once retreived via http -->
             <Image 
             [src]="imagePath"
             height="150"
@@ -29,7 +30,7 @@
                 <Label text="Sessions" class="h2"></Label>
             </StackLayout>
             <GridLayout tkExampleTitle tkToggleNavButton>
-                <RadListView [items]="sessions">
+                <RadListView [items]="sessions" (itemTap)="onSessionTap($event)">
                     <ng-template tkListItemTemplate let-session="item">
                         <StackLayout class="session" orientation="vertical">
                             <Label class="h4" textWrap="true" [text]="session.title"></Label>

@@ -4,7 +4,7 @@ import { RouterExtensions, PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Event } from '../shared/event';
-import { Session } from '../../sessions/session';
+import { Session } from '../../sessions/shared/session';
 import { EventService } from '../shared/event.service';
 
 
@@ -34,8 +34,8 @@ export class EventDetailComponent implements OnInit {
     this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
-        const eventId = params.id;
-        // const eventId = 1; // TODO: Remove – Testing only
+        // const eventId = params.id;
+        const eventId = 1; // TODO: Remove – Testing only
         // TODO: Fetch from a local storage on service to limit https calls
         this._eventService.getEventById(eventId)
           .pipe(
@@ -56,6 +56,20 @@ export class EventDetailComponent implements OnInit {
           )
       });
   }
+
+  onSessionTap(args): void {
+    const tappedSession = args.view.bindingContext;
+    this._routerExtensions.navigate(['/session', tappedSession.id],
+      {
+        animated: true,
+        transition: {
+          name: "slide",
+          duration: 200,
+          curve: "ease"
+        }
+      });
+  }
+
   get sessions(): Session[] {
     return this._sessions;
   }

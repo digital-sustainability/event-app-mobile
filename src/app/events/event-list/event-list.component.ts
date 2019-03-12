@@ -42,7 +42,7 @@ export class EventListComponent implements OnInit {
       animated: true,
       transition: {
         name: "slide",
-        duration: 200,
+        duration: 300,
         curve: "ease"
       }
     });
