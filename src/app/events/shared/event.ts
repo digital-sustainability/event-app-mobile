@@ -1,3 +1,5 @@
+import { Session } from '../../sessions/session';
+
 export interface Event {
     createdAt: string | Date,
     updatedAt: string | Date,
@@ -8,5 +10,5 @@ export interface Event {
     end: string | Date,
     location: string,
     image_path: string,
-    session: any[]
+    sessions: Session[]
 }

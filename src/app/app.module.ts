@@ -9,6 +9,7 @@ import { EventListComponent } from './events/event-list/event-list.component';
 import { EventDetailComponent } from './events/event-detail/event-detail.component';
 
 import { EventService } from './events/shared/event.service';
+import { ActionBarComponent } from './shared/action-bar/action-bar.component';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -30,6 +31,7 @@ import { EventService } from './events/shared/event.service';
         AppComponent,
         EventListComponent,
         EventDetailComponent,
+        ActionBarComponent,
     ],
     providers: [
         EventService
