@@ -4,8 +4,8 @@ import { RouterExtensions, PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Event } from '../shared/event';
-import { Session } from '../../sessions/shared/session';
 import { EventService } from '../shared/event.service';
+import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 
 
 @Component({
@@ -17,9 +17,9 @@ import { EventService } from '../shared/event.service';
 export class EventDetailComponent implements OnInit {
 
   private _event: Event;
-  private _sessions: Session[];
   private _loading = true;
   private _eventTitle = 'Event';
+
   // TODO: What is better: Default image or empty?
   // private _image_path: string;
   private _image_path = '~/images/load.png';
@@ -46,18 +46,17 @@ export class EventDetailComponent implements OnInit {
           )
           .subscribe(
             event => {
-              this._loading = false;
               this._event = event
-              this._sessions = event.sessions;
               this._eventTitle = event.title
-              this._image_path = event.image_path // TODO: Cache images
+              this._image_path = event.image_path; // TODO: Cache images
+              this._loading = false;
             },
             err => console.log(err)
           )
       });
   }
 
-  onSessionTap(args): void {
+  onSessionTap(args: TouchGestureEventData): void {
     const tappedSession = args.view.bindingContext;
     this._routerExtensions.navigate(['/session', tappedSession.id],
       {
@@ -69,9 +68,9 @@ export class EventDetailComponent implements OnInit {
         }
       });
   }
-
-  get sessions(): Session[] {
-    return this._sessions;
+  
+  onBackButtonTap(): void {
+    this._routerExtensions.backToPreviousPage();
   }
 
   get event(): Event {
@@ -88,10 +87,6 @@ export class EventDetailComponent implements OnInit {
 
   get loading(): boolean {
     return this._loading;
-  }
-
-  onBackButtonTap(): void {
-    this._routerExtensions.backToPreviousPage();
   }
 
 }

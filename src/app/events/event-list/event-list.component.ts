@@ -4,6 +4,7 @@ import { EventService } from '../shared/event.service';
 import { Event } from '../shared/event';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 
 @Component({
   selector: 'ns-event-list',
@@ -35,7 +36,7 @@ export class EventListComponent implements OnInit {
     )
   }
 
-  onEventTap(args): void  {
+  onEventTap(args: TouchGestureEventData): void  {
     const tappedEvent = args.view.bindingContext;
     this._routerExtensions.navigate(['/event', tappedEvent.id],
     {

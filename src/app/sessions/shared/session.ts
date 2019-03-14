@@ -6,4 +6,5 @@ export interface Session {
     abstract: string,
     room: string,
     event_id: number,
+    presentations: any[]
 }

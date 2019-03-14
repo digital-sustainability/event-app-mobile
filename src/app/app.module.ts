@@ -12,6 +12,7 @@ import { SessionDetailComponent } from './sessions/session-detail/session-detail
 
 import { EventService } from './events/shared/event.service';
 import { SessionService } from './sessions/shared/session.service';
+import { PresentationDetailComponent } from './presentations/presentation-detail/presentation-detail.component';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -35,6 +36,7 @@ import { SessionService } from './sessions/shared/session.service';
         EventDetailComponent,
         SessionDetailComponent,
         ActionBarComponent,
+        PresentationDetailComponent,
     ],
     providers: [
         EventService,
