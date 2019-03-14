@@ -6,6 +6,7 @@ import { PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
+import { NavigationService } from '~/app/shared/navigation.service';
 
 
 @Component({
@@ -21,8 +22,9 @@ export class SessionDetailComponent implements OnInit {
   private _loading = true;
 
   constructor(
-    private sessionService: SessionService,
+    private _sessionService: SessionService,
     private _pageRoute: PageRoute,
+    private _navigationService: NavigationService,
   ) { }
 
   ngOnInit(): void {
@@ -31,7 +33,7 @@ export class SessionDetailComponent implements OnInit {
     .forEach(params => {
       // const sessionId = params.id;
       const sessionId = 1; // TODO: Remove – Testing only
-      this.sessionService.getSessionById(sessionId)
+      this._sessionService.getSessionById(sessionId)
         .pipe(
             catchError(err => {
               // TODO: set (and create) error flag for event
@@ -50,17 +52,8 @@ export class SessionDetailComponent implements OnInit {
   }
 
   onPresentationTap(args: TouchGestureEventData): void {
-    console.log('PresentationTap');
-    // const tappedSession = args.view.bindingContext;
-    // this._routerExtensions.navigate(['/session', tappedSession.id],
-    //   {
-    //     animated: true,
-    //     transition: {
-    //       name: "slide",
-    //       duration: 200,
-    //       curve: "ease"
-    //     }
-    //   });
+    const tappedPresentation = args.view.bindingContext;
+    this._navigationService.navigateTo('/presentation', tappedPresentation.id);
   }
 
   get session(): Session {

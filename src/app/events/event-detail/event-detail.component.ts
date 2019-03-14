@@ -6,6 +6,7 @@ import { throwError } from 'rxjs';
 import { Event } from '../shared/event';
 import { EventService } from '../shared/event.service';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
+import { NavigationService } from '~/app/shared/navigation.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class EventDetailComponent implements OnInit {
     private _routerExtensions: RouterExtensions,
     private _pageRoute: PageRoute,
     private _eventService: EventService,
+    private _navigationService: NavigationService,
   ) { }
 
   ngOnInit(): void {
@@ -58,15 +60,7 @@ export class EventDetailComponent implements OnInit {
 
   onSessionTap(args: TouchGestureEventData): void {
     const tappedSession = args.view.bindingContext;
-    this._routerExtensions.navigate(['/session', tappedSession.id],
-      {
-        animated: true,
-        transition: {
-          name: "slide",
-          duration: 200,
-          curve: "ease"
-        }
-      });
+    this._navigationService.navigateTo('/session', tappedSession.id);
   }
   
   onBackButtonTap(): void {
