@@ -34,7 +34,7 @@ export class EventListComponent implements OnInit {
       )
       .subscribe(
         events => this._events = events,
-        err => console.log(err)
+        err => console.error(err)
     )
   }
 

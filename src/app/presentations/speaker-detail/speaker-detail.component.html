@@ -1,1 +1,7 @@
-<Button text="speaker-detail works!" class="btn btn-primary"></Button>
+<ns-action-bar [title]="fullName"></ns-action-bar>
+<StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
+    <ActivityIndicator class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
+</StackLayout>
+<StackLayout *ngIf="!loading && speaker">
+    <Label [text]="fullName" class="h1"></Label>
+</StackLayout>

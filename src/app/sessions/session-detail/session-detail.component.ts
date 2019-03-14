@@ -46,7 +46,7 @@ export class SessionDetailComponent implements OnInit {
               this._session = session;
               this._sessionTitle = session.title;
             },
-            err => console.log(err)
+            err => console.error(err)
           )
       });
   }
@@ -68,5 +68,4 @@ export class SessionDetailComponent implements OnInit {
     return this._sessionTitle;
   }
   
-
 }

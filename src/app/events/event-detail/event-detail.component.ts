@@ -53,7 +53,7 @@ export class EventDetailComponent implements OnInit {
               this._image_path = event.image_path; // TODO: Cache images
               this._loading = false;
             },
-            err => console.log(err)
+            err => console.error(err)
           )
       });
   }

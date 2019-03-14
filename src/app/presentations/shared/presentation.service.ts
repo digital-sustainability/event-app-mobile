@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Presentation } from './presentation';
+import { Speaker } from './speaker';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,7 +16,11 @@ export class PresentationService {
     private _http: HttpClient,
   ) { }
 
-  getEventById(id: number): Observable<Presentation> {
+  getPresentationById(id: number): Observable<Presentation> {
     return this._http.get<Presentation>(this._api + 'presentation/' + id);
+  }
+
+  getSpeakerById(id: number): Observable<Speaker> {
+    return this._http.get<Speaker>(this._api + 'speaker/' + id);
   }
 }
