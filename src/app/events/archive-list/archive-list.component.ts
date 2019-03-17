@@ -8,13 +8,13 @@ import { NavigationService } from '~/app/shared/navigation.service';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'ns-event-list',
-  templateUrl: './event-list.component.html',
-  styleUrls: ['./event-list.component.css'],
+  selector: 'ns-archive-list',
+  templateUrl: './archive-list.component.html',
+  styleUrls: ['./archive-list.component.css'],
   moduleId: module.id,
 })
-export class EventListComponent implements OnInit {
-  
+export class ArchiveListComponent implements OnInit {
+
   private _events: Event[];
   private _loading = true;
 
@@ -40,24 +40,16 @@ export class EventListComponent implements OnInit {
             TODO: TEMPORARY -> Replace by specific date filter routes
             Depending on tab choice send diffrent http request
           */
-        //  const tmp: any = _.filter(events, (o: Event) => {
-        //     if (true) {
-        //       return new Date(o.start).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
-        //     } else {
-        //       return new Date(o.start).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0);
-        //     }
-        //   });
-        //   this._events = tmp;
-        this._events = _.filter(events, (o: Event) => {
-          return new Date(o.start).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0);
-        });
-        this._loading = false;
-      },
+          this._events = _.filter(events, (o: Event) => {
+                return new Date(o.start).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
+            });
+          this._loading = false;
+        },
         err => console.error(err)
-    );
+      );
   }
 
-  onEventTap(args: TouchGestureEventData): void  {
+  onEventTap(args: TouchGestureEventData): void {
     const tappedEvent = args.view.bindingContext;
     this._navigationService.navigateTo('/event', tappedEvent.id);
   }

@@ -16,6 +16,8 @@ import { EventService } from './events/shared/event.service';
 import { SessionService } from './sessions/shared/session.service';
 import { PresentationService } from './presentations/shared/presentation.service';
 import { NavigationService } from './shared/navigation.service';
+import { EventTabComponent } from './events/event-tab/event-tab.component';
+import { ArchiveListComponent } from './events/archive-list/archive-list.component';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -40,7 +42,9 @@ import { NavigationService } from './shared/navigation.service';
         SessionDetailComponent,
         ActionBarComponent,
         PresentationDetailComponent,
-        SpeakerDetailComponent
+        SpeakerDetailComponent,
+        EventTabComponent,
+        ArchiveListComponent
     ],
     providers: [
         EventService,

@@ -7,7 +7,8 @@ import { Event } from '../shared/event';
 import { EventService } from '../shared/event.service';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { NavigationService } from '~/app/shared/navigation.service';
-
+import { Session } from '../../sessions/shared/session';
+import * as _ from 'lodash'
 
 @Component({
   selector: 'ns-event-detail',
@@ -20,6 +21,7 @@ export class EventDetailComponent implements OnInit {
   private _event: Event;
   private _loading = true;
   private _eventTitle = 'Event';
+  private _sessions: Session[];
 
   // TODO: What is better: Default image or empty?
   // private _image_path: string;
@@ -51,6 +53,7 @@ export class EventDetailComponent implements OnInit {
               this._event = event
               this._eventTitle = event.title
               this._image_path = event.image_path; // TODO: Cache images
+              this._sessions = _.sortBy(event.sessions, 'start');
               this._loading = false;
             },
             err => console.error(err)
