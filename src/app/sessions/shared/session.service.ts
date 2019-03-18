@@ -15,7 +15,7 @@ export class SessionService {
   // TODO: Store in environment
   private _api = 'https://event-app.fdn-dev.iwi.unibe.ch/';
 
-  getSessionById(id: number): Observable<Session> {
+  getSession(id: number): Observable<Session> {
     return this._http.get<Session>(this._api + 'session/' + id);
   }
 }

@@ -34,7 +34,7 @@ export class SpeakerDetailComponent implements OnInit {
       .forEach(params => {
         // const speakerId = params.id;
         const speakerId = 1; // TODO: Remove – Testing only
-        this._presentationService.getSpeakerById(speakerId)
+        this._presentationService.getSpeaker(speakerId)
           .pipe(
             catchError(err => {
               // TODO: Create generally shared error handler

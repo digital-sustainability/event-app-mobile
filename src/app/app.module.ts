@@ -11,12 +11,14 @@ import { ActionBarComponent } from './shared/action-bar/action-bar.component';
 import { SessionDetailComponent } from './sessions/session-detail/session-detail.component';
 import { PresentationDetailComponent } from './presentations/presentation-detail/presentation-detail.component';
 import { SpeakerDetailComponent } from './presentations/speaker-detail/speaker-detail.component';
+import { EventTabComponent } from './events/event-tab/event-tab.component';
+import { FeedbackComponent } from './presentations/feedback/feedback.component';
 
 import { EventService } from './events/shared/event.service';
 import { SessionService } from './sessions/shared/session.service';
 import { PresentationService } from './presentations/shared/presentation.service';
 import { NavigationService } from './shared/navigation.service';
-import { EventTabComponent } from './events/event-tab/event-tab.component';
+import { FeedbackService } from './presentations/shared/feedback.service';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -43,12 +45,14 @@ import { EventTabComponent } from './events/event-tab/event-tab.component';
         PresentationDetailComponent,
         SpeakerDetailComponent,
         EventTabComponent,
+        FeedbackComponent,
     ],
     providers: [
         EventService,
         SessionService,
         PresentationService,
         NavigationService,
+        FeedbackService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

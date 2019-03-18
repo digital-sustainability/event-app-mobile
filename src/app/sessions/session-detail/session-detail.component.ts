@@ -8,7 +8,6 @@ import { throwError, of } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { NavigationService } from '~/app/shared/navigation.service';
 import { Presentation } from '../../presentations/shared/presentation';
-import { sortBy } from 'lodash';
 
 
 @Component({
@@ -36,7 +35,7 @@ export class SessionDetailComponent implements OnInit {
     .forEach(params => {
       // const sessionId = params.id;
       const sessionId = 1; // TODO: Remove – Testing only
-      this._sessionService.getSessionById(sessionId)
+      this._sessionService.getSession(sessionId)
         .pipe(
             catchError(err => {
               // TODO: set (and create) error flag for event

@@ -16,11 +16,11 @@ export class PresentationService {
     private _http: HttpClient,
   ) { }
 
-  getPresentationById(id: number): Observable<Presentation> {
+  getPresentation(id: number): Observable<Presentation> {
     return this._http.get<Presentation>(this._api + 'presentation/' + id);
   }
 
-  getSpeakerById(id: number): Observable<Speaker> {
+  getSpeaker(id: number): Observable<Speaker> {
     return this._http.get<Speaker>(this._api + 'speaker/' + id);
   }
 }

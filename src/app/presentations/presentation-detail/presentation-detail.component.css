@@ -1,1 +1,9 @@
-/* Add mobile styles for the component here.  */
+.fab-button {
+  height: 70;
+  width: 70; 
+   /* required on iOS */
+  margin: 15;
+  background-color: orange;
+  vertical-align: bottom;
+  horizontal-align: right;
+}
