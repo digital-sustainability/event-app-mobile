@@ -7,6 +7,8 @@ import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { NavigationService } from '~/app/shared/navigation.service';
+import { Presentation } from '../../presentations/shared/presentation';
+import { sortBy } from 'lodash';
 
 
 @Component({
@@ -20,6 +22,7 @@ export class SessionDetailComponent implements OnInit {
   private _session: Session;
   private _sessionTitle = 'Session';
   private _loading = true;
+  private _presentations: Presentation[];
 
   constructor(
     private _sessionService: SessionService,
@@ -41,10 +44,11 @@ export class SessionDetailComponent implements OnInit {
             })
           )
           .subscribe(
-            session => {
+            (session: Session) => {
               this._loading = false;
               this._session = session;
               this._sessionTitle = session.title;
+              this._presentations = session.presentations;
             },
             err => console.error(err)
           )
@@ -66,6 +70,11 @@ export class SessionDetailComponent implements OnInit {
 
   get sessionTitle(): string {
     return this._sessionTitle;
+  }
+
+  get presentations(): Presentation[] {
+    // return sortBy(this._presentations, [(o: Presentation) => o.start]);
+    return this._presentations;
   }
   
 }

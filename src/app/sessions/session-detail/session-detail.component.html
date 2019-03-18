@@ -11,7 +11,7 @@
                 <Label text="Präsentationen" class="h2"></Label>
             </StackLayout>
             <GridLayout tkExampleTitle tkToggleNavButton>
-                <RadListView [items]="session.presentations" (itemTap)="onPresentationTap($event)">
+                <RadListView [items]="presentations" (itemTap)="onPresentationTap($event)">
                     <ng-template tkListItemTemplate let-presentation="item">
                         <StackLayout class="presentation" orientation="vertical">
                             <Label class="h4" textWrap="true" [text]="presentation.title"></Label>

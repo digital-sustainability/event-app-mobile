@@ -42,7 +42,7 @@ export class SpeakerDetailComponent implements OnInit {
             })
           )
           .subscribe(
-            speaker => {
+            (speaker: Speaker) => {
               this._loading = false;
               this._speaker = speaker;
               this._fullName = speaker.first_name + ' ' + speaker.last_name;

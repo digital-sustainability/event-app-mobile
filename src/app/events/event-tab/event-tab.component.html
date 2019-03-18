@@ -1,9 +1,9 @@
 <ActionBar title="FDN Event App" class="action-bar"></ActionBar>
 <TabView #tabview [selectedIndex]="tabindex" class="tab-view" androidTabsPosition="bottom">
-    <StackLayout align="top" *tabItem="{title: 'Events'}">
+    <StackLayout align="top" *tabItem="{ title: 'Events'}">
         <ns-event-list></ns-event-list>
     </StackLayout>
-    <StackLayout *tabItem="{title: 'Archiv' }">
-        <ns-archive-list></ns-archive-list>
+    <StackLayout *tabItem="{ title: 'Archiv' }">
+        <ns-event-list [archive]="true"></ns-event-list>
     </StackLayout>
 </TabView>

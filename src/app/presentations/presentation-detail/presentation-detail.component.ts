@@ -8,6 +8,7 @@ import { throwError, of } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { NavigationService } from '~/app/shared/navigation.service';
 import { PresentationService } from '../shared/presentation.service';
+import * as _ from 'lodash';
 
 
 @Component({
@@ -43,7 +44,7 @@ export class PresentationDetailComponent implements OnInit {
             })
           )
           .subscribe(
-            presentation => {
+            (presentation: Presentation) => {
               this._loading = false;
               this._presentation = presentation;
               this._presentationTitle = presentation.title;
@@ -69,7 +70,8 @@ export class PresentationDetailComponent implements OnInit {
   }
 
   get speakers(): Speaker[] {
-    return this._speakers;
+    // TODO: Not sorted..
+    return _.sortBy(this._speakers, [(o: Speaker) => o.first_name]);
   }
 
   get presentation(): Presentation {

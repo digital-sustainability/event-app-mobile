@@ -16,9 +16,16 @@ export class EventService {
     private _http: HttpClient,
   ) { }
 
-  getEvents(): Observable<Event[]> {
-    return this._http.get<Event[]>(this._api + 'event');
-  }
+  getEvents(archive = false): Observable<Event[]> {
+    // get date of tomorrow in a MYSQL compatible format
+    const tomorrow = new Date(new Date().getTime() + (24 * 60 * 60 * 1000))
+      .toISOString().slice(0, 19).replace('T', ' ')
+    if (archive) {
+      return this._http.get<Event[]>(`${this._api}event?where={"end":{"<":"${tomorrow}"}}`);
+    } else {
+      return this._http.get<Event[]>(`${this._api}event?where={"end":{">=":"${tomorrow}"}}`);
+    }
+  }  
 
   getEventById(id: number): Observable<Event> {
     return this._http.get<Event>(this._api + 'event/' + id);

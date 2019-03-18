@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { EventService } from '../shared/event.service';
 import { Event } from '../shared/event';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { NavigationService } from '~/app/shared/navigation.service';
-import * as _ from 'lodash';
+import { sortBy } from 'lodash';
 
 @Component({
   selector: 'ns-event-list',
@@ -15,6 +15,7 @@ import * as _ from 'lodash';
 })
 export class EventListComponent implements OnInit {
   
+  @Input() archive: boolean;
   private _events: Event[];
   private _loading = true;
 
@@ -23,8 +24,8 @@ export class EventListComponent implements OnInit {
     private _navigationService: NavigationService,
   ) { }
 
-  ngOnInit() {
-    this._eventService.getEvents()
+  ngOnInit(): void {
+    this._eventService.getEvents(this.archive)
       .pipe(
         catchError(err => {
           /*
@@ -36,22 +37,8 @@ export class EventListComponent implements OnInit {
       )
       .subscribe(
         (events: Event[]) => {
-          /*
-            TODO: TEMPORARY -> Replace by specific date filter routes
-            Depending on tab choice send diffrent http request
-          */
-        //  const tmp: any = _.filter(events, (o: Event) => {
-        //     if (true) {
-        //       return new Date(o.start).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
-        //     } else {
-        //       return new Date(o.start).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0);
-        //     }
-        //   });
-        //   this._events = tmp;
-        this._events = _.filter(events, (o: Event) => {
-          return new Date(o.start).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0);
-        });
-        this._loading = false;
+          this._events = sortBy(events, [(o: Event) => o.start]);
+          this._loading = false;
       },
         err => console.error(err)
     );

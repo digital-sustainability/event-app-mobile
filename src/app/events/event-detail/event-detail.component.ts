@@ -8,7 +8,6 @@ import { EventService } from '../shared/event.service';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { NavigationService } from '~/app/shared/navigation.service';
 import { Session } from '../../sessions/shared/session';
-import * as _ from 'lodash'
 
 @Component({
   selector: 'ns-event-detail',
@@ -49,11 +48,11 @@ export class EventDetailComponent implements OnInit {
             })
           )
           .subscribe(
-            event => {
+            (event: Event) => {
               this._event = event
               this._eventTitle = event.title
               this._image_path = event.image_path; // TODO: Cache images
-              this._sessions = _.sortBy(event.sessions, 'start');
+              this._sessions = event.sessions;
               this._loading = false;
             },
             err => console.error(err)
@@ -67,7 +66,7 @@ export class EventDetailComponent implements OnInit {
   }
   
   onBackButtonTap(): void {
-    this._routerExtensions.backToPreviousPage();
+    this._routerExtensions.navigate(['/home']);
   }
 
   get event(): Event {
