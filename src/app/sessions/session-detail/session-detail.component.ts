@@ -5,7 +5,6 @@ import { Image } from 'tns-core-modules/ui/image';
 import { PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
-import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { NavigationService } from '~/app/shared/navigation.service';
 import { Presentation } from '../../presentations/shared/presentation';
 
@@ -22,6 +21,7 @@ export class SessionDetailComponent implements OnInit {
   private _sessionTitle = 'Session';
   private _loading = true;
   private _presentations: Presentation[];
+  public backRoute = '/home';
 
   constructor(
     private _sessionService: SessionService,
@@ -33,8 +33,8 @@ export class SessionDetailComponent implements OnInit {
     this._pageRoute.activatedRoute
     .pipe(switchMap(activatedRoute => activatedRoute.params))
     .forEach(params => {
-      // const sessionId = params.id;
-      const sessionId = 1; // TODO: Remove – Testing only
+      const sessionId = params.id;
+      // const sessionId = 1; // TODO: Remove – Testing only
       this._sessionService.getSession(sessionId)
         .pipe(
             catchError(err => {
@@ -54,9 +54,12 @@ export class SessionDetailComponent implements OnInit {
       });
   }
 
-  onPresentationTap(args: TouchGestureEventData): void {
-    const tappedPresentation = args.view.bindingContext;
-    this._navigationService.navigateTo('/presentation', tappedPresentation.id);
+  onPresentationTap(id: number): void {
+    this._navigationService.navigateTo('/presentation', id);
+  }
+
+  onBackButtonTap(): void {
+    this._navigationService.navigateTo('/home');
   }
 
   get session(): Session {

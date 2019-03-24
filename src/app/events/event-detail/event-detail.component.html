@@ -1,4 +1,4 @@
-<ns-action-bar [title]=eventTitle></ns-action-bar>
+<ns-action-bar [title]="eventTitle" [backRoute]="backRoute"></ns-action-bar>
 <StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
     <ActivityIndicator  class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
 </StackLayout>
@@ -18,10 +18,10 @@
                 <Label [text]="event.description" class="body m-b-10" textWrap="true"></Label>
                 <GridLayout rows="*,*,*" columns="auto, auto">
                     <Label text="Beginn" class="p-l-15 m-r-20 font-weight-bold"></Label>
-                    <Label [text]="event.start | date:'dd.MM.y, HH.mm \'Uhr\''" col="1" class="text p-b-10"></Label>
+                    <Label [text]="event.start | date:'dd.MM.y, HH:mm \'Uhr\''" col="1" class="text p-b-10"></Label>
                     
                     <Label text="Ende" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="1"></Label>
-                    <Label [text]="event.end | date:'dd.MM.y, HH.mm \'Uhr\''" row="1" col="1" class="text p-b-10"></Label>
+                    <Label [text]="event.end | date:'dd.MM.y, HH:mm \'Uhr\''" row="1" col="1" class="text p-b-10"></Label>
                     
                     <Label text="Ort" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="2"></Label>
                     <Label [text]="event.location" row="2" col="1" class="text p-b-10"></Label>
@@ -29,17 +29,12 @@
                 <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
                 <Label text="Sessions" class="h2"></Label>
             </StackLayout>
-            <GridLayout tkExampleTitle tkToggleNavButton>
-                <RadListView [items]="event.sessions" (itemTap)="onSessionTap($event)">
-                    <ng-template tkListItemTemplate let-session="item">
-                        <StackLayout class="session" orientation="vertical">
-                            <Label class="h4" textWrap="true" [text]="session.title"></Label>
-                            <Label class="body" textWrap="true" [text]="session.room"></Label>
-                            <!-- TODO: Add Forward arrow icons -->
-                        </StackLayout>
-                    </ng-template>
-                </RadListView>
-            </GridLayout>
+            <StackLayout *ngFor="let s of event.sessions">
+                <StackLayout class="session" orientation="vertical" (tap)="onSessionTap(s.id)">
+                    <Label class="h4" textWrap="true" [text]="s.title"></Label>
+                    <Label class="body" textWrap="true" [text]="s.room"></Label>
+                </StackLayout>
+            </StackLayout>
         </StackLayout>
     </ScrollView>
 </StackLayout>

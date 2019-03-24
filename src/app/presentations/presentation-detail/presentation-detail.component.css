@@ -3,7 +3,11 @@
   width: 70; 
    /* required on iOS */
   margin: 15;
-  background-color: orange;
+  background-color: #FFC107;
   vertical-align: bottom;
   horizontal-align: right;
+}
+
+.call-to-action {
+  background-color: #FFC107;
 }

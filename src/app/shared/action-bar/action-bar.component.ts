@@ -9,8 +9,8 @@ import { RouterExtensions } from 'nativescript-angular/router';
 })
 export class ActionBarComponent implements OnInit {
 
-  @Input()
-  title: string;
+  @Input() title: string;
+  @Input() backRoute: string
 
   constructor(
     private _routerExtensions: RouterExtensions,
@@ -18,9 +18,14 @@ export class ActionBarComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  
   navigateBack() {
-    this._routerExtensions.back();
+    if (this.backRoute) {
+      // Fixes a bug that sometimes the back button won't work on specific sites
+      this._routerExtensions.navigate([this.backRoute]);
+    } else {
+      this._routerExtensions.back();
+    }
   }
 
 }

@@ -21,16 +21,17 @@ export class EventDetailComponent implements OnInit {
   private _loading = true;
   private _eventTitle = 'Event';
   private _sessions: Session[];
+  public backRoute = '/home'
 
   // TODO: What is better: Default image or empty?
   // private _image_path: string;
   private _image_path = '~/images/load.png';
 
   constructor(
-    private _routerExtensions: RouterExtensions,
     private _pageRoute: PageRoute,
     private _eventService: EventService,
     private _navigationService: NavigationService,
+    private _routerExtensions: RouterExtensions
   ) { }
 
   ngOnInit(): void {
@@ -60,13 +61,24 @@ export class EventDetailComponent implements OnInit {
       });
   }
 
-  onSessionTap(args: TouchGestureEventData): void {
-    const tappedSession = args.view.bindingContext;
-    this._navigationService.navigateTo('/session', tappedSession.id);
+  onSessionTap(id: number): void {
+    // const tappedSession = args.view.bindingContext;
+    // this._navigationService.navigateTo('/session', tappedSession.id);
+    // TODO: Somehow the code above does not work for (ONLY!) this component -> check
+    // Routing does not work if animation is enabled!?
+    this._routerExtensions.navigate(['/session', id], {
+      animated: false,
+      transition: {
+        name: "slide",
+        duration: 200,
+        curve: "ease"
+      }
+    });
+
   }
   
   onBackButtonTap(): void {
-    this._routerExtensions.navigate(['/home']);
+    this._navigationService.navigateTo('/home');
   }
 
   get event(): Event {

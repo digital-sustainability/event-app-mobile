@@ -3,24 +3,28 @@
     <ActivityIndicator  class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
 </StackLayout>
 <StackLayout *ngIf="!loading && session">
-    <ScrollView height="100%" class="m-x-10">
+    <ScrollView height="100%">
         <StackLayout>
-            <StackLayout>
-                <Label [text]="session.abstract" class="body m-y-10" textWrap="true"></Label>
-                <Label [text]="session.room" class="body m-y-10" textWrap="true"></Label>
+            <StackLayout class="m-x-10">
+                <Label text="Übersicht" class="h2 m-t-10"></Label>
+                <Label [text]="session.abstract" class="body m-b-10" textWrap="true"></Label>
+                <GridLayout rows="*,*,*" columns="auto, auto">            
+                    <Label text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="2"></Label>
+                    <Label [text]="session.room" row="2" col="1" class="text p-b-10"></Label>
+                </GridLayout>
+                <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
                 <Label text="Präsentationen" class="h2"></Label>
             </StackLayout>
-            <GridLayout tkExampleTitle tkToggleNavButton>
-                <RadListView [items]="presentations" (itemTap)="onPresentationTap($event)">
-                    <ng-template tkListItemTemplate let-presentation="item">
-                        <StackLayout class="presentation" orientation="vertical">
-                            <Label class="h4" textWrap="true" [text]="presentation.title"></Label>
-                            <Label class="body" textWrap="true" [text]="presentation.abstract"></Label>
-                            <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
-                        </StackLayout>
-                    </ng-template>
-                </RadListView>
-            </GridLayout>
+            <StackLayout *ngFor="let p of presentations">
+                <StackLayout class="presentation" orientation="vertical" (tap)="onPresentationTap(p.id)">
+                    <Label class="h4" textWrap="true" [text]="p.title"></Label>
+                    <Label
+                    class="body"
+                    textWrap="true"
+                    text="{{ p.start | date:'HH:mm' }} Uhr – {{ p.end | date:'HH:mm' }} Uhr"
+                    ></Label>
+                </StackLayout>
+            </StackLayout>
         </StackLayout>
     </ScrollView>
 </StackLayout>

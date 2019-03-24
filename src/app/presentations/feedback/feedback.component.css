@@ -1,1 +1,7 @@
-/* Add mobile styles for the component here.  */
+/* https://docs.nativescript.org/ui/professional-ui-components/DataForm/dataform-styling */
+
+PropertyEditor {
+    color: #1c7272;
+    margin: 10 0 10 0;
+    font-size: 14;
+}

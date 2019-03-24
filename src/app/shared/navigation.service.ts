@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { ActivatedRoute } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -8,19 +9,23 @@ import { RouterExtensions } from 'nativescript-angular/router';
 export class NavigationService {
 
   constructor(
-    private _routerExtensions: RouterExtensions
+    private _routerExtensions: RouterExtensions,
+    private activeRoute: ActivatedRoute
   ) { }
 
-  navigateTo(path: string, id: number): void {
-    this._routerExtensions.navigate([path, id],
-    {
+  navigateTo(path: string, id?: number): void {
+    const config = {
       animated: true,
       transition: {
         name: "slide",
         duration: 200,
         curve: "ease"
       }
-    });
-    //TODO: Handle not existing routes
+    };
+    if (id) {
+      this._routerExtensions.navigate([path, id], config);
+    } else {
+      this._routerExtensions.navigate([path], config);
+    }
   }
 }
