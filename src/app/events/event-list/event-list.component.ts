@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { NavigationService } from '~/app/shared/navigation.service';
 import { sortBy } from 'lodash';
+import * as moment from 'moment';
 
 @Component({
   selector: 'ns-event-list',
@@ -47,6 +48,11 @@ export class EventListComponent implements OnInit {
   onEventTap(args: TouchGestureEventData): void  {
     const tappedEvent = args.view.bindingContext;
     this._navigationService.navigateTo('/event', tappedEvent.id);
+  }
+
+  displayEventInfo(time: string | Date, location: string): string {
+    return moment.utc(time).locale('de').format('dddd, D. MMMM YYYY');
+    // return moment.utc(time).locale('de').format('dddd, D. MMMM YYYY') + ', ' + location;
   }
 
   get events(): Event[] {
