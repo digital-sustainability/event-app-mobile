@@ -8,6 +8,7 @@ export interface Session {
     title: string,
     abstract: string,
     room: string,
+    label_presentations: string,
     event_id: Event,
     presentations: Presentation[]
 }

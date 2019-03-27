@@ -6,14 +6,14 @@
     <ScrollView height="100%">
         <StackLayout>
             <StackLayout class="m-x-10">
-                <Label text="Übersicht" class="h2 m-t-10"></Label>
+                <Label [text]="sessionTitle" class="h1 m-t-10" textWrap="true"></Label>
                 <Label [text]="session.abstract" class="body m-b-10" textWrap="true"></Label>
                 <GridLayout rows="*,*,*" columns="auto, auto">            
                     <Label text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="2"></Label>
-                    <Label [text]="session.room" row="2" col="1" class="text p-b-10"></Label>
+                    <Label [text]="session.room" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
                 </GridLayout>
                 <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
-                <Label text="Präsentationen" class="h2"></Label>
+                <Label [text]="labelPresentations" class="h2" textWrap="true"></Label>
             </StackLayout>
             <StackLayout *ngFor="let p of presentations">
                 <StackLayout class="occasion-item" orientation="vertical" (tap)="onPresentationTap(p.id)">
@@ -21,7 +21,7 @@
                     <Label
                     class="body"
                     textWrap="true"
-                    text="{{ p.start | date:'HH:mm' }} Uhr – {{ p.end | date:'HH:mm' }} Uhr"
+                    text="{{ p.start | date:'HH:mm' :'UTC' }} Uhr – {{ p.end | date:'HH:mm' :'UTC'  }} Uhr"
                     ></Label>
                 </StackLayout>
             </StackLayout>

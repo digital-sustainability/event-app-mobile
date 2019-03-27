@@ -33,8 +33,8 @@ export class SpeakerDetailComponent implements OnInit {
     this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
-        // const speakerId = params.id;
-        const speakerId = 1; // TODO: Remove – Testing only
+        const speakerId = params.id;
+        // const speakerId = 1; // TODO: Remove – Testing only
         this._presentationService.getSpeaker(speakerId)
           .pipe(
             catchError(err => {
@@ -59,10 +59,11 @@ export class SpeakerDetailComponent implements OnInit {
   }
 
   adaptStartTime(time: string | Date): string {
+    console.log(time);
     if (moment(time).isSame(moment(), 'day')) {
-      return 'Heute, ' + moment(time).format('HH:mm') + ' Uhr';
+      return 'Heute, ' + moment.utc(time).format('HH:mm') + ' Uhr';
     }
-    return moment(time).locale('de').format('D. MMMM YYYY, HH:mm') + ' Uhr';
+    return moment.utc(time).locale('de').format('D. MMMM YYYY, HH:mm') + ' Uhr';
   }
 
   get speaker(): Speaker {

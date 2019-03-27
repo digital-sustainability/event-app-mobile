@@ -7,6 +7,7 @@ import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import { NavigationService } from '~/app/shared/navigation.service';
 import { Presentation } from '../../presentations/shared/presentation';
+import { sortBy } from 'lodash';
 
 
 @Component({
@@ -20,7 +21,6 @@ export class SessionDetailComponent implements OnInit {
   private _session: Session;
   private _sessionTitle = 'Session';
   private _loading = true;
-  private _presentations: Presentation[];
   public backRoute = '/home';
 
   constructor(
@@ -46,8 +46,6 @@ export class SessionDetailComponent implements OnInit {
             (session: Session) => {
               this._loading = false;
               this._session = session;
-              this._sessionTitle = session.title;
-              this._presentations = session.presentations;
             },
             err => console.error(err)
           )
@@ -76,7 +74,14 @@ export class SessionDetailComponent implements OnInit {
 
   get presentations(): Presentation[] {
     // return sortBy(this._presentations, [(o: Presentation) => o.start]);
-    return this._presentations;
+    return sortBy(this.session.presentations, ['start']);
   }
-  
+
+  get labelPresentations(): string {
+    // TODO: insert this.session.label_presentations
+    if (false) {
+      return this.session.label_presentations;
+    }
+    return 'Präsentationen'
+  }  
 }
