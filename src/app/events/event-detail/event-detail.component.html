@@ -14,18 +14,35 @@
             stretch="aspectFill"
             ></Image>
             <StackLayout class="m-x-10">
-                <Label text="Übersicht" class="h2"></Label>
                 <Label [text]="event.description" class="body m-b-10" textWrap="true"></Label>
-                <GridLayout rows="*,*,*" columns="auto, auto">
-                    <Label text="Beginn" class="p-l-15 m-r-20 font-weight-bold"></Label>
-                    <Label [text]="event.start | date:'dd.MM.y, HH:mm \'Uhr\''" col="1" class="text p-b-10"></Label>
-                    
-                    <Label text="Ende" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="1"></Label>
-                    <Label [text]="event.end | date:'dd.MM.y, HH:mm \'Uhr\''" row="1" col="1" class="text p-b-10"></Label>
-                    
-                    <Label text="Ort" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="2"></Label>
-                    <Label [text]="event.location" row="2" col="1" class="text p-b-10"></Label>
-                </GridLayout>
+                <StackLayout *ngIf="isOneDayEvent(event.start, event.end)">
+                    <GridLayout rows="*,*,*" columns="auto, auto">
+                        <Label text="Zeit" class="p-l-15 m-r-20 font-weight-bold"></Label>
+                        <Label [text]="transformEventInfo(event.start, event.end)" col="1" class="text p-b-10" textWrap="true"></Label>
+                        <Label text="Ort" row="1" class="p-l-15 p-b-10 m-r-20 font-weight-bold" ></Label>
+                        <Label [text]="event.location" row="1" col="1" class="text p-b-10" textWrap="true"></Label>
+                        <Label text="Webseite" row="2" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
+                        <!-- TODO: Add URL to database, remove below -->
+                        <!-- <Label [text]="event.url_label" row="2" col="1" class="text p-b-10 link" (tap)="openUrl(event.url)"></Label> -->
+                        <Label text="www.something.darkside"
+                        row="2" col="1" class="text p-b-10 link" (tap)="openUrl('https://docs.nativescript.org/core-concepts/utils')"></Label>
+                    </GridLayout>
+                </StackLayout>
+                <StackLayout *ngIf="!isOneDayEvent(event.start, event.end)">
+                    <GridLayout rows="*,*,*,*" columns="auto, auto">
+                        <Label text="Beginn" class="p-l-15 m-r-20 font-weight-bold"></Label>
+                        <Label [text]="event.start | date:'dd.MM.y, HH:mm \'Uhr\'' :'UTC'" col="1" class="text p-b-10" textWrap="true"></Label>
+                        <Label text="Ende" row="1" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
+                        <Label [text]="event.end | date:'dd.MM.y, HH:mm \'Uhr\'' :'UTC'" row="1" col="1" class="text p-b-10" textWrap="true"></Label>
+                        <Label text="Ort" row="2" class="p-l-15 p-b-10 m-r-20 font-weight-bold" ></Label>
+                        <Label [text]="event.location" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
+                        <Label text="Webseite" row="3" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
+                        <!-- TODO: Add URL to database, remove below -->
+                        <!-- <Label [text]="event.url_label" row="3" col="1" class="text p-b-10 link" (tap)="openUrl(event.url)"></Label> -->
+                        <Label text="www.something.darkside" row="3" col="1" class="text p-b-10 link"
+                            (tap)="openUrl('https://docs.nativescript.org/core-concepts/utils')"></Label>
+                    </GridLayout>
+                </StackLayout>r
                 <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
                 <Label text="Sessions" class="h2"></Label>
             </StackLayout>

@@ -9,6 +9,8 @@ export interface Event {
     start: string | Date,
     end: string | Date,
     location: string,
+    url: string,
+    url_label: string,
     image_path: string,
     sessions: Session[]
 }

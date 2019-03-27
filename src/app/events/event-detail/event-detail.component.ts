@@ -8,6 +8,8 @@ import { EventService } from '../shared/event.service';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { NavigationService } from '~/app/shared/navigation.service';
 import { Session } from '../../sessions/shared/session';
+import { openUrl } from 'tns-core-modules/utils/utils'
+import * as moment from 'moment';
 
 @Component({
   selector: 'ns-event-detail',
@@ -81,6 +83,20 @@ export class EventDetailComponent implements OnInit {
     this._navigationService.navigateTo('/home');
   }
 
+  isOneDayEvent(start: string | Date, end: string | Date): boolean {
+    return moment(start).format('L') === moment(end).format('L')
+  }
+
+  transformEventInfo(start: string | Date, end: string | Date): string {
+    const beginning = moment.utc(start).locale('de')
+    const ending = moment.utc(end).locale('de')
+    return `${beginning.format('dddd, D. MMMM YYYY von H')}h bis ${ending.format('H')}h`
+  }
+
+  openUrl(url: string): void {
+    openUrl(url);
+  }
+
   get event(): Event {
     return this._event;
   }
@@ -95,6 +111,10 @@ export class EventDetailComponent implements OnInit {
 
   get loading(): boolean {
     return this._loading;
+  }
+
+  get websiteTitle(): string {
+    return this._event.url
   }
 
 }

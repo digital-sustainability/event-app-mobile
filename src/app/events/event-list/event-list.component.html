@@ -11,8 +11,7 @@
                         <StackLayout class="p-b-20 p-x-20">
                             <Label class="h2" textWrap="true" [text]="event.title"></Label>
                             <Label class="h4 m-b-0" [text]="displayEventInfo(event.time)" textWrap="true"></Label>
-                            <!-- TODO: Remove inline style -->
-                            <Label class="h4 m-b-15 m-t-0" [text]="event.location" textWrap="true" style="color: #999999"></Label>
+                            <Label class="h4 m-b-15 m-t-0 location" [text]="event.location" textWrap="true"></Label>
                             <Label class="body" textWrap="true" [text]="event.description"></Label>
                         </StackLayout>
                     </StackLayout>
