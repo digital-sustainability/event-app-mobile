@@ -8,6 +8,7 @@ import { throwError, of } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { NavigationService } from '~/app/shared/navigation.service';
 import { PresentationService } from '../shared/presentation.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'ns-speaker-detail',
@@ -53,9 +54,15 @@ export class SpeakerDetailComponent implements OnInit {
       });
   }
 
-  onPresentationTap(args: TouchGestureEventData): void {
-    const tappedPresentation = args.view.bindingContext;
-    this._navigationService.navigateTo('/presentation', tappedPresentation.id);
+  onPresentationTap(id: number): void {
+    this._navigationService.navigateTo('/presentation', id);
+  }
+
+  adaptStartTime(time: string | Date): string {
+    if (moment(time).isSame(moment(), 'day')) {
+      return 'Heute, ' + moment(time).format('HH:mm') + ' Uhr';
+    }
+    return moment(time).locale('de').format('D. MMMM YYYY, HH:mm') + ' Uhr';
   }
 
   get speaker(): Speaker {
@@ -70,8 +77,27 @@ export class SpeakerDetailComponent implements OnInit {
     return this._fullName;
   }
 
+  get imagePath(): string {
+    if (!this.speaker.photo_url) {
+      return '~/images/load_homer.png';
+    }
+    return this.speaker.photo_url
+  }
+
   get loading(): boolean {
     return this._loading;
+  }
+
+  get position(): string {
+    return this._speaker.position;
+  }
+
+  get organization(): string {
+    return this._speaker.organization;
+  }
+
+  get shortBio(): string {
+    return this._speaker.short_bio;
   }
 
 }

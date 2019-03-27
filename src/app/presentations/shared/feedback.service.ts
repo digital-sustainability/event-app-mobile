@@ -21,6 +21,9 @@ export class FeedbackService {
   }
 
   addFeedback(feedback: Feedback): Observable<Feedback> {
+    if (feedback.handle === null) {
+      feedback.handle = 'Anonym'
+    }
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

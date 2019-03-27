@@ -2,19 +2,21 @@
 <StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
     <ActivityIndicator class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
 </StackLayout>
-<ScrollView height="100%" class="m-x-10">
-    <StackLayout *ngIf="!loading && presentation && feedbackForm" >
-        <Label text="Feedback {{ presentationTitle }}" class="h1 m-y-10" textWrap="true"></Label>
-        <RadDataForm
-        tkExampleTitle
-        tkToggleNavButton
-        [source]="feedbackForm"
-        [metadata]="feedbackConfig"
-        ></RadDataForm>
-        <Button
-        (tap)="onFeedbackSubmit($event)"
-        class="btn btn-primary m-t-20"
-        text="Feedback einreichen"
-        ></Button>
-    </StackLayout>
-</ScrollView>
+<StackLayout>
+    <ScrollView height="100%" class="m-x-10">
+        <StackLayout *ngIf="!loading && presentation && feedbackForm" >
+            <Label text="Feedback {{ presentationTitle }}" class="h1 m-y-10" textWrap="true"></Label>
+            <RadDataForm
+            tkExampleTitle
+            tkToggleNavButton
+            [source]="feedbackForm"
+            [metadata]="feedbackConfig"
+            ></RadDataForm>
+            <Button
+            (tap)="onFeedbackSubmit($event)"
+            class="btn btn-primary m-t-20"
+            text="Feedback einreichen"
+            ></Button>
+        </StackLayout>
+    </ScrollView>
+</StackLayout>

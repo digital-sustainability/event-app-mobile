@@ -228,3 +228,11 @@ background-color: #fafeff;
 color: #000000;
 }
 
+.occasion-item {
+    background-color: #F5F5F5;
+    color: #4d4d4d;
+    margin: 0 0 10 0;
+    padding: 20;
+    border-color:#E8E8E8;
+    border-width: 1;
+}

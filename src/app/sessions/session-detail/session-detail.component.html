@@ -16,7 +16,7 @@
                 <Label text="Präsentationen" class="h2"></Label>
             </StackLayout>
             <StackLayout *ngFor="let p of presentations">
-                <StackLayout class="presentation" orientation="vertical" (tap)="onPresentationTap(p.id)">
+                <StackLayout class="occasion-item" orientation="vertical" (tap)="onPresentationTap(p.id)">
                     <Label class="h4" textWrap="true" [text]="p.title"></Label>
                     <Label
                     class="body"

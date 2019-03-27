@@ -1,1 +1,14 @@
-/* Add mobile styles for the component here.  */
+.speaker-img {
+    height: 150;
+    width: 150;
+    border-radius: 75;
+    margin: 10;
+}
+
+Label.text-center {
+    text-align: center;
+}
+
+Label.company {
+    color: #999999;
+}

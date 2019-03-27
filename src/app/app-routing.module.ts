@@ -9,7 +9,7 @@ import { EventTabComponent } from './events/event-tab/event-tab.component';
 import { FeedbackComponent } from './presentations/feedback/feedback.component';
 
 const routes: Routes = [
-    // { path: '', component: FeedbackComponent },
+    { path: '', component: SpeakerDetailComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: EventTabComponent },
     { path: 'event/:id', component: EventDetailComponent },

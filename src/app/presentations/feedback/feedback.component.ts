@@ -112,9 +112,6 @@ export class FeedbackComponent implements OnInit {
           // TODO: Show banner or feedback
           this._navigationService.navigateTo('presentation', this._presentation.id);
         } else {
-          if (this._feedbackForm.handle === null) {
-            this._feedbackForm.handle = 'Anonym'
-          }
           const feedback = <Feedback>{
             handle: this._feedbackForm.handle,
             grade: Number(this._feedbackForm.grade),
