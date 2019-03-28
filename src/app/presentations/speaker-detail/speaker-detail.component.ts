@@ -59,7 +59,6 @@ export class SpeakerDetailComponent implements OnInit {
   }
 
   adaptStartTime(time: string | Date): string {
-    console.log(time);
     if (moment(time).isSame(moment(), 'day')) {
       return 'Heute, ' + moment.utc(time).format('HH:mm') + ' Uhr';
     }

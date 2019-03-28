@@ -16,14 +16,28 @@
                 <Label [text]="labelPresentations" class="h2" textWrap="true"></Label>
             </StackLayout>
             <StackLayout *ngFor="let p of presentations">
-                <StackLayout class="occasion-item" orientation="vertical" (tap)="onPresentationTap(p.id)">
-                    <Label class="h4" textWrap="true" [text]="p.title"></Label>
-                    <Label
-                    class="body"
-                    textWrap="true"
-                    text="{{ p.start | date:'HH:mm' :'UTC' }} Uhr – {{ p.end | date:'HH:mm' :'UTC'  }} Uhr"
-                    ></Label>
-                </StackLayout>
+                <GridLayout columns="*, auto" class="occasion-item" orientation="vertical" (tap)="onPresentationTap(p.id)">
+                    <StackLayout column="0">
+                        <Label class="h4" textWrap="true" [text]="p.title"></Label>
+                        <Label
+                        class="body"
+                        textWrap="true"
+                        text="{{ p.start | date:'HH:mm' :'UTC' }} Uhr – {{ p.end | date:'HH:mm' :'UTC'  }} Uhr"
+                        ></Label>
+                        <StackLayout *ngIf="p.room">
+                            <Label class="body" textWrap="true" [text]="p.room"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                    <GridLayout column="1" style="horizontal-align: right;" rows="*">
+                        <Label
+                        row="0"
+                        class="fa ic-arrow-right"
+                        text="&#xf054;"
+                        horizontalAlignment="center"
+                        style="text-align: center; vertical-align: center;"
+                        ></Label>
+                    </GridLayout>
+                </GridLayout>
             </StackLayout>
         </StackLayout>
     </ScrollView>

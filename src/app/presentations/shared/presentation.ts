@@ -12,6 +12,7 @@ export interface Presentation {
     start: string | Date,
     end: string | Date,
     access_token: string,
+    room:string,
     speakers: Speaker[],
     feedbacks: any[],
     // TODO: @oscar: je nach abgrage von sails ist die session_id number oder object

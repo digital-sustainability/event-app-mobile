@@ -20,12 +20,9 @@
                         <Label text="Zeit" class="p-l-15 m-r-20 font-weight-bold"></Label>
                         <Label [text]="transformEventInfo(event.start, event.end)" col="1" class="text p-b-10" textWrap="true"></Label>
                         <Label text="Ort" row="1" class="p-l-15 p-b-10 m-r-20 font-weight-bold" ></Label>
-                        <Label [text]="event.location" row="1" col="1" class="text p-b-10" textWrap="true"></Label>
+                        <Label text="{{ event.location_details }} {{ event.location }}" row="1" col="1" class="text p-b-10" textWrap="true"></Label>
                         <Label text="Webseite" row="2" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
-                        <!-- TODO: Add URL to database, remove below -->
-                        <!-- <Label [text]="event.url_label" row="2" col="1" class="text p-b-10 link" (tap)="openUrl(event.url)"></Label> -->
-                        <Label text="www.something.darkside"
-                        row="2" col="1" class="text p-b-10 link" (tap)="openUrl('https://docs.nativescript.org/core-concepts/utils')"></Label>
+                        <Label [text]="event.url_label" row="2" col="1" class="text p-b-10 link" (tap)="onOpenUrl(event.url)"></Label>
                     </GridLayout>
                 </StackLayout>
                 <StackLayout *ngIf="!isOneDayEvent(event.start, event.end)">
@@ -35,14 +32,23 @@
                         <Label text="Ende" row="1" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
                         <Label [text]="event.end | date:'dd.MM.y, HH:mm \'Uhr\'' :'UTC'" row="1" col="1" class="text p-b-10" textWrap="true"></Label>
                         <Label text="Ort" row="2" class="p-l-15 p-b-10 m-r-20 font-weight-bold" textWrap="true"></Label>
-                        <Label [text]="event.location" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
+                        <Label text="{{ event.location_details }} {{ event.location }}" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
                         <Label text="Webseite" row="3" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
-                        <!-- TODO: Add URL to database, remove below -->
-                        <!-- <Label [text]="event.url_label" row="3" col="1" class="text p-b-10 link" (tap)="openUrl(event.url)"></Label> -->
-                        <Label text="www.something.darkside" row="3" col="1" class="text p-b-10 link"
-                            (tap)="openUrl('https://docs.nativescript.org/core-concepts/utils')"></Label>
+                        <Label [text]="event.url_label" row="3" col="1" class="text p-b-10 link" (tap)="onOpenUrl(event.url)"></Label>
                     </GridLayout>
-                </StackLayout>r
+                </StackLayout>
+                <StackLayout *ngIf="mapsAvailable && event.location">
+                    <Button
+                    class="btn btn-outline m-t-30"
+                    height="50"
+                    text="Maps öffnen"
+                    (tap)="onOpenMaps(event.location)">
+                        <FormattedString>
+                            <Span text="Adresse in Maps öffen" style="font-size: 18;"></Span>
+                            <Span class="fa ic-map-pin" text=" &#xf3c5;"></Span>
+                        </FormattedString>
+                    </Button>
+                </StackLayout>
                 <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
                 <Label text="Sessions" class="h2"></Label>
             </StackLayout>
@@ -62,6 +68,39 @@
                         ></Label>
                     </GridLayout>
                 </GridLayout>
+            </StackLayout>
+            <StackLayout class="m-x-10">
+                <Label text="Speakers" class="h2"></Label>
+                <StackLayout *ngIf="!loading && speakers">
+                    <StackLayout *ngFor="let sp of speakers">
+                        <GridLayout
+                        class="list-group-item"
+                        rows="auto, *"
+                        columns="80, *"
+                        (tap)="onSpeakerTap(sp.id)">
+                            <Image
+                            row="0"
+                            col="0"
+                            [src]="sp.photo_url" 
+                            class="thumb img-circle m-8"
+                            rowSpan="2"
+                            ></Image>
+                            <Label 
+                            row="0"
+                            col="1"
+                            [text]="sp.first_name + ' ' + sp.last_name"
+                            class="list-group-item-heading"
+                            ></Label>
+                            <Label
+                            row="1"
+                            col="1"
+                            [text]="sp.position"
+                            class="list-group-item-text"
+                            ></Label>
+                        </GridLayout>
+                        <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
+                    </StackLayout>
+                </StackLayout>
             </StackLayout>
         </StackLayout>
     </ScrollView>

@@ -81,8 +81,8 @@ export class FeedbackComponent implements OnInit {
     this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
-        const presentationId = 1;
-        // const presentationId = params.id;
+        // const presentationId = 1;
+        const presentationId = params.id;
         this._presentationService.getPresentation(presentationId)
           .pipe(
             catchError(err => {
@@ -110,7 +110,6 @@ export class FeedbackComponent implements OnInit {
       if (result) {
         if (this._feedbackForm.isEmpty()) {
           // TODO: Show banner or feedback
-          console.log('Empty')
           this._navigationService.navigateTo('presentation', this._presentation.id);
         } else {
           const feedback = <Feedback>{
@@ -120,7 +119,6 @@ export class FeedbackComponent implements OnInit {
             comment_negative: this._feedbackForm.comment_negative,
             presentation_id: this._presentation.id
           }
-          console.log(feedback);
           this._feedbackService.addFeedback(feedback).subscribe(
             submitted => {
               console.log('Just submitted:', submitted);

@@ -4,11 +4,13 @@ import { RouterExtensions, PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Event } from '../shared/event';
+import { Speaker } from '../../presentations/shared/speaker';
 import { EventService } from '../shared/event.service';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { NavigationService } from '~/app/shared/navigation.service';
 import { Session } from '../../sessions/shared/session';
-import { openUrl } from 'tns-core-modules/utils/utils'
+import { openUrl } from 'tns-core-modules/utils/utils';
+import { Directions } from "nativescript-directions";
 import * as moment from 'moment';
 
 @Component({
@@ -23,7 +25,10 @@ export class EventDetailComponent implements OnInit {
   private _loading = true;
   private _eventTitle = 'Event';
   private _sessions: Session[];
+  private _mapsAvailable: boolean;
+  private _speakers: Speaker[];
   public backRoute = '/home'
+  public directions: any;
 
   // TODO: What is better: Default image or empty?
   // private _image_path: string;
@@ -40,8 +45,8 @@ export class EventDetailComponent implements OnInit {
     this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
-        // const eventId = params.id;
-        const eventId = 1; // TODO: Remove – Testing only
+        const eventId = params.id;
+        // const eventId = 1; // TODO: Remove – Testing only
         // TODO: Fetch from a local storage on service to limit https calls
         this._eventService.getEvent(eventId)
           .pipe(
@@ -60,7 +65,24 @@ export class EventDetailComponent implements OnInit {
             },
             err => console.error(err)
           )
+        this._eventService.getSpeakers(eventId)
+          .pipe(
+            catchError(err => {
+              // TODO: set (and create) error flag for event
+              return throwError(err);
+            })
+          )
+          .subscribe(
+            (speakers: Speaker[]) => this._speakers = speakers,
+            err => console.error(err)
+          )
       });
+    // instantiate maps plugin
+    this.directions = new Directions();
+    // check if device has a maps application
+    this.directions.available().then((available: boolean) => {
+      this._mapsAvailable = available;
+    });
   }
 
   onSessionTap(id: number): void {
@@ -93,8 +115,44 @@ export class EventDetailComponent implements OnInit {
     return `${beginning.format('dddd, D. MMMM YYYY von H')}h bis ${ending.format('H')}h`
   }
 
-  openUrl(url: string): void {
+  onOpenUrl(url: string): void {
     openUrl(url);
+  }
+
+  onOpenMaps(address: string): void {
+    this.directions.navigate({
+      // from: { // optional, default 'current location'
+      //   lat: ... ,
+      //   lng: ...
+      // },
+      /* Pass collection with propert "address" to use waypoints.
+       * The last item is the destination, the addresses in between are 'waypoints'.
+       */
+      to: {
+        address: address,
+      },
+      type: "transit", // optional, can be: driving, transit, bicycling or walking
+      ios: {
+        preferGoogleMaps: true,
+        allowGoogleMapsWeb: true // TODO: Check docs when implementing iOS
+      }
+    }).then(() => {
+      console.log("Maps app launched.");
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  onSpeakerTap(id: number): void {
+    // TODO: Same navigation/animation bug as above!
+    this._routerExtensions.navigate(['/speaker', id], {
+      animated: false,
+        transition: {
+        name: "slide",
+        duration: 200,
+        curve: "ease"
+      }
+    });
   }
 
   get event(): Event {
@@ -115,6 +173,14 @@ export class EventDetailComponent implements OnInit {
 
   get websiteTitle(): string {
     return this._event.url
+  }
+
+  get mapsAvailable(): boolean {
+    return this._mapsAvailable;
+  }
+
+  get speakers(): Speaker[] {
+    return this._speakers;
   }
 
 }

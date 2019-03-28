@@ -9,6 +9,7 @@ export interface Event {
     start: string | Date,
     end: string | Date,
     location: string,
+    location_details: string,
     url: string,
     url_label: string,
     published: boolean,

@@ -25,6 +25,7 @@ export class EventListComponent implements OnInit {
     private _navigationService: NavigationService,
   ) { }
 
+  // TODO: Later --> Add pull-to-refresh
   ngOnInit(): void {
     this._eventService.getEvents(this.archive)
       .pipe(
@@ -38,7 +39,7 @@ export class EventListComponent implements OnInit {
       )
       .subscribe(
         (events: Event[]) => {
-          this._events = sortBy(events, [(o: Event) => o.start]);
+          this._events = sortBy(events, [(o: Event) => o.start]).filter(e => e.published);
           this._loading = false;
       },
         err => console.error(err)
@@ -52,7 +53,6 @@ export class EventListComponent implements OnInit {
 
   displayEventInfo(time: string | Date, location: string): string {
     return moment.utc(time).locale('de').format('dddd, D. MMMM YYYY');
-    // return moment.utc(time).locale('de').format('dddd, D. MMMM YYYY') + ', ' + location;
   }
 
   get events(): Event[] {

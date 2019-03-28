@@ -61,7 +61,7 @@ color: #1c7272;
 }
 
 .img-circle {
-border-radius: 20;
+border-radius: 50;
 }
 
 .list-group-item-heading {
@@ -243,5 +243,10 @@ color: #000000;
   }
 
 .ic-arrow-right {
-    font-size: 30;
+    font-size: 20;
+}
+
+.ic-map-pin {
+    font-size: 25;
+    padding: 8;
 }

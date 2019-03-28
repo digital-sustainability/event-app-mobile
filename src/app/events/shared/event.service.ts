@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { Event } from '../shared/event'
+import { Event } from '../shared/event';
+import { Speaker } from '../../presentations/shared/speaker';
 import { Observable } from 'rxjs';
 
 
@@ -27,6 +28,10 @@ export class EventService {
   }  
 
   getEvent(id: number): Observable<Event> {
-    return this._http.get<Event>(this._api + 'event/' + id);
+    return this._http.get<Event>(`${this._api}event/${id}`);
+  }
+  
+  getSpeakers(id: number): Observable<Speaker[]> {
+    return this._http.get<Speaker[]>(`${this._api}event/${id}/speaker`);
   }
 }
