@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 })
 export class PresentationService {
 
-  // TODO: Store in environment
   private _api = 'https://event-app.fdn-dev.iwi.unibe.ch/';
 
   constructor(

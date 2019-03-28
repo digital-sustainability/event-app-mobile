@@ -46,6 +46,7 @@ export class SessionDetailComponent implements OnInit {
             (session: Session) => {
               this._loading = false;
               this._session = session;
+              this._sessionTitle = session.title;
             },
             err => console.error(err)
           )
@@ -78,8 +79,7 @@ export class SessionDetailComponent implements OnInit {
   }
 
   get labelPresentations(): string {
-    // TODO: insert this.session.label_presentations
-    if (false) {
+    if (this.session.label_presentations) {
       return this.session.label_presentations;
     }
     return 'Präsentationen'

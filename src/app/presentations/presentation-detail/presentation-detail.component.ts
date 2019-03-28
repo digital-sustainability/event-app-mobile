@@ -10,6 +10,7 @@ import { NavigationService } from '~/app/shared/navigation.service';
 import { PresentationService } from '../shared/presentation.service';
 import { Button } from 'tns-core-modules/ui/button'
 import { EventData } from 'tns-core-modules/data/observable'
+import { openUrl } from 'tns-core-modules/utils/utils'
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import * as _ from 'lodash';
 // Second argument is optional.
@@ -89,6 +90,10 @@ export class PresentationDetailComponent implements OnInit {
   onFeedbackTap(args: EventData): void {
     // let button = <Button>args.object;
     this._navigationService.navigateTo('/feedback', this._presentation.id);
+  }
+
+  onShowSlides(url: string): void {
+    openUrl(url);
   }
 
   get speakers(): Speaker[] {

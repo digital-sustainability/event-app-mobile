@@ -30,43 +30,43 @@ export class FeedbackComponent implements OnInit {
     "isReadOnly": false,
     "commitMode": "Immediate",
     "validationMode": "Immediate",
-    "propertyAnnotations":
-      [
-        {
-          "name": "handle",
-          "displayName": "Besuchername",
-          "index": 0,
-          "hintText": "Ihr Name"
-        },
-        {
-          "name": "grade",
-          "displayName": "Präsentationsbewertung (1 – 5)",
-          "index": 1,
-          "hintText": "-",
-          // "editor": "Picker",
-          // "valuesProvider": [1, 2, 3, 4, 5]
-          "editor": "Stepper",
-          "editorParams": {
-            "step": 1,
-            "min": 1,
-            "max": 5
-          }
-        },
-        {
-          "name": "comment_positive",
-          "displayName": "Das fand ich gut",
-          "index": 2,
-          "hintText": "Ihr Feedback",
-          "editor": "MultilineText"
-        },
-        {
-          "name": "comment_negative",
-          "displayName": "Das fand ich verbesserungswürdig",
-          "index": 3,
-          "hintText": "Ihr Feedback",
-          "editor": "MultilineText"
-        },
-      ]
+    // "propertyAnnotations":
+    //   [
+    //     {
+    //       "name": "handle",
+    //       "displayName": "Besuchername",
+    //       "index": 0,
+    //       "hintText": "Ihr Name (freiwillig)"
+    //     },
+    //     {
+    //       "name": "grade",
+    //       "displayName": "Präsentationsbewertung (1 – 5)",
+    //       "index": 1,
+    //       "hintText": "-",
+    //       // "editor": "Picker",
+    //       // "valuesProvider": [1, 2, 3, 4, 5]
+    //       "editor": "Stepper",
+    //       "editorParams": {
+    //         "step": 1,
+    //         "min": 1,
+    //         "max": 5
+    //       }
+    //     },
+    //     {
+    //       "name": "comment_positive",
+    //       "displayName": "Das fand ich gut",
+    //       "index": 2,
+    //       "hintText": "Ihr Feedback",
+    //       "editor": "MultilineText"
+    //     },
+    //     {
+    //       "name": "comment_negative",
+    //       "displayName": "Das fand ich verbesserungswürdig",
+    //       "index": 3,
+    //       "hintText": "Ihr Feedback",
+    //       "editor": "MultilineText"
+    //     },
+    //   ]
     }
 
   constructor(
@@ -81,8 +81,8 @@ export class FeedbackComponent implements OnInit {
     this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
-        // const presentationId = 1;
-        const presentationId = params.id;
+        const presentationId = 1;
+        // const presentationId = params.id;
         this._presentationService.getPresentation(presentationId)
           .pipe(
             catchError(err => {
@@ -108,8 +108,9 @@ export class FeedbackComponent implements OnInit {
       cancelButtonText: "Abbrechen",
     }).then(result => {
       if (result) {
-        if (!this.feedbackExists(this._feedbackForm)) {
+        if (this._feedbackForm.isEmpty()) {
           // TODO: Show banner or feedback
+          console.log('Empty')
           this._navigationService.navigateTo('presentation', this._presentation.id);
         } else {
           const feedback = <Feedback>{
@@ -119,6 +120,7 @@ export class FeedbackComponent implements OnInit {
             comment_negative: this._feedbackForm.comment_negative,
             presentation_id: this._presentation.id
           }
+          console.log(feedback);
           this._feedbackService.addFeedback(feedback).subscribe(
             submitted => {
               console.log('Just submitted:', submitted);
@@ -153,15 +155,6 @@ export class FeedbackComponent implements OnInit {
 
   get feedbackConfig(): object {
     return this._feedbackConfig;
-  }
-
-  private feedbackExists(form: FeedbackForm): boolean {
-    for (let e in form) {
-      if (e !== null) {
-        return true
-      }
-    }
-    return false;
   }
 
 }

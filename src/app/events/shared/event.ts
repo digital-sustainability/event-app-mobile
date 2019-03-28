@@ -11,6 +11,7 @@ export interface Event {
     location: string,
     url: string,
     url_label: string,
+    published: boolean,
     image_path: string,
     sessions: Session[]
 }

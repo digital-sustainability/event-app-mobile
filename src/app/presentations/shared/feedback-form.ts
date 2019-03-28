@@ -16,6 +16,16 @@ export class FeedbackForm {
         this.comment_negative = comment_negative;
     }
 
-    
-    // TODO: Move check-null method here
+    isEmpty(): boolean {
+        [this.handle, this.comment_positive, this.comment_negative]
+            .forEach(e => {
+                if (e !== null) {
+                    return false;
+                }         
+            })
+            if (Number(this.grade) !== 0) {
+                return false;
+            }
+        return true;
+    }
 }

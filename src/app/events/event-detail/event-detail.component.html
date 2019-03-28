@@ -34,7 +34,7 @@
                         <Label [text]="event.start | date:'dd.MM.y, HH:mm \'Uhr\'' :'UTC'" col="1" class="text p-b-10" textWrap="true"></Label>
                         <Label text="Ende" row="1" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
                         <Label [text]="event.end | date:'dd.MM.y, HH:mm \'Uhr\'' :'UTC'" row="1" col="1" class="text p-b-10" textWrap="true"></Label>
-                        <Label text="Ort" row="2" class="p-l-15 p-b-10 m-r-20 font-weight-bold" ></Label>
+                        <Label text="Ort" row="2" class="p-l-15 p-b-10 m-r-20 font-weight-bold" textWrap="true"></Label>
                         <Label [text]="event.location" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
                         <Label text="Webseite" row="3" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
                         <!-- TODO: Add URL to database, remove below -->
@@ -47,10 +47,21 @@
                 <Label text="Sessions" class="h2"></Label>
             </StackLayout>
             <StackLayout *ngFor="let s of event.sessions">
-                <StackLayout class="session" orientation="vertical" (tap)="onSessionTap(s.id)">
-                    <Label class="h4" textWrap="true" [text]="s.title"></Label>
-                    <Label class="body" textWrap="true" [text]="s.room"></Label>
-                </StackLayout>
+                <GridLayout columns="*, auto" class="session" orientation="vertical" (tap)="onSessionTap(s.id)">
+                    <StackLayout column="0">
+                        <Label class="h4" textWrap="true" [text]="s.title"></Label>
+                        <Label class="body" textWrap="true" [text]="s.room"></Label>
+                    </StackLayout>
+                    <GridLayout column="1" style="horizontal-align: right;" rows="*">
+                        <Label
+                        row="0"
+                        class="fa ic-arrow-right"
+                        text="&#xf054;"
+                        horizontalAlignment="center"
+                        style="text-align: center; vertical-align: center;"
+                        ></Label>
+                    </GridLayout>
+                </GridLayout>
             </StackLayout>
         </StackLayout>
     </ScrollView>

@@ -236,3 +236,12 @@ color: #000000;
     border-color:#E8E8E8;
     border-width: 1;
 }
+
+.fa {
+    font-family: Font Awesome 5 Free, fa-solid-900;
+    font-weight: 900;
+  }
+
+.ic-arrow-right {
+    font-size: 30;
+}
