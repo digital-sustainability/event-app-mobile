@@ -16,11 +16,11 @@
             <StackLayout class="m-x-10">
                 <Label [text]="event.description" class="body m-b-10" textWrap="true"></Label>
                 <StackLayout *ngIf="isOneDayEvent(event.start, event.end)">
-                    <GridLayout rows="*,*,*" columns="auto, auto">
+                    <GridLayout rows="auto,auto,auto" columns="auto, *">
                         <Label text="Zeit" class="p-l-15 m-r-20 font-weight-bold"></Label>
                         <Label [text]="transformEventInfo(event.start, event.end)" col="1" class="text p-b-10" textWrap="true"></Label>
                         <Label text="Ort" row="1" class="p-l-15 p-b-10 m-r-20 font-weight-bold" ></Label>
-                        <Label text="{{ event.location_details }} {{ event.location }}" row="1" col="1" class="text p-b-10" textWrap="true"></Label>
+                        <Label text="{{ event.location_details ? event.location_details + ' ' : ''}}{{ event.location }}" row="1" col="1" class="text p-b-10" textWrap="true"></Label>
                         <Label text="Webseite" row="2" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
                         <Label [text]="event.url_label" row="2" col="1" class="text p-b-10 link" (tap)="onOpenUrl(event.url)"></Label>
                     </GridLayout>
@@ -81,7 +81,7 @@
                             <Image
                             row="0"
                             col="0"
-                            [src]="sp.photo_url" 
+                            [src]="getPhotoUrlOfSpeaker(sp)"
                             class="thumb img-circle m-8"
                             rowSpan="2"
                             ></Image>

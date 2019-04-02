@@ -5,3 +5,13 @@ PropertyEditor {
     margin: 10 0 10 0;
     font-size: 14;
 }
+
+EntityProperty[name='name'] {
+    font-size: 14;
+    font-weight: 500;
+}
+
+PropertyEditor[type='Stepper'] DataFormEditorCore{
+    font-weight: bold;
+    font-size: 18;
+}
