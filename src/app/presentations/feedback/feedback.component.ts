@@ -88,7 +88,7 @@ export class FeedbackComponent implements OnInit {
               // code taken from https://github.com/NathanaelA/nativescript-keyboardshowing/blob/master/index.js
               const rect = new android.graphics.Rect();
               const window = _page._context.getWindow();
-              _page.android.getWindowVisibleDisplayFrame(rect);
+              this._page.android.getWindowVisibleDisplayFrame(rect);
               const rootView = _page.android.getRootView();
               const screenHeight = rootView.getHeight();
               const missingSize = screenHeight - rect.bottom;
@@ -112,8 +112,13 @@ export class FeedbackComponent implements OnInit {
             }
           }
         );
+        this._page.android.getViewTreeObserver().addOnGlobalLayoutListener(listener);
 
-        _page.android.getViewTreeObserver().addOnGlobalLayoutListener(listener);
+        this._page.on(Page.navigatingFromEvent, () => {
+          let viewTreeObserver = this._page.android.getViewTreeObserver();
+          viewTreeObserver.removeOnGlobalLayoutListener(listener);
+        });
+
       }
     });
   }
