@@ -183,4 +183,11 @@ export class EventDetailComponent implements OnInit {
     return this._speakers;
   }
 
+  getPhotoUrlOfSpeaker(speaker: Speaker) {
+      if (!speaker.photo_url) {
+        return '~/images/load_homer.png';
+      }
+      return speaker.photo_url
+  }
+
 }
