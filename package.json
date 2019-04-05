@@ -1,6 +1,6 @@
 {
     "nativescript": {
-        "id": "org.nativescript.event",
+        "id": "ch.digisus.event",
         "tns-ios": {
             "version": "5.2.0"
         },
