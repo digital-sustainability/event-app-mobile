@@ -17,13 +17,13 @@ export class EventService {
   ) { }
 
   getEvents(archive = false): Observable<Event[]> {
-    // get date of tomorrow in a MYSQL compatible format
-    const tomorrow = new Date(new Date().getTime() + (24 * 60 * 60 * 1000))
+    // get date of yesterday in a MYSQL compatible format
+    const yesterday = new Date(new Date().getTime() - (24 * 60 * 60 * 1000))
       .toISOString().slice(0, 19).replace('T', ' ')
     if (archive) {
-      return this._http.get<Event[]>(`${this._api}event?where={"end":{"<":"${tomorrow}"}}`);
+      return this._http.get<Event[]>(`${this._api}event?where={"end":{"<":"${yesterday}"}}`);
     } else {
-      return this._http.get<Event[]>(`${this._api}event?where={"end":{">=":"${tomorrow}"}}`);
+      return this._http.get<Event[]>(`${this._api}event?where={"end":{">=":"${yesterday}"}}`);
     }
   }  
 
