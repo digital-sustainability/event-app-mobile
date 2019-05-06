@@ -33,8 +33,8 @@ export class SessionDetailComponent implements OnInit {
     this._pageRoute.activatedRoute
     .pipe(switchMap(activatedRoute => activatedRoute.params))
     .forEach(params => {
-      const sessionId = params.id;
-      // const sessionId = 1; // TODO: Remove – Testing only
+      // const sessionId = params.id;
+      const sessionId = 1; // TODO: Remove – Testing only
       this._sessionService.getSession(sessionId)
         .pipe(
             catchError(err => {

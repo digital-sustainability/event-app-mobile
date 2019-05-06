@@ -45,8 +45,8 @@ export class EventDetailComponent implements OnInit {
     this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
-        const eventId = params.id;
-        // const eventId = 1; // TODO: Remove – Testing only
+        // const eventId = params.id;
+        const eventId = 1; // TODO: Remove – Testing only
         // TODO: Fetch from a local storage on service to limit https calls
         this._eventService.getEvent(eventId)
           .pipe(

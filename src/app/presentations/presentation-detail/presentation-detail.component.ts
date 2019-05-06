@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Presentation } from '../shared/presentation';
 import { Speaker } from '../shared/speaker';
-import { Image } from 'tns-core-modules/ui/image';
-import { PageRoute } from 'nativescript-angular/router';
+import { PageRoute, RouterExtensions } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
@@ -32,14 +31,15 @@ export class PresentationDetailComponent implements OnInit {
     private _presentationService: PresentationService,
     private _pageRoute: PageRoute,
     private _navigationService: NavigationService,
+    private _routerExtensions: RouterExtensions,
     ) { }
     
     ngOnInit(): void {
       this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
-        const presentationId = params.id;
-        // const presentationId = 1; // TODO: Remove – Testing only
+        // const presentationId = params.id;
+        const presentationId = 1; // TODO: Remove – Testing only
         this._presentationService.getPresentation(presentationId)
         .pipe(
           catchError(err => {
@@ -68,9 +68,21 @@ export class PresentationDetailComponent implements OnInit {
     });
   }
 
-  onSpeakerTap(args: TouchGestureEventData): void {
-    const tappedSpeaker = args.view.bindingContext;
-    this._navigationService.navigateTo('/speaker', tappedSpeaker.id);
+  // onSpeakerTap(args: TouchGestureEventData): void {
+  //   const tappedSpeaker = args.view.bindingContext;
+  //   this._navigationService.navigateTo('/speaker', tappedSpeaker.id);
+  // }
+
+  onSpeakerTap(id: number): void {
+    // TODO: Same navigation/animation bug as above!
+    this._routerExtensions.navigate(['/speaker', id], {
+      animated: false,
+      transition: {
+        name: "slide",
+        duration: 200,
+        curve: "ease"
+      }
+    });
   }
 
   onFabTap(): void {
@@ -96,8 +108,16 @@ export class PresentationDetailComponent implements OnInit {
     openUrl(url);
   }
 
+  getPhotoUrlOfSpeaker(speaker: Speaker) {
+    if (!speaker.photo_url) {
+      return '~/images/load_homer.png';
+    }
+    return speaker.photo_url
+  }
+
   get speakers(): Speaker[] {
     // TODO: Not sorted..
+    return this._speakers;
     return _.sortBy(this._speakers, [(o: Speaker) => o.first_name]);
   }
 

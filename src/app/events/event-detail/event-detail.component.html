@@ -70,8 +70,8 @@
                 </GridLayout>
             </StackLayout>
             <StackLayout class="m-x-10">
-                <Label text="Speakers" class="h2"></Label>
                 <StackLayout *ngIf="!loading && speakers">
+                <Label *ngIf="speakers.length > 0" text="Speakers" class="h2"></Label>
                     <StackLayout *ngFor="let sp of speakers">
                         <GridLayout
                         class="list-group-item"
@@ -89,12 +89,15 @@
                             row="0"
                             col="1"
                             [text]="sp.first_name + ' ' + sp.last_name"
-                            class="list-group-item-heading"
+                            textWrap="true"
+                            class="list-group-item-heading speaker-title"
+                            verticalAlignment="bottom"
                             ></Label>
                             <Label
                             row="1"
                             col="1"
                             [text]="sp.position"
+                            textWrap="true"
                             class="list-group-item-text"
                             ></Label>
                         </GridLayout>

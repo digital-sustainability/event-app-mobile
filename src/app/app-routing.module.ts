@@ -9,8 +9,8 @@ import { EventTabComponent } from './events/event-tab/event-tab.component';
 import { FeedbackComponent } from './presentations/feedback/feedback.component';
 
 const routes: Routes = [
-    // { path: '', component: SessionDetailComponent },
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '', component: PresentationDetailComponent },
+    // { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: EventTabComponent },
     { path: 'event/:id', component: EventDetailComponent },
     { path: 'session/:id', component: SessionDetailComponent },

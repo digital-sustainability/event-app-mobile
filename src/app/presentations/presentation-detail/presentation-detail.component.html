@@ -1,34 +1,52 @@
 <ns-action-bar [title]="presentationTitle"></ns-action-bar>
-<StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
-    <ActivityIndicator class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
-</StackLayout>
-<StackLayout *ngIf="!loading && presentation && speakers">
-    <ScrollView height="100%" class="m-x-10">
-        <StackLayout>
+<GridLayout>
+    <StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
+        <ActivityIndicator class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
+    </StackLayout>
+    <StackLayout *ngIf="!loading && presentation && speakers">
+        <ScrollView height="100%" class="m-x-10">
             <StackLayout>
-                <Label [text]="presentation.title" class="h1 m-y-10" textWrap="true"></Label>
-                <Label [text]="presentation.abstract" class="body m-y-10" textWrap="true"></Label>
-                <Label text="Speakers" class="h2"></Label>
-            </StackLayout>
-            <GridLayout tkExampleTitle tkToggleNavButton>
-                <RadListView class="list-group" [items]="presentation.speakers" (itemTap)="onSpeakerTap($event)">
-                    <ng-template tkListItemTemplate let-speaker="item">
-                        <StackLayout>
-                            <GridLayout class="list-group-item" rows="auto, *" columns="80, *">
-                                <Image row="0" col="0" [src]="speaker.photo_url" class="thumb img-circle" rowSpan="2"></Image>
-                                <Label row="0" col="1" [text]="speaker.first_name + ' ' + speaker.last_name" class="list-group-item-heading"></Label>
-                                <Label row="1" col="1" [text]="speaker.position" class="list-group-item-text"></Label>
+                <StackLayout>
+                    <Label [text]="presentation.title" class="h1 m-y-10" textWrap="true"></Label>
+                    <Label [text]="presentation.abstract" class="body m-y-10" textWrap="true"></Label>
+                    <Label *ngIf="speakers.length > 0" text="Speakers" class="h2"></Label>
+                </StackLayout>
+                <StackLayout class="m-x-10">
+                    <StackLayout *ngIf="!loading && speakers">
+                        <StackLayout *ngFor="let sp of speakers">
+                            <GridLayout class="list-group-item" rows="auto, *" columns="80, *" (tap)="onSpeakerTap(sp.id)">
+                                <Image
+                                row="0"
+                                col="0"
+                                [src]="getPhotoUrlOfSpeaker(sp)"
+                                class="thumb img-circle m-8"
+                                rowSpan="2">
+                                </Image>
+                                <Label
+                                row="0"
+                                col="1"
+                                [text]="sp.first_name + ' ' + sp.last_name"
+                                textWrap="true"
+                                verticalAlignment="bottom"
+                                class="list-group-item-heading"
+                                ></Label>
+                                <Label
+                                row="1"
+                                col="1"
+                                [text]="sp.position"
+                                textWrap="true"
+                                class="list-group-item-text"
+                                ></Label>
                             </GridLayout>
                             <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
                         </StackLayout>
-                    </ng-template>
-                </RadListView>
-            </GridLayout>
-            <StackLayout *ngIf="presentation.slides">
-                <Button (tap)="onShowSlides(presentation.slides)" class="btn btn-primary" text="Slides anschauen"></Button>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout *ngIf="presentation.slides">
+                    <Button (tap)="onShowSlides(presentation.slides)" class="btn btn-primary" text="Slides anschauen"></Button>
+                </StackLayout>
             </StackLayout>
-          <!--   <Button (tap)="onFeedbackTap($event)" class="btn btn-primary call-to-action" text="Feedback abgeben"></Button> -->
-        </StackLayout>
-    </ScrollView>
-</StackLayout>
-<FAB (tap)="onFeedbackTap($event)" icon="~/images/feedback.png" rippleColor="#f1f1f1" class="fab-button"></FAB>
+        </ScrollView>
+    </StackLayout>
+    <FAB (tap)="onFeedbackTap($event)" icon="~/images/feedback.png" rippleColor="#f1f1f1" class="fab-button"></FAB>
+</GridLayout>
