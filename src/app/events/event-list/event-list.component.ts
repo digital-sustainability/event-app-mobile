@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
 import { NavigationService } from '~/app/shared/navigation.service';
-import { sortBy } from 'lodash';
+import { orderBy } from 'lodash';
 import * as moment from 'moment';
 
 @Component({
@@ -39,7 +39,7 @@ export class EventListComponent implements OnInit {
       )
       .subscribe(
         (events: Event[]) => {
-          this._events = sortBy(events, [(o: Event) => o.start]).filter(e => e.published);
+          this._events = orderBy(events, ['start'], ['desc']).filter(e => e.published);
           this._loading = false;
       },
         err => console.error(err)

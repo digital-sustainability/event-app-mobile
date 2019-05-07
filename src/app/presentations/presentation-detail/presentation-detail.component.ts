@@ -10,8 +10,8 @@ import { PresentationService } from '../shared/presentation.service';
 import { Button } from 'tns-core-modules/ui/button'
 import { EventData } from 'tns-core-modules/data/observable'
 import { openUrl } from 'tns-core-modules/utils/utils'
+import { orderBy } from 'lodash';
 import * as dialogs from "tns-core-modules/ui/dialogs";
-import * as _ from 'lodash';
 // Second argument is optional.
 
 @Component({
@@ -38,8 +38,8 @@ export class PresentationDetailComponent implements OnInit {
       this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
-        // const presentationId = params.id;
-        const presentationId = 1; // TODO: Remove – Testing only
+        const presentationId = params.id;
+        // const presentationId = 1; // TODO: Remove – Testing only
         this._presentationService.getPresentation(presentationId)
         .pipe(
           catchError(err => {
@@ -116,9 +116,7 @@ export class PresentationDetailComponent implements OnInit {
   }
 
   get speakers(): Speaker[] {
-    // TODO: Not sorted..
-    return this._speakers;
-    return _.sortBy(this._speakers, [(o: Speaker) => o.first_name]);
+    return orderBy(this._speakers, ['first_name']);
   }
 
   get presentation(): Presentation {

@@ -1,5 +1,5 @@
 <ns-action-bar title="Feedback"></ns-action-bar>
-<GirdLayout>
+<GridLayout>
     <StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
         <ActivityIndicator class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
     </StackLayout>
@@ -22,9 +22,12 @@
                     displayName="Präsentationsbewertung (1 – 10)"
                     index="1">
                         <TKPropertyEditor
-                        tkEntityPropertyEditortype="Stepper"
-                        editorParams="{step: 1, min: 1, max: 5}"
-                        ></TKPropertyEditor>
+                        tkEntityPropertyEditor
+                        type="Stepper"
+                        >
+                        <TKPropertyEditorParams tKEditorParams minimum="1" maximum="10" step="1">
+                        </TKPropertyEditorParams>
+                    </TKPropertyEditor>
                     </TKEntityProperty>
                     <TKEntityProperty
                     tkDataFormProperty
@@ -51,4 +54,4 @@
             </StackLayout>
         </ScrollView>
     </StackLayout>
-</GirdLayout>
+</GridLayout>

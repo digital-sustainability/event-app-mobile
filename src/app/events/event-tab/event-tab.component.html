@@ -4,11 +4,12 @@
 [selectedIndex]="tabindex"
 class="tab-view"
 tabTextFontSize="14"
+selectedIndex="1"
 androidTabsPosition="bottom">
-    <StackLayout *tabItem="{ title: 'Kommende  Events'}" textWrap="true">
-        <ns-event-list></ns-event-list>
-    </StackLayout>
     <StackLayout *tabItem="{ title: 'Bisherige  Events' }" textWrap="true">
         <ns-event-list [archive]="true"></ns-event-list>
+    </StackLayout>
+    <StackLayout *tabItem="{ title: 'Kommende  Events'}" textWrap="true">
+        <ns-event-list></ns-event-list>
     </StackLayout>
 </TabView>

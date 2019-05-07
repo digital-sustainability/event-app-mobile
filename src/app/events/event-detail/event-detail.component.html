@@ -22,7 +22,7 @@
                         <Label text="Ort" row="1" class="p-l-15 p-b-10 m-r-20 font-weight-bold" ></Label>
                         <Label text="{{ event.location_details ? event.location_details + ' ' : ''}}{{ event.location }}" row="1" col="1" class="text p-b-10" textWrap="true"></Label>
                         <Label text="Webseite" row="2" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
-                        <Label [text]="event.url_label" row="2" col="1" class="text p-b-10 link" (tap)="onOpenUrl(event.url)"></Label>
+                        <Label [text]="event.url_label" row="2" col="1" class="text p-b-10 link" (tap)="onOpenUrl(event.url)" textWrap="true"></Label>
                     </GridLayout>
                 </StackLayout>
                 <StackLayout *ngIf="!isOneDayEvent(event.start, event.end)">
@@ -34,7 +34,7 @@
                         <Label text="Ort" row="2" class="p-l-15 p-b-10 m-r-20 font-weight-bold" textWrap="true"></Label>
                         <Label text="{{ event.location_details }} {{ event.location }}" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
                         <Label text="Webseite" row="3" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
-                        <Label [text]="event.url_label" row="3" col="1" class="text p-b-10 link" (tap)="onOpenUrl(event.url)"></Label>
+                        <Label [text]="event.url_label" row="3" col="1" class="text p-b-10 link" (tap)="onOpenUrl(event.url)" textWrap="true"></Label>
                     </GridLayout>
                 </StackLayout>
                 <StackLayout *ngIf="mapsAvailable && event.location">
