@@ -15,7 +15,7 @@
             <StackLayout *ngFor="let p of speaker.presentations">
                 <StackLayout class="occasion-item" orientation="vertical" (tap)="onPresentationTap(p.id)">
                     <Label class="h4" textWrap="true" [text]="p.title"></Label>
-                    <Label class="body" textWrap="true" [text]="adaptStartTime(p.start)"></Label>
+                    <Label class="body" textWrap="true" [text]="getStartTime(p.start) + ', ' + p.room"></Label>
                 </StackLayout>
             </StackLayout>
         </StackLayout>

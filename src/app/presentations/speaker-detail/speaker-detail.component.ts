@@ -58,7 +58,7 @@ export class SpeakerDetailComponent implements OnInit {
     this._navigationService.navigateTo('/presentation', id);
   }
 
-  adaptStartTime(time: string | Date): string {
+  getStartTime(time: string | Date): string {
     if (moment(time).isSame(moment(), 'day')) {
       return 'Heute, ' + moment.utc(time).format('HH:mm') + ' Uhr';
     }
