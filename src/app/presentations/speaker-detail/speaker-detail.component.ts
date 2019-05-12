@@ -59,10 +59,21 @@ export class SpeakerDetailComponent implements OnInit {
   }
 
   getStartTime(time: string | Date): string {
-    if (moment(time).isSame(moment(), 'day')) {
-      return 'Heute, ' + moment.utc(time).format('HH:mm') + ' Uhr';
+    if (time) {
+      if (moment(time).isSame(moment(), 'day')) {
+        return 'Heute, ' + moment.utc(time).format('HH:mm') + ' Uhr';
+      }
+      return moment.utc(time).locale('de').format('D. MMMM YYYY, HH:mm') + ' Uhr';
+    } else {
+      return ' - '
     }
-    return moment.utc(time).locale('de').format('D. MMMM YYYY, HH:mm') + ' Uhr';
+  }
+
+  concatRoom(room: string): string {
+    if (room) {
+      return `, ${room}`;
+    }
+    return '';
   }
 
   get speaker(): Speaker {

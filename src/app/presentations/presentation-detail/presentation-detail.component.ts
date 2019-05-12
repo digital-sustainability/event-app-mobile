@@ -11,6 +11,7 @@ import { Button } from 'tns-core-modules/ui/button'
 import { EventData } from 'tns-core-modules/data/observable'
 import { openUrl } from 'tns-core-modules/utils/utils'
 import { orderBy } from 'lodash';
+import * as moment from 'moment';
 import * as dialogs from "tns-core-modules/ui/dialogs";
 // Second argument is optional.
 
@@ -115,6 +116,24 @@ export class PresentationDetailComponent implements OnInit {
     return speaker.photo_url
   }
 
+  getStartTime(time: string | Date): string {
+    if (time) {
+      if (moment(time).isSame(moment(), 'day')) {
+        return 'Heute, ' + moment.utc(time).format('HH:mm') + ' Uhr';
+      }
+      return moment.utc(time).locale('de').format('D. MMMM YYYY, HH:mm') + ' Uhr';
+    } else {
+      return ' - '
+    }
+  }
+
+  concatRoom(room: string): string {
+    if (room) {
+      return `, ${room}`;
+    }
+    return '';
+  }
+
   get speakers(): Speaker[] {
     return orderBy(this._speakers, ['first_name']);
   }
@@ -122,6 +141,7 @@ export class PresentationDetailComponent implements OnInit {
   get presentation(): Presentation {
     return this._presentation;
   }
+
 
   get presentationTitle(): string {
     return this._presentationTitle;

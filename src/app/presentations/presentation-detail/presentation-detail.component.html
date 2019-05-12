@@ -8,6 +8,11 @@
             <StackLayout>
                 <StackLayout>
                     <Label [text]="presentation.title" class="h1 m-y-10" textWrap="true"></Label>
+                    <Label
+                    [text]="getStartTime(presentation.start) + concatRoom(presentation.room)"
+                    class="text m-y-10"
+                    textWrap="true"
+                    ></Label>
                     <Label [text]="presentation.abstract" class="body m-y-10" textWrap="true"></Label>
                     <Label *ngIf="speakers.length > 0" text="Speakers" class="h2"></Label>
                 </StackLayout>
