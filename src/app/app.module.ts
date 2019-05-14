@@ -4,6 +4,7 @@ import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
 import { NativeScriptUIDataFormModule } from 'nativescript-ui-dataform/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives'
 
 import { AppComponent } from './app.component';
 import { EventListComponent } from './events/event-list/event-list.component';
@@ -37,6 +38,7 @@ import { FeedbackService } from './presentations/shared/feedback.service';
         HttpClientModule,
         NativeScriptUIListViewModule,
         NativeScriptUIDataFormModule,
+        NativeScriptUISideDrawerModule
     ],
     declarations: [
         AppComponent,

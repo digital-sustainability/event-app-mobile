@@ -31,6 +31,7 @@
         "nativescript-theme-core": "~1.0.4",
         "nativescript-ui-dataform": "^4.0.0",
         "nativescript-ui-listview": "^5.2.0",
+        "nativescript-ui-sidedrawer": "^6.0.0",
         "reflect-metadata": "~0.1.12",
         "rxjs": "~6.3.0",
         "tns-core-modules": "~5.2.0",
@@ -42,7 +43,7 @@
         "@ngtools/webpack": "~7.2.0",
         "@types/jasmine": "^3.3.9",
         "nativescript-dev-typescript": "~0.8.0",
-        "nativescript-dev-webpack": "~0.20.0"
+        "nativescript-dev-webpack": "^0.21.2"
     },
     "gitHead": "36e279acd3e8bc27395256a32dec1bc9523489ae",
     "readme": "NativeScript Application"
