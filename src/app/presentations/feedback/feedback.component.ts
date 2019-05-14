@@ -124,7 +124,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._feedbackForm = new FeedbackForm(null, null, null, null);
+    this._feedbackForm = new FeedbackForm(null, 0, null, null);
     this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {

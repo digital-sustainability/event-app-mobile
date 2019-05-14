@@ -19,14 +19,13 @@
                     <TKEntityProperty
                     tkDataFormProperty
                     name="grade"
-                    displayName="Präsentationsbewertung (1 – 10)"
+                    displayName="Bewertung (1 – 10)"
                     index="1">
                         <TKPropertyEditor
                         tkEntityPropertyEditor
-                        type="Stepper"
-                        >
-                        <TKPropertyEditorParams tKEditorParams minimum="1" maximum="10" step="1">
-                        </TKPropertyEditorParams>
+                        type="Stepper">
+                            <TKPropertyEditorParams tKEditorParams minimum="1" maximum="10" step="1"></TKPropertyEditorParams>
+                            <TKPropertyEditorStyle tkPropertyEditorStyle valuePosition="Left"></TKPropertyEditorStyle>
                     </TKPropertyEditor>
                     </TKEntityProperty>
                     <TKEntityProperty
@@ -35,7 +34,7 @@
                     displayName="Das fand ich gut"
                     index="2"
                     hintText="Ihr Feedback">
-                        <TKPropertyEditor tkEntityPropertyEditortype="MultilineText"></TKPropertyEditor>
+                        <TKPropertyEditor tkEntityPropertyEditor type="MultilineText"></TKPropertyEditor>
                     </TKEntityProperty>
                     <TKEntityProperty
                     tkDataFormProperty

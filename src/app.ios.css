@@ -18,5 +18,9 @@ Place iOS specific styles below
 */
 
 .tab-view {
-tab-text-color: #cccccc;
+    tab-text-color: #cccccc;
+}
+
+.card-layout {
+    border-radius: 10;
 }
