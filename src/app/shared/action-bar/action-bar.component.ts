@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { isAndroid } from "tns-core-modules/platform";
+import { UiService } from '../ui.service';
+declare var android: any;
 
 @Component({
   selector: 'ns-action-bar',
@@ -14,6 +17,7 @@ export class ActionBarComponent implements OnInit {
 
   constructor(
     private _routerExtensions: RouterExtensions,
+    private _uiService: UiService, 
   ) { }
 
   ngOnInit() {
@@ -26,6 +30,14 @@ export class ActionBarComponent implements OnInit {
     } else {
       this._routerExtensions.back();
     }
+  }
+
+  onToggleMenu(): void {
+    this._uiService.toggleDrawer();
+  }
+
+  get android(): boolean {
+    return isAndroid;
   }
 
 }
