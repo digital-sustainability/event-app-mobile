@@ -39,8 +39,8 @@ export class PresentationDetailComponent implements OnInit {
       this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
-        const presentationId = params.id;
-        // const presentationId = 1; // TODO: Remove – Testing only
+        // const presentationId = params.id;
+        const presentationId = 1; // TODO: Remove – Testing only
         this._presentationService.getPresentation(presentationId)
         .pipe(
           catchError(err => {

@@ -11,7 +11,7 @@ EntityProperty[name='name'] {
     font-weight: 500;
 }
 
-PropertyEditor[type='Stepper'] DataFormEditorCore{
+PropertyEditor[type='Stepper'] DataFormEditorCore {
     font-weight: bold;
     font-size: 18;
 }
