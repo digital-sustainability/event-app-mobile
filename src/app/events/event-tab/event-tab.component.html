@@ -1,4 +1,22 @@
-<ActionBar title="FDN Event App" class="action-bar"></ActionBar>
+<!-- Homescreen displays a custom actionbar with logo and no backbutton -->
+<ActionBar class="action-bar">
+    <StackLayout>
+        <Image src="~/images/fdn_logo.png" class="home-icon"></Image>
+    </StackLayout>
+    <!-- Sidedrawer for Android requires the Navigation btn. iOS an ActionItem -->
+    <NavigationButton
+    *ngIf="android"
+    icon="res://hamburger"
+    android.position="right"
+    (tap)="onToggleMenu()"
+    ></NavigationButton>
+    <ActionItem
+    *ngIf="!android"
+    ios.position="right"
+    icon="res://hamburger"
+    (tap)="onToggleMenu()">
+    </ActionItem>
+</ActionBar>
 <TabView
 #tabview
 [selectedIndex]="tabindex"

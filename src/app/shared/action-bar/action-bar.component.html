@@ -5,12 +5,17 @@
     (tap)="navigateBack()"
     ></NavigationButton>
     <!-- Sidedrawer for Android requires the Navigation btn. iOS an ActionItem -->
+    <!-- TODO: Position Right not working on Android -->
     <NavigationButton
     *ngIf="android"
-    icon="res://menu_black"
+    android.position="right"
+    icon="res://hamburger"
     (tap)="onToggleMenu()"
     ></NavigationButton>
-    <ActionItem *ngIf="!android" ios.position="right" (tap)="onToggleMenu()">
-        <Label text="MENU"></Label>
+    <ActionItem
+    *ngIf="!android"
+    ios.position="right"
+    icon="res://hamburger"
+    (tap)="onToggleMenu()">
     </ActionItem>
 </ActionBar>

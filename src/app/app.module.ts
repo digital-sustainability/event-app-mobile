@@ -57,7 +57,8 @@ import { UiService } from './shared/ui.service';
         SessionService,
         PresentationService,
         NavigationService,
-        FeedbackService
+        FeedbackService,
+        UiService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

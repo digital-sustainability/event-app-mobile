@@ -5,6 +5,7 @@ import { UiService } from './shared/ui.service';
 import { Subscription } from 'rxjs';
 import { RadSideDrawerComponent } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
 import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
+import { NavigationService } from './shared/navigation.service';
 registerElement('CardView', () => CardView);
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 
@@ -21,12 +22,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private _drawer: RadSideDrawer;
 
     constructor(
-        private uiServie: UiService,
-        private changeDetectionRef: ChangeDetectorRef,
+        private _uiServie: UiService,
+        private _changeDetectionRef: ChangeDetectorRef,
+        private _navigationService: NavigationService,
     ) { }
 
     ngOnInit() {
-        this._drawerSub = this.uiServie.toggleDrawerState.subscribe(_ => {
+        this._drawerSub = this._uiServie.toggleDrawerState.subscribe(_ => {
             // prevent drawer to render at initiation
             if (this._drawer) {
                 this.drawerComponent.sideDrawer.toggleDrawerState();
@@ -37,12 +39,17 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit() {
         this._drawer = this.drawerComponent.sideDrawer;
         // check via change detection if UI has to be updated
-        this.changeDetectionRef.detectChanges();
+        this._changeDetectionRef.detectChanges();
     }
 
     ngOnDestroy() {
         if (this._drawerSub) {
             this._drawerSub.unsubscribe();
         }
+    }
+
+    onHomeTap(): void {
+        this.drawerComponent.sideDrawer.toggleDrawerState();
+        this._navigationService.navigateTo('/home');
     }
 }

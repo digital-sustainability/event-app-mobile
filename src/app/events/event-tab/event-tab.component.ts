@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { isAndroid } from 'tns-core-modules/platform';
+import { UiService } from '~/app/shared/ui.service';
 
 @Component({
   selector: 'ns-event-tab',
@@ -9,9 +11,17 @@ import { Component, OnInit } from '@angular/core';
 export class EventTabComponent implements OnInit {
 
   constructor(
+    private _uiService: UiService,
   ) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  onToggleMenu(): void {
+    this._uiService.toggleDrawer();
+  }
+
+  get android(): boolean {
+    return isAndroid;
   }
 
 }

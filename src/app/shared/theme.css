@@ -254,6 +254,12 @@
 
 .sidedrawer-container {
     background: linear-gradient(140deg,#1c7272, #4cbfbf);
-    width: 80%;
-    horizontal-align: left;
+    width: 100%;
+    horizontal-align: center;
+
+}
+.home-icon {
+    width: 40;
+    height: 40;
+    vertical-align: center;
 }
