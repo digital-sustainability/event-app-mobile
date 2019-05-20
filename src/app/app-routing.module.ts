@@ -7,6 +7,7 @@ import { PresentationDetailComponent } from './presentations/presentation-detail
 import { SpeakerDetailComponent } from './presentations/speaker-detail/speaker-detail.component';
 import { EventTabComponent } from './events/event-tab/event-tab.component';
 import { FeedbackComponent } from './presentations/feedback/feedback.component';
+import { AboutComponent } from './fdn/about/about.component';
 
 const routes: Routes = [
     // { path: '', component: EventDetailComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: 'presentation/:id', component: PresentationDetailComponent },
     { path: 'speaker/:id', component: SpeakerDetailComponent },
     { path: 'feedback/:id', component: FeedbackComponent },
+    { path: 'about', component: AboutComponent },
 ];
 
 @NgModule({

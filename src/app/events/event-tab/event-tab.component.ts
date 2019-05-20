@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { isAndroid } from 'tns-core-modules/platform';
 import { UiService } from '~/app/shared/ui.service';
 
@@ -8,13 +8,11 @@ import { UiService } from '~/app/shared/ui.service';
   styleUrls: ['./event-tab.component.css'],
   moduleId: module.id,
 })
-export class EventTabComponent implements OnInit {
+export class EventTabComponent {
 
   constructor(
     private _uiService: UiService,
   ) { }
-
-  ngOnInit() { }
 
   onToggleMenu(): void {
     this._uiService.toggleDrawer();

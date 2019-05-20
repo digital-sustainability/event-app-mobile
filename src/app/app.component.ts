@@ -22,13 +22,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private _drawer: RadSideDrawer;
 
     constructor(
-        private _uiServie: UiService,
+        private _uiService: UiService,
         private _changeDetectionRef: ChangeDetectorRef,
         private _navigationService: NavigationService,
     ) { }
 
     ngOnInit() {
-        this._drawerSub = this._uiServie.toggleDrawerState.subscribe(_ => {
+        this._drawerSub = this._uiService.toggleDrawerState.subscribe(_ => {
             // prevent drawer to render at initiation
             if (this._drawer) {
                 this.drawerComponent.sideDrawer.toggleDrawerState();
@@ -48,8 +48,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    onHomeTap(): void {
+    onDrawerBtnTap(destination: string): void {
         this.drawerComponent.sideDrawer.toggleDrawerState();
-        this._navigationService.navigateTo('/home');
+        this._navigationService.navigateTo(`/${destination}`);
     }
 }

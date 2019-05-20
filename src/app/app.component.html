@@ -1,6 +1,15 @@
 <RadSideDrawer>
     <StackLayout tkDrawerContent class="sidedrawer-container">
-        <Button class="btn btn-primary" text="Home" (tap)="onHomeTap()"></Button>
+        <Button
+        class="btn btn-primary btn-sidedrawer m-t-15"
+        text="Alle Events"
+        (tap)="onDrawerBtnTap('home')"
+        ></Button>
+        <Button
+        class="btn btn-primary btn-sidedrawer"
+        text="Kontakt"
+        (tap)="onDrawerBtnTap('about')"
+        ></Button>
     </StackLayout>
     <StackLayout tkMainContent>
         <page-router-outlet></page-router-outlet>

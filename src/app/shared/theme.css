@@ -263,3 +263,8 @@
     height: 40;
     vertical-align: center;
 }
+
+.btn-sidedrawer {
+    /* background-color: #0D5C5C; */
+    background-color: #004242;
+}
