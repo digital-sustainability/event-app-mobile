@@ -8,7 +8,11 @@
             <StackLayout class="m-x-10">
                 <Label text="Feedback" class="h1 m-y-10" textWrap="true"></Label>
                 <Label text="{{ presentationTitle }}" class="h2 m-b-10" textWrap="true"></Label>
-                <RadDataForm tkExampleTitle tkToggleNavButton [source]="feedbackForm">
+                <RadDataForm
+                tkExampleTitle
+                tkToggleNavButton
+                [source]="feedbackForm"
+                (editorUpdate)="dfEditorUpdate($event)">
                     <TKEntityProperty
                     tkDataFormProperty 
                     name="handle"
@@ -16,17 +20,11 @@
                     index="0"
                     hintText="Ihr Name (freiwillig)"
                     ></TKEntityProperty>
-                    <TKEntityProperty
-                    tkDataFormProperty
-                    name="grade"
-                    displayName="Bewertung (1 – 10)"
-                    index="1">
-                        <TKPropertyEditor
-                        tkEntityPropertyEditor
-                        type="Stepper">
+                    <TKEntityProperty tkDataFormProperty name="grade" displayName="Bewertung (1 – 10)" index="1">
+                        <TKPropertyEditor tkEntityPropertyEditor type="Stepper">
                             <TKPropertyEditorParams tKEditorParams minimum="1" maximum="10" step="1"></TKPropertyEditorParams>
                             <TKPropertyEditorStyle tkPropertyEditorStyle valuePosition="Left"></TKPropertyEditorStyle>
-                    </TKPropertyEditor>
+                        </TKPropertyEditor>
                     </TKEntityProperty>
                     <TKEntityProperty
                     tkDataFormProperty

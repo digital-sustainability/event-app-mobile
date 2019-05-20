@@ -10,10 +10,14 @@ import { Button } from 'tns-core-modules/ui/button';
 import { EventData } from 'tns-core-modules/data/observable';
 import { FeedbackService } from '../shared/feedback.service';
 import { FeedbackForm } from '../shared/feedback-form';
+import { isAndroid } from 'tns-core-modules/platform';
+import { DataFormEventData, EntityProperty } from 'nativescript-ui-dataform';
 import * as dialogs from 'tns-core-modules/ui/dialogs';
 import * as _ from 'lodash';
 import { Page } from 'tns-core-modules/ui/page/page';
 declare var android;
+declare var TKGridLayoutAlignment;
+
 
 @Component({
   selector: 'ns-feedback',
@@ -149,6 +153,12 @@ export class FeedbackComponent implements OnInit {
       });
   }
 
+  dfEditorUpdate(args: DataFormEventData) {
+    if (!isAndroid) {
+      this.editorSetupStepperIOS(args.editor);
+    }
+  }
+
   onFeedbackSubmit(args: EventData): void {
     dialogs
       .confirm({
@@ -185,6 +195,12 @@ export class FeedbackComponent implements OnInit {
           }
         }
       });
+  }
+
+  editorSetupStepperIOS(editor) {
+    // Add distance between the editor and displayed value on iOS
+    const editorView = editor.editorCore;
+    editorView.labelAlignment = TKGridLayoutAlignment.Left;
   }
 
   onBackButtonTap(): void {
