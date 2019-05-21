@@ -8,6 +8,7 @@ import { throwError, of } from 'rxjs';
 import { NavigationService } from '~/app/shared/navigation.service';
 import { Presentation } from '../../presentations/shared/presentation';
 import { sortBy } from 'lodash';
+import * as moment from 'moment';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class SessionDetailComponent implements OnInit {
     .pipe(switchMap(activatedRoute => activatedRoute.params))
     .forEach(params => {
       const sessionId = params.id;
-      // const sessionId = 1; // TODO: Remove – Testing only
+      // const sessionId = 2; // TODO: Remove – Testing only
       this._sessionService.getSession(sessionId)
         .pipe(
             catchError(err => {
@@ -51,6 +52,36 @@ export class SessionDetailComponent implements OnInit {
             err => console.error(err)
           )
       });
+  }
+
+  // TODO: On hold: implement in V0.2. HTTP req for every speaker needed
+  // getFullName(first: string, last: string): string {
+  //   if (first && last) {
+  //     return `${first} ${last}`;
+  //   }
+  //   return 'tbd';
+  // }
+  
+  // concatOrganization(org: string): string {
+  //   if (org) {
+  //     return `, ${org}`;
+  //   }
+  //   return '';
+  // }
+
+  getDuration(start: string | Date, end: string | Date): string {
+    if (start && end) {
+      return `${moment.utc(start).locale('de').format('HH:mm')} Uhr – ${moment.utc(start).locale('de').format('HH:mm')} Uhr`;
+    } else {
+      return 'tbd'
+    }
+  }
+
+  concatRoom(room: string): string {
+    if (room) {
+      return `, ${room}`;
+    }
+    return '';
   }
 
   onPresentationTap(id: number): void {
@@ -74,7 +105,6 @@ export class SessionDetailComponent implements OnInit {
   }
 
   get presentations(): Presentation[] {
-    // return sortBy(this._presentations, [(o: Presentation) => o.start]);
     return sortBy(this.session.presentations, ['start']);
   }
 

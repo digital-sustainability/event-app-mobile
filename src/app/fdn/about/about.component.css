@@ -1,1 +1,4 @@
-/* Add mobile styles for the component here.  */
+.contact-title {
+    font-size: 32;
+    text-align: center;
+}

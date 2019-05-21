@@ -134,7 +134,11 @@ export class EventDetailComponent implements OnInit {
       type: "transit", // optional, can be: driving, transit, bicycling or walking
       ios: {
         preferGoogleMaps: true,
-        allowGoogleMapsWeb: true // TODO: Check docs when implementing iOS
+        /**
+         * If Google Maps is not installed, use Apple Maps but there are no waypoints available.
+         * If waypoints are needed, option to precedence GoogleMapsWeb over Apple Maps.
+         */
+        allowGoogleMapsWeb: false
       }
     }).then(() => {
       console.log("Maps app launched.");

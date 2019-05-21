@@ -53,5 +53,11 @@
             </StackLayout>
         </ScrollView>
     </StackLayout>
-    <FAB (tap)="onFeedbackTap($event)" icon="~/images/feedback.png" rippleColor="#f1f1f1" class="fab-button"></FAB>
+    <FAB
+    *ngIf="presentation && presentationStarted()"
+    (tap)="onFeedbackTap($event)"
+    icon="~/images/feedback.png"
+    rippleColor="#f1f1f1"
+    class="fab-button"
+    ></FAB>
 </GridLayout>

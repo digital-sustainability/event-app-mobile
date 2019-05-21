@@ -10,7 +10,7 @@ import { FeedbackComponent } from './presentations/feedback/feedback.component';
 import { AboutComponent } from './fdn/about/about.component';
 
 const routes: Routes = [
-    // { path: '', component: EventDetailComponent },
+    // { path: '', component: SessionDetailComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: EventTabComponent },
     { path: 'event/:id', component: EventDetailComponent },

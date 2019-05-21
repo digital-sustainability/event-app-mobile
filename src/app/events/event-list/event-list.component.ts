@@ -30,16 +30,20 @@ export class EventListComponent implements OnInit {
     this._eventService.getEvents(this.archive)
       .pipe(
         catchError(err => {
-          /*
-            TODO: set (and create) error flag
-            return empty array on server error
-          */
+          /**
+           * TODO: set (and create) error flag
+           * return empty array on server error
+           */
           return of([]);
         })
       )
       .subscribe(
         (events: Event[]) => {
-          this._events = orderBy(events, ['start'], ['desc']).filter(e => e.published);
+          if (this.archive) {
+            this._events = orderBy(events, ['start'], ['desc']).filter(e => e.published);
+          } else {
+            this._events = orderBy(events, ['start'], ['asc']).filter(e => e.published);
+          }
           this._loading = false;
       },
         err => console.error(err)

@@ -134,6 +134,12 @@ export class PresentationDetailComponent implements OnInit {
     return '';
   }
 
+  // TODO: CHECK BEFORE NEXT EVENT!
+  presentationStarted(): boolean {
+    // check if presentation is not in the future
+    return this._presentation.start && moment(moment()).isSameOrAfter(this._presentation.start, 'day');
+  }
+
   get speakers(): Speaker[] {
     return orderBy(this._speakers, ['first_name']);
   }
@@ -141,7 +147,6 @@ export class PresentationDetailComponent implements OnInit {
   get presentation(): Presentation {
     return this._presentation;
   }
-
 
   get presentationTitle(): string {
     return this._presentationTitle;

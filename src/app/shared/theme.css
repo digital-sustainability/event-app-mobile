@@ -268,3 +268,13 @@
     /* background-color: #0D5C5C; */
     background-color: #004242;
 }
+
+.link {
+    text-decoration: underline;
+    color: blue;
+}
+
+.goright-icon {
+    text-align: center;
+    vertical-align: center;
+}

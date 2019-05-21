@@ -1,1 +1,32 @@
-<Button text="about works!" class="btn btn-primary"></Button>
+<ns-action-bar title="Kontakt" [backRoute]="backRoute"></ns-action-bar>
+<StackLayout>
+    <ScrollView height="100%">
+        <StackLayout>
+            <Image src="~/images/fdn_team.jpg" height="250" class="m-b-10" stretch="aspectFill"></Image>
+            <Label text="Forschungsstelle Digitale Nachhaltigkeit" class="contact-title m-x-5 m-t-10" textWrap='true'></Label>
+            <GridLayout rows="auto, auto, auto, auto" columns="auto, *" class="m-t-20">
+                <Label text="Adresse" class="p-l-15 m-r-20 font-weight-bold"></Label>
+                <Label text="Schützenmattstrasse 14" col="1" class="text" textWrap="true"></Label>
+                <Label text="3012 Bern" row="1" col="1" class="text p-b-10"></Label>
+                <Label text="Telefon" row="2" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
+                <Label text="+41 31 631 47 71" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
+                <Label text="Webseite" row="3" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
+                <Label
+                text="www.digitale-nachhaltigkeit.unibe.ch"
+                row="3"
+                col="1"
+                class="text p-b-10 link"
+                (tap)="onOpenUrl()"
+                textWrap="true"></Label>
+            </GridLayout>
+            <StackLayout *ngIf="mapsAvailable">
+                <Button class="btn btn-outline m-t-40" height="50" text="Maps öffnen" (tap)="onOpenMaps()">
+                    <FormattedString>
+                        <Span text="FDN Standort in Maps öffen" style="font-size: 18;"></Span>
+                        <Span class="fa ic-map-pin" text=" &#xf3c5;"></Span>
+                    </FormattedString>
+                </Button>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</StackLayout>

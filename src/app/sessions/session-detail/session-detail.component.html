@@ -18,23 +18,25 @@
             <StackLayout *ngFor="let p of presentations">
                 <GridLayout columns="*, auto" class="occasion-item" orientation="vertical" (tap)="onPresentationTap(p.id)">
                     <StackLayout column="0">
-                        <Label class="h4" textWrap="true" [text]="p.title"></Label>
+                        <!-- TODO: On hold: Implement in V0.2 -->
+                        <!-- <Label
+                        [text]="getFullName(p.first_name, p.last_name) + concatOrganization(p.organization)"
+                        class="pre-header"
+                        textWrap="true"
+                        ></Label> -->
+                        <Label [text]="p.title" class="h4" textWrap="true" ></Label>
                         <Label
+                        [text]="getDuration(p.start, p.end) + concatRoom(p.room)"
                         class="body"
                         textWrap="true"
-                        text="{{ p.start | date:'HH:mm' :'UTC' }} Uhr – {{ p.end | date:'HH:mm' :'UTC'  }} Uhr"
                         ></Label>
-                        <StackLayout *ngIf="p.room">
-                            <Label class="body" textWrap="true" [text]="p.room"></Label>
-                        </StackLayout>
                     </StackLayout>
                     <GridLayout column="1" style="horizontal-align: right;" rows="*">
                         <Label
-                        row="0"
-                        class="fa ic-arrow-right"
                         text="&#xf054;"
+                        row="0"
+                        class="fa ic-arrow-right goright-icon"
                         horizontalAlignment="center"
-                        style="text-align: center; vertical-align: center;"
                         ></Label>
                     </GridLayout>
                 </GridLayout>

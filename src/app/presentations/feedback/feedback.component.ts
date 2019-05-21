@@ -11,10 +11,10 @@ import { EventData } from 'tns-core-modules/data/observable';
 import { FeedbackService } from '../shared/feedback.service';
 import { FeedbackForm } from '../shared/feedback-form';
 import { isAndroid } from 'tns-core-modules/platform';
-import { DataFormEventData, EntityProperty } from 'nativescript-ui-dataform';
+import { DataFormEventData } from 'nativescript-ui-dataform';
+import { Page } from 'tns-core-modules/ui/page/page';
 import * as dialogs from 'tns-core-modules/ui/dialogs';
 import * as _ from 'lodash';
-import { Page } from 'tns-core-modules/ui/page/page';
 declare var android;
 declare var TKGridLayoutAlignment;
 
@@ -35,43 +35,6 @@ export class FeedbackComponent implements OnInit {
     isReadOnly: false,
     commitMode: 'Immediate',
     validationMode: 'Immediate'
-    // "propertyAnnotations":
-    //   [
-    //     {
-    //       "name": "handle",
-    //       "displayName": "Besuchername",
-    //       "index": 0,
-    //       "hintText": "Ihr Name (freiwillig)"
-    //     },
-    //     {
-    //       "name": "grade",
-    //       "displayName": "Präsentationsbewertung (1 – 5)",
-    //       "index": 1,
-    //       "hintText": "-",
-    //       // "editor": "Picker",
-    //       // "valuesProvider": [1, 2, 3, 4, 5]
-    //       "editor": "Stepper",
-    //       "editorParams": {
-    //         "step": 1,
-    //         "min": 1,
-    //         "max": 5
-    //       }
-    //     },
-    //     {
-    //       "name": "comment_positive",
-    //       "displayName": "Das fand ich gut",
-    //       "index": 2,
-    //       "hintText": "Ihr Feedback",
-    //       "editor": "MultilineText"
-    //     },
-    //     {
-    //       "name": "comment_negative",
-    //       "displayName": "Das fand ich verbesserungswürdig",
-    //       "index": 3,
-    //       "hintText": "Ihr Feedback",
-    //       "editor": "MultilineText"
-    //     },
-    //   ]
   };
 
   constructor(
