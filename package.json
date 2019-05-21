@@ -1,6 +1,9 @@
 {
     "nativescript": {
-        "id": "ch.digisus.event",
+        "id": {
+            "android": "ch.digisus.event",
+            "ios": "ch.digisus.events"
+        },
         "tns-android": {
             "version": "5.0.0"
         },
