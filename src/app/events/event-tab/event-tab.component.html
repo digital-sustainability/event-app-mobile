@@ -3,16 +3,9 @@
     <StackLayout>
         <Image src="~/images/fdn_logo.png" class="home-icon"></Image>
     </StackLayout>
-    <!-- Sidedrawer for Android requires the Navigation btn. iOS an ActionItem -->
-    <NavigationButton
-    *ngIf="android"
-    icon="res://hamburger"
-    android.position="right"
-    (tap)="onToggleMenu()"
-    ></NavigationButton>
     <ActionItem
-    *ngIf="!android"
     ios.position="right"
+    android.position="right"
     icon="res://hamburger"
     (tap)="onToggleMenu()">
     </ActionItem>
