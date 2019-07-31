@@ -3,13 +3,14 @@ import { HttpClient } from "@angular/common/http";
 import { Presentation } from './presentation';
 import { Speaker } from './speaker';
 import { Observable } from 'rxjs';
+import { config } from '../../shared/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PresentationService {
 
-  private _api = 'https://event-app.fdn-dev.iwi.unibe.ch/';
+  private _api = config.api;
 
   constructor(
     private _http: HttpClient,
