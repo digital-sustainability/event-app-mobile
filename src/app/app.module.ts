@@ -3,7 +3,7 @@ import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
 import { NativeScriptUIDataFormModule } from 'nativescript-ui-dataform/angular';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives'
 
 import { AppComponent } from './app.component';
@@ -23,6 +23,7 @@ import { NavigationService } from './shared/navigation.service';
 import { FeedbackService } from './presentations/shared/feedback.service';
 import { UiService } from './shared/ui.service';
 import { AboutComponent } from './fdn/about/about.component';
+import { HttpInterceptorService } from './shared/http-interceptor.service';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -60,7 +61,12 @@ import { AboutComponent } from './fdn/about/about.component';
         PresentationService,
         NavigationService,
         FeedbackService,
-        UiService
+        UiService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpInterceptorService,
+            multi: true
+          },
     ],
     schemas: [
         NO_ERRORS_SCHEMA
