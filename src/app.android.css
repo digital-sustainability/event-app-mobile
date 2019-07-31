@@ -16,3 +16,7 @@ refer to http://docs.nativescript.org/ui/theme.
 /*
 Place Android specific styles below
 */
+.drawer-wrapper {
+    margin-top: 20;
+    padding-top: 20;
+}
