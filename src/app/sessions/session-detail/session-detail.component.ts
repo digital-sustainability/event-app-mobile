@@ -71,7 +71,7 @@ export class SessionDetailComponent implements OnInit {
 
   getDuration(start: string | Date, end: string | Date): string {
     if (start && end) {
-      return `${moment.utc(start).locale('de').format('HH:mm')} Uhr – ${moment.utc(start).locale('de').format('HH:mm')} Uhr`;
+      return `${moment.utc(start).locale('de').format('HH:mm')} Uhr – ${moment.utc(end).locale('de').format('HH:mm')} Uhr`;
     } else {
       return 'tbd'
     }
