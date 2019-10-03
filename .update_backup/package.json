@@ -8,7 +8,7 @@
             "version": "6.0.1"
         },
         "tns-android": {
-            "version": "6.0.0"
+            "version": "6.0.1"
         }
     },
     "description": "NativeScript Application",
@@ -28,16 +28,16 @@
         "lodash": "^4.17.11",
         "moment": "^2.24.0",
         "nativescript-angular": "8.0.2",
-        "nativescript-cardview": "^3.1.1",
+        "nativescript-cardview": "^3.2.0",
         "nativescript-directions": "^1.3.0",
         "nativescript-floatingactionbutton": "^5.0.3",
         "nativescript-theme-core": "~1.0.4",
         "nativescript-ui-dataform": "5.0.0",
-        "nativescript-ui-listview": "7.0.0",
-        "nativescript-ui-sidedrawer": "7.0.0",
+        "nativescript-ui-listview": "^7.1.0",
+        "nativescript-ui-sidedrawer": "^7.0.2",
         "reflect-metadata": "~0.1.12",
         "rxjs": "~6.3.0",
-        "tns-core-modules": "6.0.1",
+        "tns-core-modules": "~6.0.0",
         "zone.js": "0.9.1"
     },
     "devDependencies": {
@@ -45,7 +45,7 @@
         "@nativescript/schematics": "~0.5.0",
         "@ngtools/webpack": "8.0.0",
         "@types/jasmine": "^3.3.9",
-        "nativescript-dev-webpack": "1.0.1",
+        "nativescript-dev-webpack": "~1.0.0",
         "typescript": "3.4.5"
     },
     "gitHead": "36e279acd3e8bc27395256a32dec1bc9523489ae",
