@@ -42,6 +42,11 @@ export class EventDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    /**
+     * The activatedRoute obj of PageRoute will always be availabe even if the
+     * page was fetched from cache. This would not be the case with ActivatedRoute
+     * from @angular/router.
+     */
     this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {

@@ -28,17 +28,20 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     ) { }
 
     ngOnInit() {
-        this._drawerSub = this._uiService.toggleDrawerState.subscribe(_ => {
-            // prevent drawer to render at initiation
+        this._drawerSub = this._uiService.drawerState.subscribe(_ => {
+            // TODO: Only check once if this logs. Remove after:
+            console.log('I log at setup, but should not yet toggle the drawer')
+            // prevent drawer to open at initiation, because _drawer exists only after view init
             if (this._drawer) {
-                this.drawerComponent.sideDrawer.toggleDrawerState();
+                this._drawer.toggleDrawerState();
             } 
         });
     }
     
+    // runs after template has been initialized
     ngAfterViewInit() {
         this._drawer = this.drawerComponent.sideDrawer;
-        // check via change detection if UI has to be updated
+        // check via change detection if UI has to be updated/rerendered
         this._changeDetectionRef.detectChanges();
     }
 

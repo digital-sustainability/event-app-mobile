@@ -12,6 +12,7 @@ import { Directions } from 'nativescript-directions';
 export class AboutComponent implements OnInit {
 
   private _mapsAvailable = false;
+  public homepage = 'http://www.digitale-nachhaltigkeit.unibe.ch';
   public directions: any;
 
   constructor(
@@ -32,7 +33,7 @@ export class AboutComponent implements OnInit {
   }
 
   onOpenUrl(): void {
-    openUrl('http://www.digitale-nachhaltigkeit.unibe.ch');
+    openUrl(this.homepage);
   }
 
   onOpenMaps(): void {

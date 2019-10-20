@@ -6,16 +6,16 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UiService {
 
-  private _toggleDrawerState = new BehaviorSubject<void>(null);
+  private _drawerState = new BehaviorSubject<void>(null);
 
   constructor() { }
 
-  get toggleDrawerState() {
-    return this._toggleDrawerState.asObservable();
+  get drawerState() {
+    return this._drawerState.asObservable();
   }
 
   toggleDrawer() {
-    return this._toggleDrawerState.next(null);
+    return this._drawerState.next(null);
   }
 
 }
