@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { RequestOptions } from '@angular/http';
 import { Feedback } from './feedback';
 import { Observable } from 'rxjs';
+import { config } from '../../shared/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedbackService {
 
-  private _api = 'https://event-app.fdn-dev.iwi.unibe.ch/';
+  private _api = config.api;
 
   constructor(
     private _http: HttpClient,

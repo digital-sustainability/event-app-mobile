@@ -17,7 +17,7 @@ registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // get access to the drawer element
-    @ViewChild(RadSideDrawerComponent) drawerComponent: RadSideDrawerComponent;
+    @ViewChild(RadSideDrawerComponent, { static: true}) drawerComponent: RadSideDrawerComponent;
     private _drawerSub: Subscription;
     private _drawer: RadSideDrawer;
 
