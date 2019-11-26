@@ -4,7 +4,7 @@ import { Feedback } from '../shared/feedback';
 import { PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
-import { NavigationService } from '~/app/shared/navigation.service';
+import { NavigationService } from '~/app/shared/services/navigation.service';
 import { PresentationService } from '../shared/presentation.service';
 import { Button } from 'tns-core-modules/ui/button';
 import { EventData } from 'tns-core-modules/data/observable';
