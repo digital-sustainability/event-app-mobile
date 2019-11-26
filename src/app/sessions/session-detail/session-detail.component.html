@@ -8,6 +8,7 @@
             <StackLayout class="m-x-10">
                 <Label [text]="sessionTitle" class="h1 m-t-10" textWrap="true"></Label>
                 <Label [text]="session.abstract" class="body m-b-10" textWrap="true"></Label>
+                <HtmlView [html]="session.abstract" class="body m-b-10"></HtmlView>
                 <GridLayout rows="auto,auto,auto" columns="auto, *">
                     <Label text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="2"></Label>
                     <Label [text]="session.room" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
