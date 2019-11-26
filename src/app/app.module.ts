@@ -9,7 +9,7 @@ import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angul
 import { AppComponent } from './app.component';
 import { EventListComponent } from './events/event-list/event-list.component';
 import { EventDetailComponent } from './events/event-detail/event-detail.component';
-import { ActionBarComponent } from './shared/action-bar/action-bar.component';
+import { ActionBarComponent } from './shared/components/action-bar/action-bar.component';
 import { SessionDetailComponent } from './sessions/session-detail/session-detail.component';
 import { PresentationDetailComponent } from './presentations/presentation-detail/presentation-detail.component';
 import { SpeakerDetailComponent } from './presentations/speaker-detail/speaker-detail.component';
@@ -19,11 +19,11 @@ import { FeedbackComponent } from './presentations/feedback/feedback.component';
 import { EventService } from './events/shared/event.service';
 import { SessionService } from './sessions/shared/session.service';
 import { PresentationService } from './presentations/shared/presentation.service';
-import { NavigationService } from './shared/navigation.service';
+import { NavigationService } from './shared/services/navigation.service';
 import { FeedbackService } from './presentations/shared/feedback.service';
-import { UiService } from './shared/ui.service';
+import { UiService } from './shared/services/ui.service';
 import { AboutComponent } from './fdn/about/about.component';
-import { HttpInterceptorService } from './shared/http-interceptor.service';
+import { HttpInterceptorService } from './shared/services/http-interceptor.service';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';

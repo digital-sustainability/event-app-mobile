@@ -7,7 +7,7 @@ import { Event } from '../shared/event';
 import { Speaker } from '../../presentations/shared/speaker';
 import { EventService } from '../shared/event.service';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
-import { NavigationService } from '~/app/shared/navigation.service';
+import { NavigationService } from '~/app/shared/services/navigation.service';
 import { Session } from '../../sessions/shared/session';
 import { openUrl } from 'tns-core-modules/utils/utils';
 import { Directions } from "nativescript-directions";

@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { registerElement } from 'nativescript-angular/element-registry';
 import { CardView } from 'nativescript-cardview';
-import { UiService } from './shared/ui.service';
+import { UiService } from './shared/services/ui.service';
 import { Subscription } from 'rxjs';
 import { RadSideDrawerComponent } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
 import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
-import { NavigationService } from './shared/navigation.service';
+import { NavigationService } from './shared/services/navigation.service';
 registerElement('CardView', () => CardView);
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 
