@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Directive } from '@angular/core';
 import { Image } from 'tns-core-modules/ui/image';
 import { RouterExtensions, PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
@@ -20,8 +20,10 @@ import * as moment from 'moment';
   styleUrls: ['./event-detail.component.css'],
   moduleId: module.id,
 })
+@Directive({
+  selector: '[htmlview]',
+})
 export class EventDetailComponent implements OnInit {
-
   private _event: Event;
   private _loading = true;
   private _eventTitle = 'Event';
@@ -39,7 +41,8 @@ export class EventDetailComponent implements OnInit {
     private _pageRoute: PageRoute,
     private _eventService: EventService,
     private _navigationService: NavigationService,
-    private _routerExtensions: RouterExtensions
+    private _routerExtensions: RouterExtensions,
+    private _htmlView: ElementRef
   ) { }
 
   ngOnInit(): void {
@@ -71,6 +74,8 @@ export class EventDetailComponent implements OnInit {
               // add default font to HTML (for iOS)
               if(isIOS) {
                 this._event.description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._event.description + "</span>";
+                
+                this._htmlView.nativeElement.requestLayout();
               }
 
               this._loading = false;

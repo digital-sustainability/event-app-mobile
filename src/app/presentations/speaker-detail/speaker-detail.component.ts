@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Directive } from '@angular/core';
 import { Presentation } from '../shared/presentation';
 import { Speaker } from '../shared/speaker';
 import { Image } from 'tns-core-modules/ui/image';
@@ -17,8 +17,10 @@ import * as moment from 'moment';
   styleUrls: ['./speaker-detail.component.css'],
   moduleId: module.id,
 })
+@Directive({
+  selector: '[htmlview]',
+})
 export class SpeakerDetailComponent implements OnInit {
-  
   private _loading = true;
   private _speaker: Speaker;
   private _presentations: Presentation[];
@@ -28,6 +30,7 @@ export class SpeakerDetailComponent implements OnInit {
     private _presentationService: PresentationService,
     private _pageRoute: PageRoute,
     private _navigationService: NavigationService,
+    private _htmlView: ElementRef
   ) { }
   
   ngOnInit(): void {
@@ -52,6 +55,8 @@ export class SpeakerDetailComponent implements OnInit {
               // add default font to HTML (for iOS)
               if(isIOS) {
                 this._speaker.short_bio = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._speaker.short_bio + "</span>";
+                
+                this._htmlView.nativeElement.requestLayout();
               }
 
               this._loading = false;

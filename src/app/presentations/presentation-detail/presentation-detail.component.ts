@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Directive } from '@angular/core';
 import { Presentation } from '../shared/presentation';
 import { Speaker } from '../shared/speaker';
 import { PageRoute, RouterExtensions } from 'nativescript-angular/router';
@@ -22,8 +22,10 @@ import * as dialogs from "tns-core-modules/ui/dialogs";
   styleUrls: ['./presentation-detail.component.css'],
   moduleId: module.id,
 })
+@Directive({
+  selector: '[htmlview]',
+})
 export class PresentationDetailComponent implements OnInit {
-  
   private _presentationTitle = 'Präsentation'
   private _loading = true;
   private _presentation: Presentation;
@@ -34,6 +36,7 @@ export class PresentationDetailComponent implements OnInit {
     private _pageRoute: PageRoute,
     private _navigationService: NavigationService,
     private _routerExtensions: RouterExtensions,
+    private _htmlView: ElementRef
     ) { }
     
     ngOnInit(): void {
@@ -59,6 +62,8 @@ export class PresentationDetailComponent implements OnInit {
               // add default font to HTML (for iOS)
               if(isIOS) {
                 this._presentation.abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._presentation.abstract + "</span>";
+                
+                this._htmlView.nativeElement.requestLayout();
               }
 
               this._loading = false;

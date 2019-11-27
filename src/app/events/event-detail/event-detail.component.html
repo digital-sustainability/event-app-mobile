@@ -16,7 +16,7 @@
                 ></Image>
                 <StackLayout class="m-x-10">
                     <Label [text]="event.description" class="body m-b-10" textWrap="true"></Label>
-                    <HtmlView [html]="event.description" class="body m-b-10 htmlview"></HtmlView>
+                    <HtmlView htmlview [html]="event.description" class="body m-b-10 htmlview"></HtmlView>
                     <StackLayout *ngIf="isOneDayEvent(event.start, event.end)">
                         <GridLayout rows="auto,auto,auto" columns="auto, *">
                             <Label text="Zeit" class="p-l-15 m-r-20 font-weight-bold"></Label>
