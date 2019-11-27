@@ -44,10 +44,14 @@ export class SpeakerDetailComponent implements OnInit {
           )
           .subscribe(
             (speaker: Speaker) => {
-              this._loading = false;
               this._speaker = speaker;
               this._fullName = speaker.first_name + ' ' + speaker.last_name;
               this._presentations = speaker.presentations;
+
+              // add default font to HTML (for iOS)
+              this._speaker.short_bio = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; color:black;\">" + this._speaker.short_bio + "</span>";
+
+              this._loading = false;
             },
             err => console.error(err)
           )

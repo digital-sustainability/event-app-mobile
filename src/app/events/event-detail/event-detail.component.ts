@@ -62,10 +62,14 @@ export class EventDetailComponent implements OnInit {
           )
           .subscribe(
             (event: Event) => {
-              this._event = event
+              this._event = event;
               this._eventTitle = event.title
               this._image_path = event.image_path; // TODO: Cache images
               this._sessions = event.sessions;
+
+              // add default font to HTML (for iOS)
+              this._event.description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; color:black;\">" + this._event.description + "</span>";
+
               this._loading = false;
             },
             err => console.error(err)

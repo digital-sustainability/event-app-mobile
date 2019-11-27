@@ -54,6 +54,10 @@ export class PresentationDetailComponent implements OnInit {
               this._presentationTitle = presentation.title;
               this._speakers = presentation.speakers;
               this.checkSpeakerPhoto();
+
+              // add default font to HTML (for iOS)
+              this._presentation.abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; color:black;\">" + this._presentation.abstract + "</span>";
+
               this._loading = false;
             },
             err => console.error(err)

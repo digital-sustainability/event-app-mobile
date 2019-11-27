@@ -44,6 +44,12 @@ export class EventListComponent implements OnInit {
           } else {
             this._events = orderBy(events, ['start'], ['asc']).filter(e => e.published);
           }
+
+          // add default font to HTML (for iOS)
+          this._events.forEach(event => {
+            event.description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; color:black;\">" + event.description + "</span>";
+          });
+
           this._loading = false;
       },
         err => console.error(err)

@@ -1,47 +1,49 @@
 <ns-action-bar [title]="sessionTitle"></ns-action-bar>
-<StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
-    <ActivityIndicator  class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
-</StackLayout>
-<StackLayout *ngIf="!loading && session">
-    <ScrollView height="100%">
-        <StackLayout>
-            <StackLayout class="m-x-10">
-                <Label [text]="sessionTitle" class="h1 m-t-10" textWrap="true"></Label>
-                <Label [text]="session.abstract" class="body m-b-10" textWrap="true"></Label>
-                <HtmlView [html]="session.abstract" class="body m-b-10"></HtmlView>
-                <GridLayout rows="auto,auto,auto" columns="auto, *">
-                    <Label text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="2"></Label>
-                    <Label [text]="session.room" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
-                </GridLayout>
-                <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
-                <Label [text]="labelPresentations" class="h2" textWrap="true"></Label>
-            </StackLayout>
-            <StackLayout *ngFor="let p of presentations">
-                <GridLayout columns="*, auto" class="occasion-item" orientation="vertical" (tap)="onPresentationTap(p.id)">
-                    <StackLayout column="0">
-                        <!-- TODO: On hold: Implement in V0.2 -->
-                        <!-- <Label
-                        [text]="getFullName(p.first_name, p.last_name) + concatOrganization(p.organization)"
-                        class="pre-header"
-                        textWrap="true"
-                        ></Label> -->
-                        <Label [text]="p.title" class="h4" textWrap="true" ></Label>
-                        <Label
-                        [text]="getDuration(p.start, p.end) + concatRoom(p.room)"
-                        class="body"
-                        textWrap="true"
-                        ></Label>
-                    </StackLayout>
-                    <GridLayout column="1" style="horizontal-align: right;" rows="*">
-                        <Label
-                        text="&#xf054;"
-                        row="0"
-                        class="fa ic-arrow-right goright-icon"
-                        horizontalAlignment="center"
-                        ></Label>
+<GridLayout>
+    <StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
+        <ActivityIndicator  class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
+    </StackLayout>
+    <StackLayout *ngIf="!loading && session">
+        <ScrollView height="100%">
+            <StackLayout>
+                <StackLayout class="m-x-10">
+                    <Label [text]="sessionTitle" class="h1 m-t-10" textWrap="true"></Label>
+                    <Label [text]="session.abstract" class="body m-b-10" textWrap="true"></Label>
+                    <HtmlView [html]="session.abstract" class="body m-b-10"></HtmlView>
+                    <GridLayout rows="auto,auto,auto" columns="auto, *">
+                        <Label text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="2"></Label>
+                        <Label [text]="session.room" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
                     </GridLayout>
-                </GridLayout>
+                    <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
+                    <Label [text]="labelPresentations" class="h2" textWrap="true"></Label>
+                </StackLayout>
+                <StackLayout *ngFor="let p of presentations">
+                    <GridLayout columns="*, auto" class="occasion-item" orientation="vertical" (tap)="onPresentationTap(p.id)">
+                        <StackLayout column="0">
+                            <!-- TODO: On hold: Implement in V0.2 -->
+                            <!-- <Label
+                            [text]="getFullName(p.first_name, p.last_name) + concatOrganization(p.organization)"
+                            class="pre-header"
+                            textWrap="true"
+                            ></Label> -->
+                            <Label [text]="p.title" class="h4" textWrap="true" ></Label>
+                            <Label
+                            [text]="getDuration(p.start, p.end) + concatRoom(p.room)"
+                            class="body"
+                            textWrap="true"
+                            ></Label>
+                        </StackLayout>
+                        <GridLayout column="1" style="horizontal-align: right;" rows="*">
+                            <Label
+                            text="&#xf054;"
+                            row="0"
+                            class="fa ic-arrow-right goright-icon"
+                            horizontalAlignment="center"
+                            ></Label>
+                        </GridLayout>
+                    </GridLayout>
+                </StackLayout>
             </StackLayout>
-        </StackLayout>
-    </ScrollView>
-</StackLayout>
+        </ScrollView>
+    </StackLayout>
+</GridLayout>

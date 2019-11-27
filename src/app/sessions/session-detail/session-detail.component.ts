@@ -45,9 +45,13 @@ export class SessionDetailComponent implements OnInit {
           )
           .subscribe(
             (session: Session) => {
-              this._loading = false;
               this._session = session;
               this._sessionTitle = session.title;
+
+              // add default font to HTML (for iOS)
+              this._session.abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; color:black;\">" + this._session.abstract + "</span>";
+
+              this._loading = false;
             },
             err => console.error(err)
           )
