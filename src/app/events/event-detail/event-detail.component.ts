@@ -7,6 +7,7 @@ import { Event } from '../shared/event';
 import { Speaker } from '../../presentations/shared/speaker';
 import { EventService } from '../shared/event.service';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
+import { isIOS } from 'tns-core-modules/platform';
 import { NavigationService } from '~/app/shared/services/navigation.service';
 import { Session } from '../../sessions/shared/session';
 import { openUrl } from 'tns-core-modules/utils/utils';
@@ -68,7 +69,9 @@ export class EventDetailComponent implements OnInit {
               this._sessions = event.sessions;
 
               // add default font to HTML (for iOS)
-              this._event.description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; color:black;\">" + this._event.description + "</span>";
+              if(isIOS) {
+                this._event.description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._event.description + "</span>";
+              }
 
               this._loading = false;
             },

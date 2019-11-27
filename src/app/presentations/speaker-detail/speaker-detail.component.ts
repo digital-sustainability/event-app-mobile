@@ -6,6 +6,7 @@ import { PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
+import { isIOS } from 'tns-core-modules/platform';
 import { NavigationService } from '~/app/shared/services/navigation.service';
 import { PresentationService } from '../shared/presentation.service';
 import * as moment from 'moment';
@@ -49,7 +50,9 @@ export class SpeakerDetailComponent implements OnInit {
               this._presentations = speaker.presentations;
 
               // add default font to HTML (for iOS)
-              this._speaker.short_bio = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; color:black;\">" + this._speaker.short_bio + "</span>";
+              if(isIOS) {
+                this._speaker.short_bio = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._speaker.short_bio + "</span>";
+              }
 
               this._loading = false;
             },

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../shared/session.service';
 import { Session } from '../shared/session';
 import { Image } from 'tns-core-modules/ui/image';
+import { isIOS } from 'tns-core-modules/platform';
 import { PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
@@ -49,7 +50,9 @@ export class SessionDetailComponent implements OnInit {
               this._sessionTitle = session.title;
 
               // add default font to HTML (for iOS)
-              this._session.abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; color:black;\">" + this._session.abstract + "</span>";
+              if(isIOS) {
+                this._session.abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._session.abstract + "</span>";
+              }
 
               this._loading = false;
             },

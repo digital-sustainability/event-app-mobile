@@ -5,6 +5,7 @@ import { PageRoute, RouterExtensions } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
+import { isIOS } from 'tns-core-modules/platform';
 import { NavigationService } from '~/app/shared/services/navigation.service';
 import { PresentationService } from '../shared/presentation.service';
 import { Button } from 'tns-core-modules/ui/button'
@@ -56,7 +57,9 @@ export class PresentationDetailComponent implements OnInit {
               this.checkSpeakerPhoto();
 
               // add default font to HTML (for iOS)
-              this._presentation.abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; color:black;\">" + this._presentation.abstract + "</span>";
+              if(isIOS) {
+                this._presentation.abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._presentation.abstract + "</span>";
+              }
 
               this._loading = false;
             },
