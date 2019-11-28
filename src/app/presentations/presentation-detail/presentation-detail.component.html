@@ -47,7 +47,7 @@
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
-                <StackLayout *ngIf="presentation.slides">
+                <StackLayout *ngIf="isUrl(presentation.slides)">
                     <Button (tap)="onShowSlides(presentation.slides)" class="btn btn-primary" text="Slides anschauen"></Button>
                 </StackLayout>
             </StackLayout>

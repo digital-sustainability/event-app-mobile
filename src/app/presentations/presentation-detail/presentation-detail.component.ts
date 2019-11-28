@@ -106,6 +106,7 @@ export class PresentationDetailComponent implements OnInit {
   }
 
   onShowSlides(url: string): void {
+    console.log('|==>', url);
     openUrl(url);
   }
 
@@ -138,6 +139,12 @@ export class PresentationDetailComponent implements OnInit {
   presentationStarted(): boolean {
     // check if presentation is not in the future
     return this._presentation.start && moment(moment()).isSameOrAfter(this._presentation.start, 'day');
+  }
+
+  isUrl(str: string): boolean {
+    const urlExp = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+    const regex = new RegExp(urlExp);
+    return str && str.length && regex.test(str);
   }
 
   get speakers(): Speaker[] {
