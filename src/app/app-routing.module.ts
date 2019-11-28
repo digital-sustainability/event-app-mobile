@@ -6,7 +6,7 @@ import { SessionDetailComponent } from './sessions/session-detail/session-detail
 import { PresentationDetailComponent } from './presentations/presentation-detail/presentation-detail.component';
 import { SpeakerDetailComponent } from './presentations/speaker-detail/speaker-detail.component';
 import { EventTabComponent } from './events/event-tab/event-tab.component';
-import { FeedbackComponent } from './presentations/feedback/feedback.component';
+import { UserFeedbackComponent } from './presentations/user-feedback/user-feedback.component';
 import { AboutComponent } from './fdn/about/about.component';
 
 const routes: Routes = [
@@ -17,7 +17,7 @@ const routes: Routes = [
     { path: 'session/:id', component: SessionDetailComponent },
     { path: 'presentation/:id', component: PresentationDetailComponent },
     { path: 'speaker/:id', component: SpeakerDetailComponent },
-    { path: 'feedback/:id', component: FeedbackComponent },
+    { path: 'feedback/:id', component: UserFeedbackComponent },
     { path: 'about', component: AboutComponent },
 ];
 

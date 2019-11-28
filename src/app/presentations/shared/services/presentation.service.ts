@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { Presentation } from './presentation';
-import { Speaker } from './speaker';
+import { Presentation } from '../models/presentation';
+import { Speaker } from '../models/speaker';
 import { Observable } from 'rxjs';
-import { config } from '../../shared/config';
+import { config } from '../../../shared/config';
 
 @Injectable({
   providedIn: 'root'

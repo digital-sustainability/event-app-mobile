@@ -14,16 +14,17 @@ import { SessionDetailComponent } from './sessions/session-detail/session-detail
 import { PresentationDetailComponent } from './presentations/presentation-detail/presentation-detail.component';
 import { SpeakerDetailComponent } from './presentations/speaker-detail/speaker-detail.component';
 import { EventTabComponent } from './events/event-tab/event-tab.component';
-import { FeedbackComponent } from './presentations/feedback/feedback.component';
+import { UserFeedbackComponent } from './presentations/user-feedback/user-feedback.component';
 
 import { EventService } from './events/shared/event.service';
 import { SessionService } from './sessions/shared/session.service';
-import { PresentationService } from './presentations/shared/presentation.service';
+import { PresentationService } from './presentations/shared/services/presentation.service';
 import { NavigationService } from './shared/services/navigation.service';
-import { FeedbackService } from './presentations/shared/feedback.service';
+import { UserFeedbackService } from './presentations/shared/services/user-feedback.service';
 import { UiService } from './shared/services/ui.service';
 import { AboutComponent } from './fdn/about/about.component';
 import { HttpInterceptorService } from './shared/services/http-interceptor.service';
+import { FeedbackService } from './shared/services/feedback.service';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -52,7 +53,7 @@ import { HttpInterceptorService } from './shared/services/http-interceptor.servi
         PresentationDetailComponent,
         SpeakerDetailComponent,
         EventTabComponent,
-        FeedbackComponent,
+        UserFeedbackComponent,
         AboutComponent,
     ],
     providers: [
@@ -60,8 +61,9 @@ import { HttpInterceptorService } from './shared/services/http-interceptor.servi
         SessionService,
         PresentationService,
         NavigationService,
-        FeedbackService,
+        UserFeedbackService,
         UiService,
+        FeedbackService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HttpInterceptorService,

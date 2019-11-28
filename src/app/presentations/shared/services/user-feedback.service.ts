@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Feedback } from './feedback';
+import { UserFeedback } from '../models/user-feedback';
 import { Observable } from 'rxjs';
-import { config } from '../../shared/config';
+import { config } from '../../../shared/config';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FeedbackService {
+export class UserFeedbackService {
 
   private _api = config.api;
 
@@ -15,11 +15,11 @@ export class FeedbackService {
     private _http: HttpClient,
   ) { }
 
-  getFeedback(id: number): Observable<Feedback> {
-    return this._http.get<Feedback>(this._api + 'feedback/' + id);
+  getFeedback(id: number): Observable<UserFeedback> {
+    return this._http.get<UserFeedback>(this._api + 'feedback/' + id);
   }
 
-  addFeedback(feedback: Feedback): Observable<Feedback> {
+  addFeedback(feedback: UserFeedback): Observable<UserFeedback> {
     if (feedback.handle === null) {
       feedback.handle = 'Anonym'
     }
@@ -28,6 +28,6 @@ export class FeedbackService {
         'Content-Type': 'application/json',
       })
     };
-    return this._http.post<Feedback>(this._api + 'feedback', feedback, httpOptions);
+    return this._http.post<UserFeedback>(this._api + 'feedback', feedback, httpOptions);
   }
 }
