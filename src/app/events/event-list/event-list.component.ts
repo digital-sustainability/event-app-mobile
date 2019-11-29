@@ -4,7 +4,7 @@ import { Event } from '../shared/event';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
-import { NavigationService } from '~/app/shared/services/navigation.service';
+import { NavigationService } from '../../shared/services/navigation.service';
 import { orderBy } from 'lodash';
 import * as moment from 'moment';
 

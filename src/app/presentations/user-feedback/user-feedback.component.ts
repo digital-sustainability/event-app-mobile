@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Presentation } from '../shared/presentation';
-import { Feedback } from '../shared/feedback';
+import { Presentation } from '../shared/models/presentation';
+import { UserFeedback } from '../shared/models/user-feedback';
 import { PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
-import { NavigationService } from '~/app/shared/services/navigation.service';
-import { PresentationService } from '../shared/presentation.service';
+import { NavigationService } from '../../shared/services/navigation.service';
+import { PresentationService } from '../shared/services/presentation.service';
 import { Button } from 'tns-core-modules/ui/button';
 import { EventData } from 'tns-core-modules/data/observable';
-import { FeedbackService } from '../shared/feedback.service';
-import { FeedbackForm } from '../shared/feedback-form';
+import { UserFeedbackService } from '../shared/services/user-feedback.service';
+import { UserFeedbackForm } from '../shared/util/user-feedback-form';
 import { isAndroid } from 'tns-core-modules/platform';
 import { DataFormEventData } from 'nativescript-ui-dataform';
 import { Page } from 'tns-core-modules/ui/page/page';
+import { FeedbackType } from 'nativescript-feedback';
+import { FeedbackService } from '../../shared/services/feedback.service';
 import * as dialogs from 'tns-core-modules/ui/dialogs';
 import * as _ from 'lodash';
 declare var android;
@@ -21,17 +23,17 @@ declare var TKGridLayoutAlignment;
 
 @Component({
   selector: 'ns-feedback',
-  templateUrl: './feedback.component.html',
-  styleUrls: ['./feedback.component.css'],
+  templateUrl: './user-feedback.component.html',
+  styleUrls: ['./user-feedback.component.css'],
   moduleId: module.id
 })
-export class FeedbackComponent implements OnInit {
+export class UserFeedbackComponent implements OnInit {
   private _presentationTitle = 'Präsentation';
   private _loading = true;
   private _presentation: Presentation;
-  private _feedbackForm: FeedbackForm;
+  private _userFeedbackForm: UserFeedbackForm;
 
-  private _feedbackConfig = {
+  private _userFeedbackConfig = {
     isReadOnly: false,
     commitMode: 'Immediate',
     validationMode: 'Immediate'
@@ -41,8 +43,9 @@ export class FeedbackComponent implements OnInit {
     private _presentationService: PresentationService,
     private _pageRoute: PageRoute,
     private _navigationService: NavigationService,
+    private _userFeedbackService: UserFeedbackService,
+    private _page: Page,
     private _feedbackService: FeedbackService,
-    private _page: Page
   ) {
     this._page.on('loaded', args => {
       if (this._page.android) {
@@ -91,7 +94,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._feedbackForm = new FeedbackForm(null, 0, null, null);
+    this._userFeedbackForm = new UserFeedbackForm(null, 0, null, null);
     this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
@@ -122,42 +125,52 @@ export class FeedbackComponent implements OnInit {
     }
   }
 
-  onFeedbackSubmit(args: EventData): void {
-    dialogs
-      .confirm({
+  onUserFeedbackSubmit(args: EventData): void {
+    if (this._userFeedbackForm.isEmpty()) {
+      dialogs.confirm({
+        title: 'Es wurde kein Feedback abgegeben.',
+        okButtonText: 'Feedback verlassen',
+        cancelButtonText: 'Zurück'
+      }).then(
+        ok => {
+          if (ok) {
+            this._navigationService.navigateTo('presentation', this._presentation.id);
+          }
+        }
+      );
+    } else {
+      dialogs.confirm({
         title: 'Feedback abgeschlossen?',
         okButtonText: 'Feedback absenden',
         cancelButtonText: 'Abbrechen'
-      })
-      .then(result => {
-        if (result) {
-          if (this._feedbackForm.isEmpty()) {
-            // TODO: Show banner or feedback
-            this._navigationService.navigateTo(
-              'presentation',
-              this._presentation.id
-            );
-          } else {
-            const feedback = <Feedback>{
-              handle: this._feedbackForm.handle,
-              grade: Number(this._feedbackForm.grade),
-              comment_positive: this._feedbackForm.comment_positive,
-              comment_negative: this._feedbackForm.comment_negative,
+      }).then(
+        ok => {
+          if (ok) {
+            const feedback = <UserFeedback>{
+              handle: this._userFeedbackForm.handle,
+              grade: Number(this._userFeedbackForm.grade),
+              comment_positive: this._userFeedbackForm.comment_positive,
+              comment_negative: this._userFeedbackForm.comment_negative,
               presentation_id: this._presentation.id
             };
-            this._feedbackService.addFeedback(feedback).subscribe(
+            this._userFeedbackService.addFeedback(feedback).subscribe(
               submitted => {
-                console.log('Just submitted:', submitted);
-                this._navigationService.navigateTo(
-                  'presentation',
-                  this._presentation.id
-                );
+                this._feedbackService.show(FeedbackType.Success, 'Feedback eingreicht', 'Vielen Dank für Ihre Rückmeldung!', 4000);
+                this._navigationService.navigateTo('presentation', this._presentation.id);
               },
-              err => console.log(err)
+              err => {
+                this._feedbackService.show(
+                  FeedbackType.Error,
+                  'Fehler',
+                  'Feedback konnte nicht gespeichert werden. Probieren Sie es später erneut',
+                  4000);
+                console.log(err)
+              }
             );
           }
         }
-      });
+      );
+    }
   }
 
   editorSetupStepperIOS(editor) {
@@ -182,11 +195,11 @@ export class FeedbackComponent implements OnInit {
     return this._loading;
   }
 
-  get feedbackForm(): FeedbackForm {
-    return this._feedbackForm;
+  get userFeedbackForm(): UserFeedbackForm {
+    return this._userFeedbackForm;
   }
 
-  get feedbackConfig(): object {
-    return this._feedbackConfig;
+  get userFeedbackConfig(): object {
+    return this._userFeedbackConfig;
   }
 }

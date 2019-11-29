@@ -1,4 +1,4 @@
-export interface Feedback {
+export interface UserFeedback {
     createdAt: string | Date,
     updatedAt: string | Date,
     id: number,

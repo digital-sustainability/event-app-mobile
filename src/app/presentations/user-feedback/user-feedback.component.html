@@ -3,7 +3,7 @@
     <StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
         <ActivityIndicator class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
     </StackLayout>
-    <StackLayout *ngIf="!loading && presentation && feedbackForm">
+    <StackLayout *ngIf="!loading && presentation && userFeedbackForm">
         <ScrollView height="100%">
             <StackLayout class="m-x-10">
                 <Label text="Feedback" class="h1 m-y-10" textWrap="true"></Label>
@@ -11,7 +11,7 @@
                 <RadDataForm
                 tkExampleTitle
                 tkToggleNavButton
-                [source]="feedbackForm"
+                [source]="userFeedbackForm"
                 (editorUpdate)="dfEditorUpdate($event)">
                     <TKEntityProperty
                     tkDataFormProperty 
@@ -44,7 +44,7 @@
                     </TKEntityProperty>
                 </RadDataForm>
                 <Button
-                (tap)="onFeedbackSubmit($event)"
+                (tap)="onUserFeedbackSubmit($event)"
                 class="btn btn-primary m-t-20"
                 text="Feedback einreichen"
                 ></Button>

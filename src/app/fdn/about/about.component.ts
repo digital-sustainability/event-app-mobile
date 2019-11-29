@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '~/app/shared/services/navigation.service';
+import { NavigationService } from '../../shared/services/navigation.service';
 import { openUrl } from 'tns-core-modules/utils/utils';
 import { Directions } from 'nativescript-directions';
 

@@ -30,6 +30,7 @@
     "nativescript-angular": "^8.2.1",
     "nativescript-cardview": "^3.2.0",
     "nativescript-directions": "^1.3.0",
+    "nativescript-feedback": "^1.3.12",
     "nativescript-floatingactionbutton": "^5.0.3",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-ui-dataform": "5.0.0",

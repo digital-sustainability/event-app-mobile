@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Presentation } from '../shared/presentation';
-import { Speaker } from '../shared/speaker';
+import { Presentation } from '../shared/models/presentation';
+import { Speaker } from '../shared/models/speaker';
 import { PageRoute, RouterExtensions } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
-import { NavigationService } from '~/app/shared/services/navigation.service';
-import { PresentationService } from '../shared/presentation.service';
+import { NavigationService } from '../../shared/services/navigation.service';
+import { PresentationService } from '../shared/services/presentation.service';
 import { Button } from 'tns-core-modules/ui/button'
 import { EventData } from 'tns-core-modules/data/observable'
 import { openUrl } from 'tns-core-modules/utils/utils'
@@ -100,12 +100,13 @@ export class PresentationDetailComponent implements OnInit {
     });
   }
 
-  onFeedbackTap(args: EventData): void {
+  onUserFeedbackTap(args: EventData): void {
     // let button = <Button>args.object;
     this._navigationService.navigateTo('/feedback', this._presentation.id);
   }
 
   onShowSlides(url: string): void {
+    console.log('|==>', url);
     openUrl(url);
   }
 
@@ -138,6 +139,12 @@ export class PresentationDetailComponent implements OnInit {
   presentationStarted(): boolean {
     // check if presentation is not in the future
     return this._presentation.start && moment(moment()).isSameOrAfter(this._presentation.start, 'day');
+  }
+
+  isUrl(str: string): boolean {
+    const urlExp = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+    const regex = new RegExp(urlExp);
+    return str && str.length && regex.test(str);
   }
 
   get speakers(): Speaker[] {

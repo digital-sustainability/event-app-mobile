@@ -1,5 +1,5 @@
 import { Speaker } from './speaker';
-import { Session } from '../../sessions/shared/session';
+import { Session } from '../../../sessions/shared/session';
 
 export interface Presentation {
     createdAt: string | Date,

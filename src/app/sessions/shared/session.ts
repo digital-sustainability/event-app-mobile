@@ -1,4 +1,4 @@
-import { Presentation } from '../../presentations/shared/presentation';
+import { Presentation } from '../../presentations/shared/models/presentation';
 import { Event } from '../../events/shared/event';
 
 export interface Session {

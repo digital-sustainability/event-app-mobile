@@ -1,4 +1,4 @@
-export class FeedbackForm {
+export class UserFeedbackForm {
     public handle: string;
     public grade: number;
     public comment_positive: string;

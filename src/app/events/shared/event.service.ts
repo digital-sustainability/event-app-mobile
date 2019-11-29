@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Event } from '../shared/event';
-import { Speaker } from '../../presentations/shared/speaker';
+import { Speaker } from '../../presentations/shared/models/speaker';
 import { Observable } from 'rxjs';
 import { config } from '../../shared/config';
 

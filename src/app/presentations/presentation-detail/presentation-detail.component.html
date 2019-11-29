@@ -19,13 +19,14 @@
                 <StackLayout class="m-x-10">
                     <StackLayout *ngIf="!loading && speakers">
                         <StackLayout *ngFor="let sp of speakers">
-                            <GridLayout class="list-group-item" rows="auto, *" columns="80, *" (tap)="onSpeakerTap(sp.id)">
+                            <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
                                 <Image
                                 row="0"
                                 col="0"
                                 [src]="getPhotoUrlOfSpeaker(sp)"
-                                class="thumb img-circle m-8"
-                                rowSpan="2">
+                                class="img-circle"
+                                rowSpan="2"
+                                stretch="aspectFill">
                                 </Image>
                                 <Label
                                 row="0"
@@ -47,7 +48,7 @@
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
-                <StackLayout *ngIf="presentation.slides">
+                <StackLayout *ngIf="isUrl(presentation.slides)">
                     <Button (tap)="onShowSlides(presentation.slides)" class="btn btn-primary" text="Slides anschauen"></Button>
                 </StackLayout>
             </StackLayout>
@@ -55,8 +56,8 @@
     </StackLayout>
     <FAB
     *ngIf="presentation && presentationStarted()"
-    (tap)="onFeedbackTap($event)"
-    icon="~/images/feedback.png"
+    (tap)="onUserFeedbackTap($event)"
+    icon="~/images/userFeedback.png"
     rippleColor="#f1f1f1"
     class="fab-button"
     ></FAB>
