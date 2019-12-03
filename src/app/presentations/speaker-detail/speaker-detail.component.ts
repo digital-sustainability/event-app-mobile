@@ -117,4 +117,15 @@ export class SpeakerDetailComponent implements OnInit {
     return this._speaker.short_bio;
   }
 
+  get formattedShortBio(): string {
+    return this._speaker.formatted_short_bio;
+  }
+
+  get isFormattedShortBioAvailable(): boolean {
+    if(this._speaker.formatted_short_bio)
+      return true;
+    else 
+      return false;
+  }
+
 }

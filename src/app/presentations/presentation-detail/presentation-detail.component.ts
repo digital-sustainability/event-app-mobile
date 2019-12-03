@@ -162,4 +162,11 @@ export class PresentationDetailComponent implements OnInit {
     return this._loading;
   }
 
+  get isFormattedAbstractAvailable(): boolean {
+    if(this._presentation.formatted_abstract)
+      return true;
+    else 
+      return false;
+  }
+
 }

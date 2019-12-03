@@ -119,5 +119,12 @@ export class SessionDetailComponent implements OnInit {
       return this.session.label_presentations;
     }
     return 'Präsentationen'
-  }  
+  }
+
+  get isFormattedAbstractAvailable(): boolean {
+    if(this._session.formatted_abstract)
+      return true;
+    else 
+      return false;
+  }
 }

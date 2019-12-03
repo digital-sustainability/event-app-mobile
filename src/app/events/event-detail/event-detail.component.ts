@@ -198,6 +198,13 @@ export class EventDetailComponent implements OnInit {
     return this._speakers;
   }
 
+  get isFormattedDescriptionAvailable(): boolean {
+    if(this._event.formatted_description)
+      return true;
+    else 
+      return false;
+  }
+
   getPhotoUrlOfSpeaker(speaker: Speaker) {
       if (!speaker.photo_url) {
         return '~/images/load_homer.png';

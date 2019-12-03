@@ -59,11 +59,10 @@ export class EventListComponent implements OnInit {
     );
   }
 
-  onEventTap(args: TouchGestureEventData): void  {
-    const tappedEvent = args.view.bindingContext;
-    this._navigationService.navigateTo('/event', tappedEvent.id);
+  onEventTap(event: Event): void  {
+    this._navigationService.navigateTo('/event', event.id);
   }
-
+  
   displayEventInfo(time: string | Date, location: string): string {
     return moment.utc(time).locale('de').format('dddd, D. MMMM YYYY');
   }
