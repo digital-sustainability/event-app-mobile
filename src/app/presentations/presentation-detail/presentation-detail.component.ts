@@ -56,8 +56,8 @@ export class PresentationDetailComponent implements OnInit {
               this.checkSpeakerPhoto();
 
               // add default font to HTML (for iOS)
-              if(isIOS) {
-                this._presentation.abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._presentation.abstract + "</span>";
+              if(isIOS && this._presentation.formatted_abstract) {
+                this._presentation.formatted_abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._presentation.formatted_abstract + "</span>";
               }
 
               this._loading = false;

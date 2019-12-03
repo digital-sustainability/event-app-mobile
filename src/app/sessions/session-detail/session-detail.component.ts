@@ -49,8 +49,8 @@ export class SessionDetailComponent implements OnInit {
               this._sessionTitle = session.title;
 
               // add default font to HTML (for iOS)
-              if(isIOS) {
-                this._session.abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._session.abstract + "</span>";
+              if(isIOS && this._session.formatted_abstract) {
+                this._session.formatted_abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._session.formatted_abstract + "</span>";
               }
 
               this._loading = false;

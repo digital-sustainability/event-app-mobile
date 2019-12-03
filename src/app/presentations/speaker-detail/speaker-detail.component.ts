@@ -49,8 +49,8 @@ export class SpeakerDetailComponent implements OnInit {
               this._presentations = speaker.presentations;
 
               // add default font to HTML (for iOS)
-              if(isIOS) {
-                this._speaker.short_bio = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._speaker.short_bio + "</span>";
+              if(isIOS && this._speaker.formatted_short_bio) {
+                this._speaker.formatted_short_bio = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._speaker.formatted_short_bio + "</span>";
               }
 
               this._loading = false;

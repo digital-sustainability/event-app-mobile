@@ -49,7 +49,8 @@ export class EventListComponent implements OnInit {
           // add default font to HTML (for iOS)
           if(isIOS) {
             this._events.forEach(event => {
-              event.description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + event.description + "</span>";
+              if(event.formatted_description)
+                event.formatted_description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + event.formatted_description + "</span>";
             });
           }
 
@@ -62,7 +63,7 @@ export class EventListComponent implements OnInit {
   onEventTap(event: Event): void  {
     this._navigationService.navigateTo('/event', event.id);
   }
-  
+
   displayEventInfo(time: string | Date, location: string): string {
     return moment.utc(time).locale('de').format('dddd, D. MMMM YYYY');
   }
