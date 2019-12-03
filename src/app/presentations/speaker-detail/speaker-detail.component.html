@@ -12,7 +12,7 @@
                     <Label [text]="position" class="h3 text-center" textWrap="true"></Label>
                     <Label [text]="organization" class="h3 text-center company" textWrap="true"></Label>
                     <Label [text]="shortBio" class="body m-y-20" textWrap="true"></Label>
-                    <HtmlView htmlview [html]="shortBio" class="body m-y-20 htmlview"></HtmlView>
+                    <HtmlView nsFixHtmlView [html]="shortBio" class="body m-y-20 htmlview"></HtmlView>
                 </StackLayout>
                 <StackLayout *ngFor="let p of speaker.presentations">
                     <StackLayout class="occasion-item" orientation="vertical" (tap)="onPresentationTap(p.id)">

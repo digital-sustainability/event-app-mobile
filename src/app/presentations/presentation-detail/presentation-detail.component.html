@@ -14,7 +14,7 @@
                     textWrap="true"
                     ></Label>
                     <Label [text]="presentation.abstract" class="body m-y-10" textWrap="true"></Label>
-                    <HtmlView htmlview [html]="presentation.abstract" class="body m-y-10 htmlview"></HtmlView>
+                    <HtmlView nsFixHtmlView [html]="presentation.abstract" class="body m-y-10 htmlview"></HtmlView>
                     <Label *ngIf="speakers.length > 0" text="Speakers" class="h2"></Label>
                 </StackLayout>
                 <StackLayout class="m-x-10">

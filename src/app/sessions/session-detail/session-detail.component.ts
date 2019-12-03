@@ -18,9 +18,6 @@ import * as moment from 'moment';
   styleUrls: ['./session-detail.component.css'],
   moduleId: module.id,
 })
-@Directive({
-  selector: '[htmlview]',
-})
 export class SessionDetailComponent implements OnInit {
   private _session: Session;
   private _sessionTitle = 'Session';
@@ -30,8 +27,7 @@ export class SessionDetailComponent implements OnInit {
   constructor(
     private _sessionService: SessionService,
     private _pageRoute: PageRoute,
-    private _navigationService: NavigationService,
-    private _htmlView: ElementRef
+    private _navigationService: NavigationService
   ) { }
 
   ngOnInit(): void {
@@ -55,8 +51,6 @@ export class SessionDetailComponent implements OnInit {
               // add default font to HTML (for iOS)
               if(isIOS) {
                 this._session.abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._session.abstract + "</span>";
-              
-                this._htmlView.nativeElement.requestLayout();
               }
 
               this._loading = false;
