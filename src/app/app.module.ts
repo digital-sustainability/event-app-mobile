@@ -24,6 +24,7 @@ import { FeedbackService } from './presentations/shared/feedback.service';
 import { UiService } from './shared/services/ui.service';
 import { AboutComponent } from './fdn/about/about.component';
 import { HttpInterceptorService } from './shared/services/http-interceptor.service';
+import { FixHtmlViewDirective } from './fix-html-view.directive';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -54,6 +55,7 @@ import { HttpInterceptorService } from './shared/services/http-interceptor.servi
         EventTabComponent,
         FeedbackComponent,
         AboutComponent,
+        FixHtmlViewDirective,
     ],
     providers: [
         EventService,
