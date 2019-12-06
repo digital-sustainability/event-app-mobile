@@ -47,6 +47,7 @@
     "@ngtools/webpack": "~8.2.0",
     "@types/jasmine": "^3.3.9",
     "nativescript-dev-webpack": "^1.2.0",
+    "prettier": "^1.19.1",
     "typescript": "~3.5.3"
   },
   "gitHead": "36e279acd3e8bc27395256a32dec1bc9523489ae",
