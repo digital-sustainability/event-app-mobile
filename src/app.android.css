@@ -11,7 +11,7 @@ refer to http://docs.nativescript.org/ui/theme.
 */
 @import '~nativescript-theme-core/css/core.light.css'; /* nativescript-provided core theme */
 
-@import './app/shared/styles/theme.css'; /* theme build with https://www.nativescriptthemebuilder.com */
+@import './app/shared-module/styles/theme.css'; /* theme build with https://www.nativescriptthemebuilder.com */
 
 /*
 Place Android specific styles below

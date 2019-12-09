@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UserFeedback } from '../models/user-feedback';
 import { Observable } from 'rxjs';
-import { config } from '../../../shared/config';
+import { config } from '../../../../shared-module/config';
 
 @Injectable({
   providedIn: 'root'

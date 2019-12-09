@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Event } from '../shared/event';
+import { Event } from './event';
 import { Speaker } from '../../presentations/shared/models/speaker';
 import { Observable } from 'rxjs';
-import { config } from '../../shared/config';
+import { config } from '../../../shared-module/config';
 
 @Injectable({
   providedIn: 'root'

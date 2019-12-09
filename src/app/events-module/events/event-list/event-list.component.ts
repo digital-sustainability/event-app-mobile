@@ -4,7 +4,7 @@ import { Event } from '../shared/event';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
-import { NavigationService } from '../../shared/services/navigation.service';
+import { NavigationService } from '../../../shared-module/services/navigation.service';
 import { orderBy } from 'lodash';
 import * as moment from 'moment';
 
@@ -23,10 +23,13 @@ export class EventListComponent implements OnInit {
   constructor(
     private _eventService: EventService,
     private _navigationService: NavigationService,
-  ) { }
-
+  ) {
+    console.log('get constructed')
+  }
+  
   // TODO: Later --> Add pull-to-refresh
   ngOnInit(): void {
+    console.log('get initialized')
     this._eventService.getEvents(this.archive)
       .pipe(
         catchError(err => {

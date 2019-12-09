@@ -5,7 +5,7 @@ import { PageRoute, RouterExtensions } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
-import { NavigationService } from '../../shared/services/navigation.service';
+import { NavigationService } from '../../../shared-module/services/navigation.service';
 import { PresentationService } from '../shared/services/presentation.service';
 import { Button } from 'tns-core-modules/ui/button'
 import { EventData } from 'tns-core-modules/data/observable'

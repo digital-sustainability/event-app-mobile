@@ -5,7 +5,7 @@ import { Image } from 'tns-core-modules/ui/image';
 import { PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
-import { NavigationService } from '../../shared/services/navigation.service';
+import { NavigationService } from '../../../shared-module/services/navigation.service';
 import { Presentation } from '../../presentations/shared/models/presentation';
 import { sortBy } from 'lodash';
 import * as moment from 'moment';
