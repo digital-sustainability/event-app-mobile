@@ -46,11 +46,17 @@ export class EventListComponent implements OnInit {
             this._events = orderBy(events, ['start'], ['asc']).filter(e => e.published);
           }
 
-          // add default font to HTML (for iOS)
+          // add default font to HTML (for iOS) and remove all links
           if(isIOS) {
             this._events.forEach(event => {
               if(event.formatted_description)
+              event.formatted_description = event.formatted_description.replace(/<a[^>]*>/gi, ''); // remove all links
                 event.formatted_description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + event.formatted_description + "</span>";
+            });
+          } else {
+            this._events.forEach(event => {
+              if(event.formatted_description)
+                event.formatted_description = event.formatted_description.replace(/<a[^>]*>/gi, ''); // remove all links
             });
           }
 
