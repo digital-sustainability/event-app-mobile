@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { isAndroid } from 'tns-core-modules/platform';
-import { UiService } from '../../../shared-module/services/ui.service';
+import { UiService } from '~/app/shared-module/services/ui.service';
 
 @Component({
   selector: 'ns-event-tab',

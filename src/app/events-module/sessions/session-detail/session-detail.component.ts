@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService } from '../shared/session.service';
-import { Session } from '../shared/session';
-import { Image } from 'tns-core-modules/ui/image';
+import { SessionService } from '../session.service';
+import { Session } from '../../shared/models/session';
 import { PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
-import { throwError, of } from 'rxjs';
-import { NavigationService } from '../../../shared-module/services/navigation.service';
-import { Presentation } from '../../presentations/shared/models/presentation';
+import { throwError } from 'rxjs';
+import { NavigationService } from '~/app/shared-module/services/navigation.service';
+import { Presentation } from '../../shared/models/presentation';
 import { sortBy } from 'lodash';
 import * as moment from 'moment';
 

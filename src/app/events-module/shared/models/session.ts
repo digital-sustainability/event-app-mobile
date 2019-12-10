@@ -1,5 +1,5 @@
-import { Presentation } from '../../presentations/shared/models/presentation';
-import { Event } from '../../events/shared/event';
+import { Presentation } from './presentation';
+import { Event } from './event';
 
 export interface Session {
     createdAt: string | Date,

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Presentation } from '../shared/models/presentation';
-import { Speaker } from '../shared/models/speaker';
+import { Presentation } from '../../shared/models/presentation';
+import { Speaker } from '../../shared/models/speaker';
 import { Image } from 'tns-core-modules/ui/image';
 import { PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
-import { throwError, of } from 'rxjs';
+import { throwError } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
-import { NavigationService } from '../../../shared-module/services/navigation.service';
-import { PresentationService } from '../shared/services/presentation.service';
+import { NavigationService } from '~/app//shared-module/services/navigation.service';
+import { PresentationService } from '../presentation.service';
 import * as moment from 'moment';
 
 @Component({

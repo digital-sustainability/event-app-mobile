@@ -3,14 +3,14 @@ import { Image } from 'tns-core-modules/ui/image';
 import { RouterExtensions, PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { Event } from '../shared/event';
-import { Speaker } from '../../presentations/shared/models/speaker';
-import { EventService } from '../shared/event.service';
+import { Event } from '../../shared/models/event';
+import { Speaker } from '../../shared/models/speaker';
+import { EventService } from '../event.service';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
-import { NavigationService } from '../../../shared-module/services/navigation.service';
-import { Session } from '../../sessions/shared/session';
+import { NavigationService } from '~/app/shared-module/services/navigation.service';
+import { Session } from '../../shared/models/session';
 import { openUrl } from 'tns-core-modules/utils/utils';
-import { Directions } from "nativescript-directions";
+import { Directions } from 'nativescript-directions';
 import * as moment from 'moment';
 
 @Component({
