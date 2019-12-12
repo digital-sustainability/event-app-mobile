@@ -4,6 +4,7 @@ import { EventsRoutingModule } from './events-routing.module';
 
 import { NativeScriptCommonModule } from 'nativescript-angular/common';
 import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
+import { NativeScriptUIDataFormModule } from 'nativescript-ui-dataform/angular';
 
 import { EventTabComponent } from './events/event-tab/event-tab.component';
 import { EventDetailComponent } from './events/event-detail/event-detail.component';
@@ -19,7 +20,13 @@ import { UserFeedbackService } from './presentations/user-feedback.service';
 import { PresentationService } from './presentations/presentation.service';
 
 @NgModule({
-  imports: [NativeScriptCommonModule, EventsRoutingModule, SharedModule, NativeScriptUIListViewModule],
+  imports: [
+    NativeScriptCommonModule,
+    EventsRoutingModule,
+    SharedModule,
+    NativeScriptUIListViewModule,
+    NativeScriptUIDataFormModule,
+  ],
   declarations: [
     EventTabComponent,
     EventListComponent,
