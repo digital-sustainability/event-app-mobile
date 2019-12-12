@@ -109,177 +109,175 @@ module.exports = env => {
 
     nsWebpack.processAppComponents(appComponents, platform);
     const config = {
-        mode: production ? "production" : "development",
-        context: appFullPath,
-        externals,
-        watchOptions: {
-            ignored: [
-                appResourcesFullPath,
-                // Don't watch hidden files
-                "**/.*",
-            ]
-        },
-        target: nativescriptTarget,
-        entry: entries,
-        output: {
-            pathinfo: false,
-            path: dist,
-            sourceMapFilename,
-            libraryTarget: "commonjs2",
-            filename: "[name].js",
-            globalObject: "global",
-            hashSalt
-        },
-        resolve: {
-            extensions: [".ts", ".js", ".scss", ".css"],
-            // Resolve {N} system modules from tns-core-modules
-            modules: [
-                resolve(__dirname, "node_modules/tns-core-modules"),
-                resolve(__dirname, "node_modules"),
-                "node_modules/tns-core-modules",
-                "node_modules",
-            ],
-            alias: {
-                '~': appFullPath
-            },
-            symlinks: true
-        },
-        resolveLoader: {
-            symlinks: false
-        },
-        node: {
-            // Disable node shims that conflict with NativeScript
-            "http": false,
-            "timers": false,
-            "setImmediate": false,
-            "fs": "empty",
-            "__dirname": false,
-        },
-        devtool: hiddenSourceMap ? "hidden-source-map" : (sourceMap ? "inline-source-map" : "none"),
-        optimization: {
-            runtimeChunk: "single",
-            splitChunks: {
-                cacheGroups: {
-                    vendor: {
-                        name: "vendor",
-                        chunks: "all",
-                        test: (module, chunks) => {
-                            const moduleName = module.nameForCondition ? module.nameForCondition() : '';
-                            return /[\\/]node_modules[\\/]/.test(moduleName) ||
-                                appComponents.some(comp => comp === moduleName);
-                        },
-                        enforce: true,
-                    },
-                }
-            },
-            minimize: !!uglify,
-            minimizer: [
-                new TerserPlugin({
-                    parallel: true,
-                    cache: true,
-                    sourceMap: isAnySourceMapEnabled,
-                    terserOptions: {
-                        output: {
-                            comments: false,
-                            semicolons: !isAnySourceMapEnabled
-                        },
-                        compress: {
-                            // The Android SBG has problems parsing the output
-                            // when these options are enabled
-                            'collapse_vars': platform !== "android",
-                            sequences: platform !== "android",
-                        }
-                    }
-                })
-            ],
-        },
-        module: {
-            rules: [
-                {
-                    include: join(appFullPath, entryPath),
-                    use: [
-                        // Require all Android app components
-                        platform === "android" && {
-                            loader: "nativescript-dev-webpack/android-app-components-loader",
-                            options: { modules: appComponents }
-                        },
-
-                        {
-                            loader: "nativescript-dev-webpack/bundle-config-loader",
-                            options: {
-                                angular: true,
-                                loadCss: !snapshot, // load the application css if in debug mode
-                                unitTesting,
-                                appFullPath,
-                                projectRoot,
-                                ignoredFiles: nsWebpack.getUserDefinedEntries(entries, platform)
-                            }
-                        },
-                    ].filter(loader => !!loader)
-                },
-
-                { test: /\.html$|\.xml$/, use: "raw-loader" },
-
-                // tns-core-modules reads the app.css and its imports using css-loader
-                {
-                    test: /[\/|\\]app\.css$/,
-                    use: [
-                        "nativescript-dev-webpack/style-hot-loader",
-                        { loader: "css-loader", options: { url: false } }
-                    ]
-                },
-                {
-                    test: /[\/|\\]app\.scss$/,
-                    use: [
-                        "nativescript-dev-webpack/style-hot-loader",
-                        { loader: "css-loader", options: { url: false } },
-                        "sass-loader"
-                    ]
-                },
-
-                // Angular components reference css files and their imports using raw-loader
-                { test: /\.css$/, exclude: /[\/|\\]app\.css$/, use: "raw-loader" },
-                { test: /\.scss$/, exclude: /[\/|\\]app\.scss$/, use: ["raw-loader", "resolve-url-loader", "sass-loader"] },
-
-                {
-                    test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
-                    use: [
-                        "nativescript-dev-webpack/moduleid-compat-loader",
-                        "nativescript-dev-webpack/lazy-ngmodule-hot-loader",
-                        "@ngtools/webpack",
-                    ]
-                },
-
-                // Mark files inside `@angular/core` as using SystemJS style dynamic imports.
-                // Removing this will cause deprecation warnings to appear.
-                {
-                    test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
-                    parser: { system: true },
-                },
-            ],
-        },
-        plugins: [
-            // Define useful constants like TNS_WEBPACK
-            new webpack.DefinePlugin({
-                "global.TNS_WEBPACK": "true",
-                "process": "global.process",
-            }),
-            // Remove all files from the out dir.
-            new CleanWebpackPlugin(itemsToClean, { verbose: !!verbose }),
-            // Copy assets to out dir. Add your own globs as needed.
-            new CopyWebpackPlugin([
-                { from: { glob: "fonts/**" } },
-                { from: { glob: "**/*.jpg" } },
-                { from: { glob: "**/*.png" } },
-            ], { ignore: [`${relative(appPath, appResourcesFullPath)}/**`] }),
-            new nsWebpack.GenerateNativeScriptEntryPointsPlugin("bundle"),
-            // For instructions on how to set up workers with webpack
-            // check out https://github.com/nativescript/worker-loader
-            new NativeScriptWorkerPlugin(),
-            ngCompilerPlugin,
-            // Does IPC communication with the {N} CLI to notify events when running in watch mode.
-            new nsWebpack.WatchStateLoggerPlugin(),
+      mode: production ? 'production' : 'development',
+      context: appFullPath,
+      externals,
+      watchOptions: {
+        ignored: [
+          appResourcesFullPath,
+          // Don't watch hidden files
+          '**/.*',
         ],
+      },
+      target: nativescriptTarget,
+      entry: entries,
+      output: {
+        pathinfo: false,
+        path: dist,
+        sourceMapFilename,
+        libraryTarget: 'commonjs2',
+        filename: '[name].js',
+        globalObject: 'global',
+        hashSalt,
+      },
+      resolve: {
+        extensions: ['.ts', '.js', '.scss', '.css'],
+        // Resolve {N} system modules from tns-core-modules
+        modules: [
+          resolve(__dirname, 'node_modules/tns-core-modules'),
+          resolve(__dirname, 'node_modules'),
+          'node_modules/tns-core-modules',
+          'node_modules',
+        ],
+        alias: {
+          '~': appFullPath,
+        },
+        symlinks: true,
+      },
+      resolveLoader: {
+        symlinks: false,
+      },
+      node: {
+        // Disable node shims that conflict with NativeScript
+        http: false,
+        timers: false,
+        setImmediate: false,
+        fs: 'empty',
+        __dirname: false,
+      },
+      devtool: hiddenSourceMap ? 'hidden-source-map' : sourceMap ? 'inline-source-map' : 'none',
+      optimization: {
+        runtimeChunk: 'single',
+        splitChunks: {
+          cacheGroups: {
+            vendor: {
+              name: 'vendor',
+              chunks: 'all',
+              test: (module, chunks) => {
+                const moduleName = module.nameForCondition ? module.nameForCondition() : '';
+                return /[\\/]node_modules[\\/]/.test(moduleName) || appComponents.some(comp => comp === moduleName);
+              },
+              enforce: true,
+            },
+          },
+        },
+        minimize: !!uglify,
+        minimizer: [
+          new TerserPlugin({
+            parallel: true,
+            cache: true,
+            sourceMap: isAnySourceMapEnabled,
+            terserOptions: {
+              output: {
+                comments: false,
+                semicolons: !isAnySourceMapEnabled,
+              },
+              compress: {
+                // The Android SBG has problems parsing the output
+                // when these options are enabled
+                collapse_vars: platform !== 'android',
+                sequences: platform !== 'android',
+              },
+            },
+          }),
+        ],
+      },
+      module: {
+        rules: [
+          {
+            include: join(appFullPath, entryPath),
+            use: [
+              // Require all Android app components
+              platform === 'android' && {
+                loader: 'nativescript-dev-webpack/android-app-components-loader',
+                options: { modules: appComponents },
+              },
+
+              {
+                loader: 'nativescript-dev-webpack/bundle-config-loader',
+                options: {
+                  angular: true,
+                  loadCss: !snapshot, // load the application css if in debug mode
+                  unitTesting,
+                  appFullPath,
+                  projectRoot,
+                  ignoredFiles: nsWebpack.getUserDefinedEntries(entries, platform),
+                },
+              },
+            ].filter(loader => !!loader),
+          },
+
+          { test: /\.html$|\.xml$/, use: 'raw-loader' },
+
+          // tns-core-modules reads the app.css and its imports using css-loader
+          {
+            test: /[\/|\\]app\.css$/,
+            use: ['nativescript-dev-webpack/style-hot-loader', { loader: 'css-loader', options: { url: false } }],
+          },
+          {
+            test: /[\/|\\]app\.scss$/,
+            use: [
+              'nativescript-dev-webpack/style-hot-loader',
+              { loader: 'css-loader', options: { url: false } },
+              'sass-loader',
+            ],
+          },
+
+          // Angular components reference css files and their imports using raw-loader
+          { test: /\.css$/, exclude: /[\/|\\]app\.css$/, use: 'raw-loader' },
+          { test: /\.scss$/, exclude: /[\/|\\]app\.scss$/, use: ['raw-loader', 'resolve-url-loader', 'sass-loader'] },
+
+          {
+            test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
+            use: [
+              'nativescript-dev-webpack/moduleid-compat-loader',
+              'nativescript-dev-webpack/lazy-ngmodule-hot-loader',
+              '@ngtools/webpack',
+            ],
+          },
+
+          // Mark files inside `@angular/core` as using SystemJS style dynamic imports.
+          // Removing this will cause deprecation warnings to appear.
+          {
+            test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
+            parser: { system: true },
+          },
+        ],
+      },
+      plugins: [
+        // Define useful constants like TNS_WEBPACK
+        new webpack.DefinePlugin({
+          'global.TNS_WEBPACK': 'true',
+          'process.env': {
+            envtype: JSON.stringify(env && env.envtype ? env.envtype : ''),
+            eventApi: JSON.stringify(env && env.eventApi ? env.eventApi : ''),
+          },
+        }),
+        // Remove all files from the out dir.
+        new CleanWebpackPlugin(itemsToClean, { verbose: !!verbose }),
+        // Copy assets to out dir. Add your own globs as needed.
+        new CopyWebpackPlugin(
+          [{ from: { glob: 'fonts/**' } }, { from: { glob: '**/*.jpg' } }, { from: { glob: '**/*.png' } }],
+          { ignore: [`${relative(appPath, appResourcesFullPath)}/**`] },
+        ),
+        new nsWebpack.GenerateNativeScriptEntryPointsPlugin('bundle'),
+        // For instructions on how to set up workers with webpack
+        // check out https://github.com/nativescript/worker-loader
+        new NativeScriptWorkerPlugin(),
+        ngCompilerPlugin,
+        // Does IPC communication with the {N} CLI to notify events when running in watch mode.
+        new nsWebpack.WatchStateLoggerPlugin(),
+      ],
     };
 
     if (report) {

@@ -11,6 +11,11 @@
       "version": "6.1.2"
     }
   },
+  "scripts": {
+    "dev-android": "tns run android --bundle --env.envtype='dev' --env.eventApi='https://event-app.fdn.iwi.unibe.ch/api/'",
+    "dev-ios": "tns run ios --bundle --env.envtype='dev' --env.eventApi='https://event-app.fdn.iwi.unibe.ch/api/'"
+  },
+  "private": true,
   "description": "NativeScript Application",
   "license": "SEE LICENSE IN <your-license-filename>",
   "repository": "<fill-your-repository-here>",
