@@ -1,0 +1,54 @@
+<ns-action-bar title="Feedback"></ns-action-bar>
+<GridLayout>
+    <StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
+        <ActivityIndicator class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
+    </StackLayout>
+    <StackLayout *ngIf="!loading && presentation && userFeedbackForm">
+        <ScrollView height="100%">
+            <StackLayout class="m-x-10">
+                <Label text="Feedback" class="h1 m-y-10" textWrap="true"></Label>
+                <Label text="{{ presentationTitle }}" class="h2 m-b-10" textWrap="true"></Label>
+                <RadDataForm
+                tkExampleTitle
+                tkToggleNavButton
+                [source]="userFeedbackForm"
+                (editorUpdate)="dfEditorUpdate($event)">
+                    <TKEntityProperty
+                    tkDataFormProperty 
+                    name="handle"
+                    displayName="Besuchername"
+                    index="0"
+                    hintText="Ihr Name (freiwillig)"
+                    ></TKEntityProperty>
+                    <TKEntityProperty tkDataFormProperty name="grade" displayName="Bewertung (1 – 10)" index="1">
+                        <TKPropertyEditor tkEntityPropertyEditor type="Stepper">
+                            <TKPropertyEditorParams tKEditorParams minimum="1" maximum="10" step="1"></TKPropertyEditorParams>
+                            <TKPropertyEditorStyle tkPropertyEditorStyle valuePosition="Left"></TKPropertyEditorStyle>
+                        </TKPropertyEditor>
+                    </TKEntityProperty>
+                    <TKEntityProperty
+                    tkDataFormProperty
+                    name="comment_positive"
+                    displayName="Das fand ich gut"
+                    index="2"
+                    hintText="Ihr Feedback">
+                        <TKPropertyEditor tkEntityPropertyEditor type="MultilineText"></TKPropertyEditor>
+                    </TKEntityProperty>
+                    <TKEntityProperty
+                    tkDataFormProperty
+                    name="comment_negative"
+                    displayName="Das fand ich verbesserungswürdig"
+                    index="3"
+                    hintText="Ihr Feedback">
+                        <TKPropertyEditor tkEntityPropertyEditor type="MultilineText"></TKPropertyEditor>
+                    </TKEntityProperty>
+                </RadDataForm>
+                <Button
+                (tap)="onUserFeedbackSubmit($event)"
+                class="btn btn-primary m-t-20"
+                text="Feedback einreichen"
+                ></Button>
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</GridLayout>

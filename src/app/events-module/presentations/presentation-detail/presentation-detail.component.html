@@ -1,0 +1,65 @@
+<ns-action-bar [title]="presentationTitle"></ns-action-bar>
+<GridLayout>
+    <StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
+        <ActivityIndicator class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
+    </StackLayout>
+    <StackLayout *ngIf="!loading && presentation && speakers">
+        <ScrollView height="100%" class="m-x-10">
+            <StackLayout>
+                <StackLayout>
+                    <Label [text]="presentation.title" class="h1 m-y-10" textWrap="true"></Label>
+                    <Label
+                    [text]="getStartTime(presentation.start) + concatRoom(presentation.room)"
+                    class="text m-y-10"
+                    textWrap="true"
+                    ></Label>
+                    <Label *ngIf="!isFormattedAbstractAvailable" [text]="presentation.abstract" class="body m-y-10" textWrap="true"></Label>
+                    <HtmlView *ngIf="isFormattedAbstractAvailable" nsFixHtmlView [html]="presentation.formatted_abstract" class="body m-y-10 htmlview"></HtmlView>
+                    <Label *ngIf="speakers.length > 0" text="Speakers" class="h2"></Label>
+                </StackLayout>
+                <StackLayout class="m-x-10">
+                    <StackLayout *ngIf="!loading && speakers">
+                        <StackLayout *ngFor="let sp of speakers">
+                            <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
+                                <Image
+                                row="0"
+                                col="0"
+                                [src]="getPhotoUrlOfSpeaker(sp)"
+                                class="img-circle"
+                                rowSpan="2"
+                                stretch="aspectFill">
+                                </Image>
+                                <Label
+                                row="0"
+                                col="1"
+                                [text]="sp.first_name + ' ' + sp.last_name"
+                                textWrap="true"
+                                verticalAlignment="bottom"
+                                class="list-group-item-heading"
+                                ></Label>
+                                <Label
+                                row="1"
+                                col="1"
+                                [text]="sp.position"
+                                textWrap="true"
+                                class="list-group-item-text"
+                                ></Label>
+                            </GridLayout>
+                            <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout *ngIf="isUrl(presentation.slides)">
+                    <Button (tap)="onShowSlides(presentation.slides)" class="btn btn-primary" text="Slides anschauen"></Button>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+    <FAB
+    *ngIf="presentation && presentationStarted()"
+    (tap)="onUserFeedbackTap($event)"
+    icon="~/images/userFeedback.png"
+    rippleColor="#f1f1f1"
+    class="fab-button"
+    ></FAB>
+</GridLayout>
