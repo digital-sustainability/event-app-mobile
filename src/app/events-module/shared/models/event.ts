@@ -6,6 +6,7 @@ export interface Event {
     id: number,
     title: string,
     description: string,
+    formatted_description: string,
     start: string | Date,
     end: string | Date,
     location: string,

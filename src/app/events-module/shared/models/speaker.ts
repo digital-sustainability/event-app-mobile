@@ -9,7 +9,8 @@ export interface Speaker {
     email: string,
     position: string,
     organization: string,
-    short_bio: string
+    short_bio: string,
+    formatted_short_bio: string,
     photo_url: string,
     presentations: Presentation[]
 }

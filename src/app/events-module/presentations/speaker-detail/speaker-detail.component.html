@@ -1,23 +1,26 @@
 <ns-action-bar [title]="fullName"></ns-action-bar>
-<StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
-    <ActivityIndicator class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
-</StackLayout>
-<StackLayout *ngIf="!loading && speaker">
-    <ScrollView height="100%">
-        <StackLayout>
-            <StackLayout class="m-x-10">
-                <Image [src]="imagePath" class="m-b-10 speaker-img" stretch="aspectFill"></Image>
-                <Label [text]="fullName" class="h1 text-center" textWrap="true"></Label>
-                <Label [text]="position" class="h3 text-center" textWrap="true"></Label>
-                <Label [text]="organization" class="h3 text-center company" textWrap="true"></Label>
-                <Label [text]="shortBio" class="body m-y-20" textWrap="true"></Label>
-            </StackLayout>
-            <StackLayout *ngFor="let p of speaker.presentations">
-                <StackLayout class="occasion-item" orientation="vertical" (tap)="onPresentationTap(p.id)">
-                    <Label class="h4" textWrap="true" [text]="p.title"></Label>
-                    <Label class="body" textWrap="true" [text]="getStartTime(p.start) + concatRoom(p.room)"></Label>
+<GridLayout>
+    <StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
+        <ActivityIndicator class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
+    </StackLayout>
+    <StackLayout *ngIf="!loading && speaker">
+        <ScrollView height="100%">
+            <StackLayout>
+                <StackLayout class="m-x-10">
+                    <Image [src]="imagePath" class="m-b-10 speaker-img" stretch="aspectFill"></Image>
+                    <Label [text]="fullName" class="h1 text-center" textWrap="true"></Label>
+                    <Label [text]="position" class="h3 text-center" textWrap="true"></Label>
+                    <Label [text]="organization" class="h3 text-center company" textWrap="true"></Label>
+                    <Label *ngIf="!isFormattedShortBioAvailable" [text]="shortBio" class="body m-y-20" textWrap="true"></Label>
+                    <HtmlView *ngIf="isFormattedShortBioAvailable" nsFixHtmlView [html]="formattedShortBio" class="body m-y-20 htmlview"></HtmlView>
+                </StackLayout>
+                <StackLayout *ngFor="let p of speaker.presentations">
+                    <StackLayout class="occasion-item" orientation="vertical" (tap)="onPresentationTap(p.id)">
+                        <Label class="h4" textWrap="true" [text]="p.title"></Label>
+                        <Label class="body" textWrap="true" [text]="getStartTime(p.start) + concatRoom(p.room)"></Label>
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
-        </StackLayout>
-    </ScrollView>
-</StackLayout>
+        </ScrollView>
+    </StackLayout>
+</GridLayout>

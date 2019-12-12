@@ -4,6 +4,7 @@ import { Event } from '../../shared/models/event';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
+import { isIOS } from 'tns-core-modules/platform';
 import { NavigationService } from '~/app/shared-module/services/navigation.service';
 import { orderBy } from 'lodash';
 import * as moment from 'moment';
@@ -44,15 +45,29 @@ export class EventListComponent implements OnInit {
           } else {
             this._events = orderBy(events, ['start'], ['asc']).filter(e => e.published);
           }
+
+          // add default font to HTML (for iOS) and remove all links
+          if(isIOS) {
+            this._events.forEach(event => {
+              if(event.formatted_description)
+              event.formatted_description = event.formatted_description.replace(/<a[^>]*>/gi, ''); // remove all links
+                event.formatted_description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + event.formatted_description + "</span>";
+            });
+          } else {
+            this._events.forEach(event => {
+              if(event.formatted_description)
+                event.formatted_description = event.formatted_description.replace(/<a[^>]*>/gi, ''); // remove all links
+            });
+          }
+
           this._loading = false;
       },
         err => console.error(err)
     );
   }
 
-  onEventTap(args: TouchGestureEventData): void  {
-    const tappedEvent = args.view.bindingContext;
-    this._navigationService.navigateTo('/event', tappedEvent.id);
+  onEventTap(event: Event): void  {
+    this._navigationService.navigateTo('/event', event.id);
   }
 
   displayEventInfo(time: string | Date, location: string): string {

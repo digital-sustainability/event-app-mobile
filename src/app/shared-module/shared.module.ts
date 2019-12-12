@@ -8,10 +8,14 @@ import { FeedbackService } from './services/feedback.service';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { NavigationService } from './services/navigation.service';
 import { UiService } from './services/ui.service';
+import { FixHtmlViewDirective } from './fix-html-view.directive';
 
 @NgModule({
   imports: [NativeScriptCommonModule, HttpClientModule],
-  declarations: [ActionBarComponent],
+  declarations: [
+    ActionBarComponent,
+    FixHtmlViewDirective
+  ],
   exports: [ActionBarComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
