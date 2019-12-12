@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { Session } from '../shared/session'
+import { HttpClient } from '@angular/common/http';
+import { Session } from '../shared/models/session';
 import { Observable } from 'rxjs';
-import { config } from '../../shared/config';
+import { config } from '~/app/shared-module/config';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SessionService {
 
   constructor(

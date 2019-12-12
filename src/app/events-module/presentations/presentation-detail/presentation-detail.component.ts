@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Presentation } from '../shared/models/presentation';
-import { Speaker } from '../shared/models/speaker';
+import { Presentation } from '../../shared/models/presentation';
+import { Speaker } from '../../shared/models/speaker';
 import { PageRoute, RouterExtensions } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
-import { NavigationService } from '../../shared/services/navigation.service';
-import { PresentationService } from '../shared/services/presentation.service';
+import { NavigationService } from '~/app/shared-module/services/navigation.service';
+import { PresentationService } from '../presentation.service';
 import { Button } from 'tns-core-modules/ui/button'
 import { EventData } from 'tns-core-modules/data/observable'
 import { openUrl } from 'tns-core-modules/utils/utils'

@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { Presentation } from '../models/presentation';
-import { Speaker } from '../models/speaker';
+import { Presentation } from '../shared/models/presentation';
+import { Speaker } from '../shared/models/speaker';
 import { Observable } from 'rxjs';
-import { config } from '../../../shared/config';
+import { config } from '../../shared-module/config';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PresentationService {
 
   private _api = config.api;

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { EventService } from '../shared/event.service';
-import { Event } from '../shared/event';
+import { EventService } from '../event.service';
+import { Event } from '../../shared/models/event';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
-import { NavigationService } from '../../shared/services/navigation.service';
+import { NavigationService } from '~/app/shared-module/services/navigation.service';
 import { orderBy } from 'lodash';
 import * as moment from 'moment';
 
@@ -24,7 +24,7 @@ export class EventListComponent implements OnInit {
     private _eventService: EventService,
     private _navigationService: NavigationService,
   ) { }
-
+  
   // TODO: Later --> Add pull-to-refresh
   ngOnInit(): void {
     this._eventService.getEvents(this.archive)

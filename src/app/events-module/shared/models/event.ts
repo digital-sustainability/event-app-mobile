@@ -1,4 +1,4 @@
-import { Session } from '../../sessions/shared/session';
+import { Session } from './session';
 
 export interface Event {
     createdAt: string | Date,

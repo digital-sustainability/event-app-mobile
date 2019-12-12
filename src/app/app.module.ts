@@ -1,25 +1,12 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
-import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
-import { NativeScriptUIDataFormModule } from 'nativescript-ui-dataform/angular';
-import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
 import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
+import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './shared-module/shared.module';
+import { FdnModule } from './fdn-module/fdn.module';
+import { EventsModule } from './events-module/events.module';
 
 import { AppComponent } from './app.component';
-import { EventListComponent } from './events/event-list/event-list.component';
-import { EventDetailComponent } from './events/event-detail/event-detail.component';
-import { SessionDetailComponent } from './sessions/session-detail/session-detail.component';
-import { PresentationDetailComponent } from './presentations/presentation-detail/presentation-detail.component';
-import { SpeakerDetailComponent } from './presentations/speaker-detail/speaker-detail.component';
-import { EventTabComponent } from './events/event-tab/event-tab.component';
-import { UserFeedbackComponent } from './presentations/user-feedback/user-feedback.component';
-
-import { EventService } from './events/shared/event.service';
-import { SessionService } from './sessions/shared/session.service';
-import { PresentationService } from './presentations/shared/services/presentation.service';
-import { UserFeedbackService } from './presentations/shared/services/user-feedback.service';
-import { SharedModule } from './shared/shared.module';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -32,23 +19,15 @@ import { SharedModule } from './shared/shared.module';
   imports: [
     NativeScriptModule,
     AppRoutingModule,
-    HttpClientModule,
+    FdnModule,
+    EventsModule,
     SharedModule.forRoot(),
-    NativeScriptUIListViewModule,
-    NativeScriptUIDataFormModule,
     NativeScriptUISideDrawerModule,
   ],
   declarations: [
     AppComponent,
-    EventListComponent,
-    EventDetailComponent,
-    SessionDetailComponent,
-    PresentationDetailComponent,
-    SpeakerDetailComponent,
-    EventTabComponent,
-    UserFeedbackComponent,
   ],
-  providers: [EventService, SessionService, PresentationService, UserFeedbackService],
+  providers: [],
   schemas: [NO_ERRORS_SCHEMA],
 })
 /*

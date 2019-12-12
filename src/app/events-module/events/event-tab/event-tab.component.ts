@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { isAndroid } from 'tns-core-modules/platform';
-import { UiService } from '../../shared/services/ui.service';
+import { UiService } from '~/app/shared-module/services/ui.service';
 
 @Component({
   selector: 'ns-event-tab',
@@ -16,6 +16,7 @@ export class EventTabComponent {
 
   onToggleMenu(): void {
     this._uiService.toggleDrawer();
+    console.log('Got here')
   }
 
   get android(): boolean {
