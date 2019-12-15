@@ -8,7 +8,8 @@ import { FeedbackService } from './services/feedback.service';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { NavigationService } from './services/navigation.service';
 import { UiService } from './services/ui.service';
-import { FixHtmlViewDirective } from './fix-html-view.directive';
+import { EnvironmentManagerService } from './services/environment-manager.service';
+import { FixHtmlViewDirective } from './directives/fix-html-view.directive';
 
 @NgModule({
   imports: [NativeScriptCommonModule, HttpClientModule],
@@ -33,6 +34,7 @@ export class SharedModule {
           useClass: HttpInterceptorService,
           multi: true,
         },
+        EnvironmentManagerService,
       ],
     };
   }

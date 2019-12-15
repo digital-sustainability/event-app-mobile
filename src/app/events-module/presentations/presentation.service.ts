@@ -3,22 +3,25 @@ import { HttpClient } from "@angular/common/http";
 import { Presentation } from '../shared/models/presentation';
 import { Speaker } from '../shared/models/speaker';
 import { Observable } from 'rxjs';
-import { config } from '../../shared-module/config';
+import { EnvironmentManagerService } from '~/app/shared-module/services/environment-manager.service';
 
 @Injectable()
 export class PresentationService {
 
-  private _api = config.api;
+  private _api: string;
 
   constructor(
     private _http: HttpClient,
-  ) { }
+    private _evnManager: EnvironmentManagerService,
+  ) {
+    this._api = this._evnManager.getEventApi();
+  }
 
   getPresentation(id: number): Observable<Presentation> {
-    return this._http.get<Presentation>(this._api + 'presentation/' + id);
+    return this._http.get<Presentation>(`${this._api}presentation/${id}`);
   }
 
   getSpeaker(id: number): Observable<Speaker> {
-    return this._http.get<Speaker>(this._api + 'speaker/' + id);
+    return this._http.get<Speaker>(`${this._api}speaker/${id}`);
   }
 }

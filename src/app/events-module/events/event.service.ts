@@ -3,16 +3,19 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Event } from '../shared/models/event';
 import { Speaker } from '../shared/models/speaker';
 import { Observable } from 'rxjs';
-import { config } from '../../shared-module/config';
+import { EnvironmentManagerService } from '~/app/shared-module/services/environment-manager.service';
 
 @Injectable()
 export class EventService {
 
-  private _api = config.api;
+  private _api: string;
 
   constructor(
     private _http: HttpClient,
-  ) { }
+    private _envManager: EnvironmentManagerService,
+  ) {
+    this._api = this._envManager.getEventApi();
+  }
 
   getEvents(archive = false): Observable<Event[]> {
     // get date of tomorrow in a MySQL compatible format
