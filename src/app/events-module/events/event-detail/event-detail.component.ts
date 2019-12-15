@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Directive } from '@angular/core';
 import { Image } from 'tns-core-modules/ui/image';
 import { RouterExtensions, PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { Event } from '../../shared/models/event';
 import { Speaker } from '../../shared/models/speaker';
 import { EventService } from '../event.service';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
+import { isIOS } from 'tns-core-modules/platform';
 import { NavigationService } from '~/app/shared-module/services/navigation.service';
 import { Session } from '../../shared/models/session';
 import { openUrl } from 'tns-core-modules/utils/utils';
@@ -20,7 +21,6 @@ import * as moment from 'moment';
   moduleId: module.id,
 })
 export class EventDetailComponent implements OnInit {
-
   private _event: Event;
   private _loading = true;
   private _eventTitle = 'Event';
@@ -62,10 +62,16 @@ export class EventDetailComponent implements OnInit {
           )
           .subscribe(
             (event: Event) => {
-              this._event = event
+              this._event = event;
               this._eventTitle = event.title
               this._image_path = event.image_path; // TODO: Cache images
               this._sessions = event.sessions;
+
+              // add default font to HTML (for iOS)
+              if(isIOS && this._event.formatted_description) {
+                this._event.formatted_description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._event.formatted_description + "</span>";
+              }
+
               this._loading = false;
             },
             err => console.error(err)
@@ -190,6 +196,13 @@ export class EventDetailComponent implements OnInit {
 
   get speakers(): Speaker[] {
     return this._speakers;
+  }
+
+  get isFormattedDescriptionAvailable(): boolean {
+    if(this._event.formatted_description)
+      return true;
+    else 
+      return false;
   }
 
   getPhotoUrlOfSpeaker(speaker: Speaker) {

@@ -5,6 +5,7 @@ import { PageRoute, RouterExtensions } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
+import { isIOS } from 'tns-core-modules/platform';
 import { NavigationService } from '~/app/shared-module/services/navigation.service';
 import { PresentationService } from '../presentation.service';
 import { Button } from 'tns-core-modules/ui/button'
@@ -22,7 +23,6 @@ import * as dialogs from "tns-core-modules/ui/dialogs";
   moduleId: module.id,
 })
 export class PresentationDetailComponent implements OnInit {
-  
   private _presentationTitle = 'Präsentation'
   private _loading = true;
   private _presentation: Presentation;
@@ -32,7 +32,7 @@ export class PresentationDetailComponent implements OnInit {
     private _presentationService: PresentationService,
     private _pageRoute: PageRoute,
     private _navigationService: NavigationService,
-    private _routerExtensions: RouterExtensions,
+    private _routerExtensions: RouterExtensions
     ) { }
     
     ngOnInit(): void {
@@ -54,6 +54,12 @@ export class PresentationDetailComponent implements OnInit {
               this._presentationTitle = presentation.title;
               this._speakers = presentation.speakers;
               this.checkSpeakerPhoto();
+
+              // add default font to HTML (for iOS)
+              if(isIOS && this._presentation.formatted_abstract) {
+                this._presentation.formatted_abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._presentation.formatted_abstract + "</span>";
+              }
+
               this._loading = false;
             },
             err => console.error(err)
@@ -161,6 +167,13 @@ export class PresentationDetailComponent implements OnInit {
 
   get loading(): boolean {
     return this._loading;
+  }
+
+  get isFormattedAbstractAvailable(): boolean {
+    if(this._presentation.formatted_abstract)
+      return true;
+    else 
+      return false;
   }
 
 }

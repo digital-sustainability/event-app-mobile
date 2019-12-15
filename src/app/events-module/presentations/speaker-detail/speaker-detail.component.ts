@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Presentation } from '../../shared/models/presentation';
 import { Speaker } from '../../shared/models/speaker';
-import { Image } from 'tns-core-modules/ui/image';
 import { PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
+import { isIOS } from 'tns-core-modules/platform';
 import { NavigationService } from '~/app//shared-module/services/navigation.service';
 import { PresentationService } from '../presentation.service';
 import * as moment from 'moment';
@@ -17,7 +17,6 @@ import * as moment from 'moment';
   moduleId: module.id,
 })
 export class SpeakerDetailComponent implements OnInit {
-  
   private _loading = true;
   private _speaker: Speaker;
   private _presentations: Presentation[];
@@ -26,7 +25,7 @@ export class SpeakerDetailComponent implements OnInit {
   constructor(
     private _presentationService: PresentationService,
     private _pageRoute: PageRoute,
-    private _navigationService: NavigationService,
+    private _navigationService: NavigationService
   ) { }
   
   ngOnInit(): void {
@@ -44,10 +43,16 @@ export class SpeakerDetailComponent implements OnInit {
           )
           .subscribe(
             (speaker: Speaker) => {
-              this._loading = false;
               this._speaker = speaker;
               this._fullName = speaker.first_name + ' ' + speaker.last_name;
               this._presentations = speaker.presentations;
+
+              // add default font to HTML (for iOS)
+              if(isIOS && this._speaker.formatted_short_bio) {
+                this._speaker.formatted_short_bio = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._speaker.formatted_short_bio + "</span>";
+              }
+
+              this._loading = false;
             },
             err => console.error(err)
           )
@@ -109,6 +114,17 @@ export class SpeakerDetailComponent implements OnInit {
 
   get shortBio(): string {
     return this._speaker.short_bio;
+  }
+
+  get formattedShortBio(): string {
+    return this._speaker.formatted_short_bio;
+  }
+
+  get isFormattedShortBioAvailable(): boolean {
+    if(this._speaker.formatted_short_bio)
+      return true;
+    else 
+      return false;
   }
 
 }

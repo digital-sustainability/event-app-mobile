@@ -22,8 +22,7 @@ export class CsrfService {
   requestCSRFToken(): Observable<string> {
     return this._http.get<any>(`${this._api}csrf-token`)
       .pipe(map((res) => {
-        this._csrf = res._csrf
-        console.log(this._csrf);
+        this._csrf = res._csrf;
         return res._csrf
       }));
   }

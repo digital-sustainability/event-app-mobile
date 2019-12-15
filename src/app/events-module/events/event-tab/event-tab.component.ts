@@ -16,7 +16,6 @@ export class EventTabComponent {
 
   onToggleMenu(): void {
     this._uiService.toggleDrawer();
-    console.log('Got here')
   }
 
   get android(): boolean {

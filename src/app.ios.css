@@ -24,3 +24,8 @@ Place iOS specific styles below
 .card-layout {
     border-radius: 10;
 }
+
+.htmlview {
+    margin-left: -5;
+    margin-right: -5;
+}
