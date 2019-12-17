@@ -19,7 +19,6 @@ import { SessionService } from './sessions/session.service';
 import { UserFeedbackService } from './presentations/user-feedback.service';
 import { PresentationService } from './presentations/presentation.service';
 import { NativeScriptFormsModule } from 'nativescript-angular';
-import { NativeScriptMaterialTextFieldModule } from 'nativescript-material-textfield/angular';
 
 @NgModule({
   imports: [
@@ -28,8 +27,7 @@ import { NativeScriptMaterialTextFieldModule } from 'nativescript-material-textf
     SharedModule,
     NativeScriptUIListViewModule,
     NativeScriptUIDataFormModule,
-    NativeScriptFormsModule,
-    NativeScriptMaterialTextFieldModule
+    NativeScriptFormsModule
   ],
   declarations: [
     EventTabComponent,

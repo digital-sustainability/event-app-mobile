@@ -6,17 +6,9 @@ import { switchMap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { NavigationService } from '~/app/shared-module/services/navigation.service';
 import { PresentationService } from '../presentation.service';
-import { Button } from 'tns-core-modules/ui/button';
-import { EventData } from 'tns-core-modules/data/observable';
 import { UserFeedbackService } from '../user-feedback.service';
-import { UserFeedbackForm } from '../user-feedback-form';
-import { isAndroid } from 'tns-core-modules/platform';
-import { DataFormEventData } from 'nativescript-ui-dataform';
-import { Page } from 'tns-core-modules/ui/page/page';
 import { FeedbackType } from 'nativescript-feedback';
 import { FeedbackService } from '~/app/shared-module/services/feedback.service';
-import * as dialogs from 'tns-core-modules/ui/dialogs';
-import * as _ from 'lodash';
 import { registerElement } from 'nativescript-angular';
 registerElement('PreviousNextView', () => require('nativescript-iqkeyboardmanager').PreviousNextView);
 
@@ -32,76 +24,26 @@ declare var TKGridLayoutAlignment;
 })
 export class UserFeedbackComponent implements OnInit {
   feedback: UserFeedback;
-  enteredHandle: string;
+  staging_grade: number;
+  private _sliderLoaded = false;
 
 
   private _presentationTitle = 'Präsentation';
   private _loading = true;
   private _presentation: Presentation;
-  private _userFeedbackForm: UserFeedbackForm;
 
-  private _userFeedbackConfig = {
-    isReadOnly: false,
-    commitMode: 'Immediate',
-    validationMode: 'Immediate'
-  };
 
   constructor(
     private _presentationService: PresentationService,
     private _pageRoute: PageRoute,
     private _navigationService: NavigationService,
     private _userFeedbackService: UserFeedbackService,
-    private _page: Page,
     private _feedbackService: FeedbackService,
   ) {
-    this._page.on('loaded', args => {
-      if (this._page.android) {
-        this._page.android.setFitsSystemWindows(true);
-
-        const listener = new android.view.ViewTreeObserver.OnGlobalLayoutListener(
-          {
-            onGlobalLayout: () => {
-              // the following lines check if keyboard is shown
-              // code taken from https://github.com/NathanaelA/nativescript-keyboardshowing/blob/master/index.js
-              const rect = new android.graphics.Rect();
-              const window = _page._context.getWindow();
-              this._page.android.getWindowVisibleDisplayFrame(rect);
-              const rootView = _page.android.getRootView();
-              const screenHeight = rootView.getHeight();
-              const missingSize = screenHeight - rect.bottom;
-
-              if (missingSize > screenHeight * 0.15) {
-                // if keyboard is shown
-                // the following lines get the statusBarHeight
-                // code taken from https://stackoverflow.com/questions/3407256/height-of-status-bar-in-android
-                const rectangle = new android.graphics.Rect();
-                window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
-                const statusBarHeight = rectangle.top;
-
-                this._page.marginTop =
-                  -statusBarHeight /
-                  _page._context.getResources().getDisplayMetrics().density;
-
-                // remove the listener so that it does not leak
-                const viewTreeObserver = rootView.getViewTreeObserver();
-                viewTreeObserver.removeOnGlobalLayoutListener(listener);
-              }
-            }
-          }
-        );
-        this._page.android.getViewTreeObserver().addOnGlobalLayoutListener(listener);
-
-        this._page.on(Page.navigatingFromEvent, () => {
-          let viewTreeObserver = this._page.android.getViewTreeObserver();
-          viewTreeObserver.removeOnGlobalLayoutListener(listener);
-        });
-
-      }
-    });
   }
 
   ngOnInit(): void {
-    this._userFeedbackForm = new UserFeedbackForm(null, 0, null, null);
+
     this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
@@ -130,76 +72,47 @@ export class UserFeedbackComponent implements OnInit {
           comment_negative: '',
           comment_positive: '',
           grade: 0
-        }
+        };
       });
+
+    this.staging_grade = 1;
+    this._sliderLoaded = false;
   }
 
-  incr() {
-    this.feedback.grade += 1;
+  onSliderValueChange(event: any) {
+    // 0 is not allowed for the slider (min 1) but in the database
+    if(this._sliderLoaded)
+      this.feedback.grade = this.staging_grade;
 
+    if(event.value != 0)
+      this._sliderLoaded = true;
+  }
+
+  onSubmitFeedback() {
     console.log(this.feedback)
-    console.log(this.enteredHandle);
-  }
-
-  dfEditorUpdate(args: DataFormEventData) {
-    if (!isAndroid) {
-      this.editorSetupStepperIOS(args.editor);
-    }
-  }
-
-  onUserFeedbackSubmit(args: EventData): void {
-    if (this._userFeedbackForm.isEmpty()) {
-      dialogs.confirm({
-        title: 'Es wurde kein Feedback abgegeben.',
-        okButtonText: 'Feedback verlassen',
-        cancelButtonText: 'Zurück'
-      }).then(
-        ok => {
-          if (ok) {
-            this._navigationService.navigateTo('presentation', this._presentation.id);
-          }
-        }
-      );
+    if(
+      this.feedback.comment_negative == '' &&
+      this.feedback.comment_positive == '' &&
+      this.feedback.grade == 0) {
+        this._feedbackService.show(FeedbackType.Error, 'Leeres Formular', 'Füllen Sie das Formular aus, um Feedback einzureichen.')
     } else {
-      dialogs.confirm({
-        title: 'Feedback abgeschlossen?',
-        okButtonText: 'Feedback absenden',
-        cancelButtonText: 'Abbrechen'
-      }).then(
-        ok => {
-          if (ok) {
-            const feedback = <UserFeedback>{
-              handle: this._userFeedbackForm.handle,
-              grade: Number(this._userFeedbackForm.grade),
-              comment_positive: this._userFeedbackForm.comment_positive,
-              comment_negative: this._userFeedbackForm.comment_negative,
-              presentation_id: this._presentation.id
-            };
-            this._userFeedbackService.addFeedback(feedback).subscribe(
-              submitted => {
-                this._feedbackService.show(FeedbackType.Success, 'Feedback eingreicht', 'Vielen Dank für Ihre Rückmeldung!', 4000);
-                this._navigationService.navigateTo('presentation', this._presentation.id);
-              },
-              err => {
-                this._feedbackService.show(
-                  FeedbackType.Error,
-                  'Fehler',
-                  'Feedback konnte nicht gespeichert werden. Probieren Sie es später erneut',
-                  4000);
-                console.log(err)
-              }
-            );
-          }
+      this._userFeedbackService.addFeedback(this.feedback).subscribe(
+        (submitted) => {
+          this._feedbackService.show(FeedbackType.Success, 'Feedback eingreicht', 'Vielen Dank für Ihre Rückmeldung.', 4000);
+          this._navigationService.navigateBack();
+        },
+        err => {
+          this._feedbackService.show(
+            FeedbackType.Error,
+            'Fehler',
+            'Feedback konnte nicht gespeichert werden. Probieren Sie es später erneut',
+            4000);
+          console.log(err)
         }
       );
     }
   }
 
-  editorSetupStepperIOS(editor) {
-    // Add distance between the editor and displayed value on iOS
-    const editorView = editor.editorCore;
-    editorView.labelAlignment = TKGridLayoutAlignment.Left;
-  }
 
   onBackButtonTap(): void {
     this._navigationService.navigateBack();
@@ -217,11 +130,4 @@ export class UserFeedbackComponent implements OnInit {
     return this._loading;
   }
 
-  get userFeedbackForm(): UserFeedbackForm {
-    return this._userFeedbackForm;
-  }
-
-  get userFeedbackConfig(): object {
-    return this._userFeedbackConfig;
-  }
 }
