@@ -17,6 +17,9 @@ import { FeedbackType } from 'nativescript-feedback';
 import { FeedbackService } from '~/app/shared-module/services/feedback.service';
 import * as dialogs from 'tns-core-modules/ui/dialogs';
 import * as _ from 'lodash';
+import { registerElement } from 'nativescript-angular';
+registerElement('PreviousNextView', () => require('nativescript-iqkeyboardmanager').PreviousNextView);
+
 declare var android;
 declare var TKGridLayoutAlignment;
 
@@ -28,6 +31,10 @@ declare var TKGridLayoutAlignment;
   moduleId: module.id
 })
 export class UserFeedbackComponent implements OnInit {
+  feedback: UserFeedback;
+  enteredHandle: string;
+
+
   private _presentationTitle = 'Präsentation';
   private _loading = true;
   private _presentation: Presentation;
@@ -98,8 +105,8 @@ export class UserFeedbackComponent implements OnInit {
     this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
-        // const presentationId = 1;
         const presentationId = params.id;
+        
         this._presentationService
           .getPresentation(presentationId)
           .pipe(
@@ -116,7 +123,22 @@ export class UserFeedbackComponent implements OnInit {
             },
             err => console.error(err)
           );
+
+        this.feedback = {
+          handle: '',
+          presentation_id: presentationId,
+          comment_negative: '',
+          comment_positive: '',
+          grade: 0
+        }
       });
+  }
+
+  incr() {
+    this.feedback.grade += 1;
+
+    console.log(this.feedback)
+    console.log(this.enteredHandle);
   }
 
   dfEditorUpdate(args: DataFormEventData) {
@@ -180,7 +202,7 @@ export class UserFeedbackComponent implements OnInit {
   }
 
   onBackButtonTap(): void {
-    this._navigationService.navigateTo('/presentation', this._presentation.id);
+    this._navigationService.navigateBack();
   }
 
   get presentation(): Presentation {

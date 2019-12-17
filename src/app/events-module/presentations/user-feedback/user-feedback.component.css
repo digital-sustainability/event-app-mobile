@@ -15,3 +15,18 @@ PropertyEditor[type='Stepper'] DataFormEditorCore {
     font-weight: bold;
     font-size: 18;
 }
+
+
+.grid-item {
+    margin: 5;
+    padding: 5;
+}
+
+.grid-input {
+    font-size: 18;
+    margin: 0;
+}
+
+.grid-input.multiline {
+    min-height: 100;
+}
