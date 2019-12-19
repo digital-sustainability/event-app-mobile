@@ -21,7 +21,6 @@ export class SessionDetailComponent implements OnInit {
   private _session: Session;
   private _sessionTitle = 'Session';
   private _loading = true;
-  public backRoute = '/home';
 
   constructor(
     private _sessionService: SessionService,
