@@ -10,6 +10,7 @@ import { UserFeedbackService } from '../user-feedback.service';
 import { FeedbackType } from 'nativescript-feedback';
 import { FeedbackService } from '~/app/shared-module/services/feedback.service';
 import { registerElement } from 'nativescript-angular';
+import { Page } from 'tns-core-modules/ui/page/page';
 registerElement('PreviousNextView', () => require('nativescript-iqkeyboardmanager').PreviousNextView);
 
 declare var android;
@@ -24,8 +25,6 @@ declare var TKGridLayoutAlignment;
 })
 export class UserFeedbackComponent implements OnInit {
   feedback: UserFeedback;
-  staging_grade: number;
-  private _sliderLoaded = false;
 
 
   private _presentationTitle = 'Präsentation';
@@ -38,8 +37,53 @@ export class UserFeedbackComponent implements OnInit {
     private _pageRoute: PageRoute,
     private _navigationService: NavigationService,
     private _userFeedbackService: UserFeedbackService,
+    private _page: Page,
     private _feedbackService: FeedbackService,
   ) {
+    this._page.on('loaded', args => {
+      if (this._page.android) {
+        this._page.android.setFitsSystemWindows(true);
+
+        const listener = new android.view.ViewTreeObserver.OnGlobalLayoutListener(
+          {
+            onGlobalLayout: () => {
+              // the following lines check if keyboard is shown
+              // code taken from https://github.com/NathanaelA/nativescript-keyboardshowing/blob/master/index.js
+              const rect = new android.graphics.Rect();
+              const window = _page._context.getWindow();
+              this._page.android.getWindowVisibleDisplayFrame(rect);
+              const rootView = _page.android.getRootView();
+              const screenHeight = rootView.getHeight();
+              const missingSize = screenHeight - rect.bottom;
+
+              if (missingSize > screenHeight * 0.15) {
+                // if keyboard is shown
+                // the following lines get the statusBarHeight
+                // code taken from https://stackoverflow.com/questions/3407256/height-of-status-bar-in-android
+                const rectangle = new android.graphics.Rect();
+                window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+                const statusBarHeight = rectangle.top;
+
+                this._page.marginTop =
+                  -statusBarHeight /
+                  _page._context.getResources().getDisplayMetrics().density;
+
+                // remove the listener so that it does not leak
+                const viewTreeObserver = rootView.getViewTreeObserver();
+                viewTreeObserver.removeOnGlobalLayoutListener(listener);
+              }
+            }
+          }
+        );
+        this._page.android.getViewTreeObserver().addOnGlobalLayoutListener(listener);
+
+        this._page.on(Page.navigatingFromEvent, () => {
+          let viewTreeObserver = this._page.android.getViewTreeObserver();
+          viewTreeObserver.removeOnGlobalLayoutListener(listener);
+        });
+
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -74,34 +118,31 @@ export class UserFeedbackComponent implements OnInit {
           grade: 0
         };
       });
-
-    this.staging_grade = 1;
-    this._sliderLoaded = false;
   }
 
   onSliderValueChange(event: any) {
-    // 0 is not allowed for the slider (min 1) but in the database
-    if(this._sliderLoaded)
-      this.feedback.grade = this.staging_grade;
-
-    if(event.value != 0)
-      this._sliderLoaded = true;
+    this.feedback.grade = event.value;
   }
 
   onSubmitFeedback() {
-    console.log(this.feedback)
     if(
       this.feedback.comment_negative == '' &&
       this.feedback.comment_positive == '' &&
       this.feedback.grade == 0) {
         this._feedbackService.show(FeedbackType.Error, 'Leeres Formular', 'Füllen Sie das Formular aus, um Feedback einzureichen.')
     } else {
+      this._loading = true;
+
       this._userFeedbackService.addFeedback(this.feedback).subscribe(
         (submitted) => {
+          this._loading = false;
+
           this._feedbackService.show(FeedbackType.Success, 'Feedback eingreicht', 'Vielen Dank für Ihre Rückmeldung.', 4000);
           this._navigationService.navigateBack();
         },
         err => {
+          this._loading = false;
+
           this._feedbackService.show(
             FeedbackType.Error,
             'Fehler',
@@ -130,4 +171,19 @@ export class UserFeedbackComponent implements OnInit {
     return this._loading;
   }
 
+  get gradeDescription(): string {
+    switch (this.feedback.grade) {
+      case 1: return 'sehr schlecht'; break;
+      case 2: return 'schlecht'; break;
+      case 3: return 'schlecht'; break;
+      case 4: return 'mittelmässig'; break;
+      case 5: return 'mittelmässig'; break;
+      case 6: return 'mittelmässig'; break;
+      case 7: return 'gut'; break;
+      case 8: return 'gut'; break;
+      case 9: return 'ausgezeichnet'; break;
+      case 10: return 'ausgezeichnet'; break;
+      default: return 'keine Bewertung';
+    }
+  }
 }

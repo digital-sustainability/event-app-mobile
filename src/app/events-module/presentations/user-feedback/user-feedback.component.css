@@ -30,3 +30,7 @@ PropertyEditor[type='Stepper'] DataFormEditorCore {
 .grid-input.multiline {
     min-height: 100;
 }
+
+.slider-box {
+    margin: 20 10 20 10;
+}

@@ -33,7 +33,17 @@
 
                         <StackLayout row="3" class="grid-item">
                             <Label text="Ihre Bewertung"></Label>
-                            <Slider [(ngModel)]="staging_grade" (valueChange)="onSliderValueChange($event)" minValue="1" maxValue="10"></Slider>
+                            <GridLayout columns="auto, *, auto" rows="auto, auto" class="slider-box">
+                                <Label row="0" col="0" text="1"></Label>
+                                <Slider row="0" col="1" (valueChange)="onSliderValueChange($event)" minValue="1" maxValue="10"></Slider>
+                                <Label row="0" col="2" text="10"></Label>
+                                <Label row="1" col="1" *ngIf="feedback.grade != 0" textAlignment="center"><FormattedString>
+                                    <Span fontWeight="bold" [text]="feedback.grade"></Span>
+                                    <Span text=" ~ "></Span>
+                                    <Span [text]="gradeDescription"></Span>
+                                </FormattedString></Label>
+                            </GridLayout>
+                            
                         </StackLayout>
 
                         <Button row="4" class="btn btn-primary m-t-20" (tap)="onSubmitFeedback();" text="Feedback einreichen"></Button>
