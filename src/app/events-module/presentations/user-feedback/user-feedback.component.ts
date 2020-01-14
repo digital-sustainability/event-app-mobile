@@ -11,6 +11,7 @@ import { FeedbackType } from 'nativescript-feedback';
 import { FeedbackService } from '~/app/shared-module/services/feedback.service';
 import { registerElement } from 'nativescript-angular';
 import { Page } from 'tns-core-modules/ui/page/page';
+import { device } from "tns-core-modules/platform";
 registerElement('PreviousNextView', () => require('nativescript-iqkeyboardmanager').PreviousNextView);
 
 declare var android;
@@ -111,6 +112,7 @@ export class UserFeedbackComponent implements OnInit {
           );
 
         this.feedback = {
+          uuid: device.uuid,
           handle: '',
           presentation_id: presentationId,
           comment_negative: '',
@@ -125,6 +127,7 @@ export class UserFeedbackComponent implements OnInit {
   }
 
   onSubmitFeedback() {
+    console.log(this.feedback);
     if(
       this.feedback.comment_negative == '' &&
       this.feedback.comment_positive == '' &&

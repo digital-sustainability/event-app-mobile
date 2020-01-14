@@ -6,5 +6,6 @@ export interface UserFeedback {
     handle: string,
     comment_positive: string,
     comment_negative: string,
-    presentation_id: number
+    presentation_id: number,
+    uuid: string
 }
