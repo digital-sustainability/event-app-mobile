@@ -27,7 +27,6 @@ export class EventDetailComponent implements OnInit {
   private _sessions: Session[];
   private _mapsAvailable: boolean;
   private _speakers: Speaker[];
-  public backRoute = '/home'
   public directions: any;
 
   // TODO: What is better: Default image or empty?

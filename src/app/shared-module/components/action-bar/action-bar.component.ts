@@ -13,7 +13,6 @@ declare var android: any;
 export class ActionBarComponent implements OnInit {
 
   @Input() title: string;
-  @Input() backRoute: string
 
   constructor(
     private _routerExtensions: RouterExtensions,
@@ -24,12 +23,7 @@ export class ActionBarComponent implements OnInit {
   }
   
   navigateBack() {
-    if (this.backRoute) {
-      // Fixes a bug that sometimes the back button won't work on specific sites
-      this._routerExtensions.navigate([this.backRoute]);
-    } else {
-      this._routerExtensions.back();
-    }
+    this._routerExtensions.back();
   }
 
   onToggleMenu(): void {
