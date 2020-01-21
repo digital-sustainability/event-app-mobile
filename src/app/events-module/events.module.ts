@@ -18,6 +18,7 @@ import { EventService } from './events/event.service';
 import { SessionService } from './sessions/session.service';
 import { UserFeedbackService } from './presentations/user-feedback.service';
 import { PresentationService } from './presentations/presentation.service';
+import { NativeScriptFormsModule } from 'nativescript-angular';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { PresentationService } from './presentations/presentation.service';
     SharedModule,
     NativeScriptUIListViewModule,
     NativeScriptUIDataFormModule,
+    NativeScriptFormsModule
   ],
   declarations: [
     EventTabComponent,

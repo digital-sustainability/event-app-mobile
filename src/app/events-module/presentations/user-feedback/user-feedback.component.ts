@@ -6,17 +6,14 @@ import { switchMap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { NavigationService } from '~/app/shared-module/services/navigation.service';
 import { PresentationService } from '../presentation.service';
-import { Button } from 'tns-core-modules/ui/button';
-import { EventData } from 'tns-core-modules/data/observable';
 import { UserFeedbackService } from '../user-feedback.service';
-import { UserFeedbackForm } from '../user-feedback-form';
-import { isAndroid } from 'tns-core-modules/platform';
-import { DataFormEventData } from 'nativescript-ui-dataform';
-import { Page } from 'tns-core-modules/ui/page/page';
 import { FeedbackType } from 'nativescript-feedback';
 import { FeedbackService } from '~/app/shared-module/services/feedback.service';
-import * as dialogs from 'tns-core-modules/ui/dialogs';
-import * as _ from 'lodash';
+import { registerElement } from 'nativescript-angular';
+import { Page } from 'tns-core-modules/ui/page/page';
+import { device } from "tns-core-modules/platform";
+registerElement('PreviousNextView', () => require('nativescript-iqkeyboardmanager').PreviousNextView);
+
 declare var android;
 declare var TKGridLayoutAlignment;
 
@@ -28,16 +25,13 @@ declare var TKGridLayoutAlignment;
   moduleId: module.id
 })
 export class UserFeedbackComponent implements OnInit {
+  feedback: UserFeedback;
+
+
   private _presentationTitle = 'Präsentation';
   private _loading = true;
   private _presentation: Presentation;
-  private _userFeedbackForm: UserFeedbackForm;
 
-  private _userFeedbackConfig = {
-    isReadOnly: false,
-    commitMode: 'Immediate',
-    validationMode: 'Immediate'
-  };
 
   constructor(
     private _presentationService: PresentationService,
@@ -94,12 +88,12 @@ export class UserFeedbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._userFeedbackForm = new UserFeedbackForm(null, 0, null, null);
+
     this._pageRoute.activatedRoute
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
-        // const presentationId = 1;
         const presentationId = params.id;
+        
         this._presentationService
           .getPresentation(presentationId)
           .pipe(
@@ -116,71 +110,56 @@ export class UserFeedbackComponent implements OnInit {
             },
             err => console.error(err)
           );
+
+        this.feedback = {
+          uuid: device.uuid,
+          handle: '',
+          presentation_id: presentationId,
+          comment_negative: '',
+          comment_positive: '',
+          grade: 0
+        };
       });
   }
 
-  dfEditorUpdate(args: DataFormEventData) {
-    if (!isAndroid) {
-      this.editorSetupStepperIOS(args.editor);
-    }
+  onSliderValueChange(event: any) {
+    this.feedback.grade = Math.round(event.value);
   }
 
-  onUserFeedbackSubmit(args: EventData): void {
-    if (this._userFeedbackForm.isEmpty()) {
-      dialogs.confirm({
-        title: 'Es wurde kein Feedback abgegeben.',
-        okButtonText: 'Feedback verlassen',
-        cancelButtonText: 'Zurück'
-      }).then(
-        ok => {
-          if (ok) {
-            this._navigationService.navigateTo('presentation', this._presentation.id);
-          }
-        }
-      );
+  onSubmitFeedback() {
+    console.log(this.feedback);
+    if(
+      this.feedback.comment_negative == '' &&
+      this.feedback.comment_positive == '' &&
+      this.feedback.grade == 0) {
+        this._feedbackService.show(FeedbackType.Error, 'Leeres Formular', 'Füllen Sie das Formular aus, um Feedback einzureichen.')
     } else {
-      dialogs.confirm({
-        title: 'Feedback abgeschlossen?',
-        okButtonText: 'Feedback absenden',
-        cancelButtonText: 'Abbrechen'
-      }).then(
-        ok => {
-          if (ok) {
-            const feedback = <UserFeedback>{
-              handle: this._userFeedbackForm.handle,
-              grade: Number(this._userFeedbackForm.grade),
-              comment_positive: this._userFeedbackForm.comment_positive,
-              comment_negative: this._userFeedbackForm.comment_negative,
-              presentation_id: this._presentation.id
-            };
-            this._userFeedbackService.addFeedback(feedback).subscribe(
-              submitted => {
-                this._feedbackService.show(FeedbackType.Success, 'Feedback eingreicht', 'Vielen Dank für Ihre Rückmeldung!', 4000);
-                this._navigationService.navigateTo('presentation', this._presentation.id);
-              },
-              err => {
-                this._feedbackService.show(
-                  FeedbackType.Error,
-                  'Fehler',
-                  'Feedback konnte nicht gespeichert werden. Probieren Sie es später erneut',
-                  4000);
-                console.log(err)
-              }
-            );
-          }
+      this._loading = true;
+
+      this._userFeedbackService.addFeedback(this.feedback).subscribe(
+        (submitted) => {
+          this._loading = false;
+
+          this._feedbackService.show(FeedbackType.Success, 'Feedback eingreicht', 'Vielen Dank für Ihre Rückmeldung.', 4000);
+          this._navigationService.navigateBack();
+        },
+        err => {
+          this._loading = false;
+
+          this._feedbackService.show(
+            FeedbackType.Error,
+            'Fehler',
+            'Feedback konnte nicht gespeichert werden. Probieren Sie es später erneut',
+            4000);
+          console.log(err)
         }
       );
     }
   }
 
-  editorSetupStepperIOS(editor) {
-    // Add distance between the editor and displayed value on iOS
-    const editorView = editor.editorCore;
-    editorView.labelAlignment = TKGridLayoutAlignment.Left;
-  }
 
   onBackButtonTap(): void {
-    this._navigationService.navigateTo('/presentation', this._presentation.id);
+    this._navigationService.navigateBack();
   }
 
   get presentation(): Presentation {
@@ -195,11 +174,19 @@ export class UserFeedbackComponent implements OnInit {
     return this._loading;
   }
 
-  get userFeedbackForm(): UserFeedbackForm {
-    return this._userFeedbackForm;
-  }
-
-  get userFeedbackConfig(): object {
-    return this._userFeedbackConfig;
+  get gradeDescription(): string {
+    switch (this.feedback.grade) {
+      case 1: return 'sehr schlecht'; break;
+      case 2: return 'schlecht'; break;
+      case 3: return 'schlecht'; break;
+      case 4: return 'mittelmässig'; break;
+      case 5: return 'mittelmässig'; break;
+      case 6: return 'mittelmässig'; break;
+      case 7: return 'gut'; break;
+      case 8: return 'gut'; break;
+      case 9: return 'ausgezeichnet'; break;
+      case 10: return 'ausgezeichnet'; break;
+      default: return 'keine Bewertung';
+    }
   }
 }
