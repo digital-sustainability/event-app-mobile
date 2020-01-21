@@ -29,3 +29,8 @@ Place iOS specific styles below
     margin-left: -5;
     margin-right: -5;
 }
+
+TextView {
+    border-bottom-width: 1;
+    border-bottom-color: black;
+}

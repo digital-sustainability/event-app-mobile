@@ -6,8 +6,6 @@
 .grid-input {
     font-size: 18;
     margin: 0;
-    border-bottom-width: 1;
-    border-bottom-color: black;
 }
 
 .grid-input.multiline {
