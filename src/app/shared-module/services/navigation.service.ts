@@ -28,4 +28,9 @@ export class NavigationService {
       this._routerExtensions.navigate([path], config);
     }
   }
+
+  navigateBack(): void {
+    if(this._routerExtensions.canGoBack())
+      this._routerExtensions.back();
+  }
 }
