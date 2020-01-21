@@ -30,7 +30,7 @@ Place iOS specific styles below
     margin-right: -5;
 }
 
-TextView {
+TextView, TextField {
     border-bottom-width: 1;
     border-bottom-color: black;
 }
