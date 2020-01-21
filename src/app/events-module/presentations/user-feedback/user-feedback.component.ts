@@ -123,7 +123,7 @@ export class UserFeedbackComponent implements OnInit {
   }
 
   onSliderValueChange(event: any) {
-    this.feedback.grade = event.value;
+    this.feedback.grade = Math.round(event.value);
   }
 
   onSubmitFeedback() {
