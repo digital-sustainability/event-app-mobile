@@ -8,6 +8,7 @@ import { NavigationService } from './shared-module/services/navigation.service';
 import { CardView } from 'nativescript-cardview';
 registerElement('CardView', () => CardView);
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
+registerElement("Ripple", () => require("nativescript-ripple").Ripple);
 
 @Component({
     selector: 'ns-app',

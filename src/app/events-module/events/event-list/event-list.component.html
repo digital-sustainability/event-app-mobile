@@ -2,6 +2,24 @@
     <ActivityIndicator class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
 </StackLayout>
 <StackLayout *ngIf="!loading && events">
+    <StackLayout orientation="horizontal">
+        <Ripple>
+            <Image width="50" height="50" borderRadius="50" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Icon_Digitale_Nachhaltigkeit_Farbig.svg/240px-Icon_Digitale_Nachhaltigkeit_Farbig.svg.png" decodeWidth="400" decodeHeight="400" loadMode="async"></Image>
+        </Ripple>
+        <Ripple backgroundColor="#fff" rippleBorderRadius="30" height="60" width="60">
+            <Image width="50" height="50" borderRadius="50" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Icon_Digitale_Nachhaltigkeit_Farbig.svg/240px-Icon_Digitale_Nachhaltigkeit_Farbig.svg.png" decodeWidth="400" decodeHeight="400" loadMode="async"></Image>
+        </Ripple>
+        <Ripple>
+            <Image width="50" height="50" borderRadius="50" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Icon_Digitale_Nachhaltigkeit_Farbig.svg/240px-Icon_Digitale_Nachhaltigkeit_Farbig.svg.png" decodeWidth="400" decodeHeight="400" loadMode="async"></Image>
+        </Ripple>
+    </StackLayout>
+    
+    
+    <Button text="FDN" (tap)="onToggleCategoryFilter(1)"></Button>
+    <Button text="CH Open" (tap)="onToggleCategoryFilter(2)"></Button>
+    <Button text="Parldigi" (tap)="onToggleCategoryFilter(3)"></Button>
+    <Button text="Digital Impact Network" (tap)="onToggleCategoryFilter(4)"></Button>
+    <Button text="DINAcon" (tap)="onToggleCategoryFilter(5)"></Button>
     <GridLayout tkExampleTitle tkToggleNavButton>
         <RadListView [items]="events" (itemTap)="onEventTap($event.view.bindingContext)">
             <ng-template tkListItemTemplate let-event="item">

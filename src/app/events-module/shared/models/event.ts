@@ -1,4 +1,5 @@
 import { Session } from './session';
+import { Category } from './category';
 
 export interface Event {
     createdAt: string | Date,
@@ -15,5 +16,6 @@ export interface Event {
     url_label: string,
     published: boolean,
     image_path: string,
-    sessions: Session[]
+    sessions: Session[],
+    categories: Category[]
 }
