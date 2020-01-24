@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { EventService } from '../event.service';
 import { Event } from '../../shared/models/event';
 import { of } from 'rxjs';
@@ -16,13 +16,13 @@ import { categories } from 'tns-core-modules/trace/trace';
   styleUrls: ['./event-list.component.css'],
   moduleId: module.id,
 })
-export class EventListComponent implements OnInit {
+export class EventListComponent implements OnInit, OnChanges {
   
   @Input() archive: boolean;
+  @Input() selectedCategoryIds: number[];
   private _events: Event[];
   private _unfilteredEvents: Event[];
   private _loading = true;
-  private _selectedCategoryIds = [];
 
   constructor(
     private _eventService: EventService,
@@ -73,8 +73,12 @@ export class EventListComponent implements OnInit {
     );
   }
 
+  ngOnChanges(): void {
+    this.refreshFilteredEvents();
+  }
+
   refreshFilteredEvents(): void {
-    if(this._selectedCategoryIds.length == 0)
+    if(this.selectedCategoryIds.length == 0)
       this._events = this._unfilteredEvents;
     else
       this._events = this._unfilteredEvents.filter((event) => {
@@ -82,23 +86,12 @@ export class EventListComponent implements OnInit {
 
         if(event.categories) 
           event.categories.forEach((category) => {
-            if(this._selectedCategoryIds.indexOf(category.id) !=-1)
+            if(this.selectedCategoryIds.indexOf(category.id) !=-1)
               found = true;
           });
 
         return found;
       });
-  }
-
-  onToggleCategoryFilter(categoryId: number): void{
-    if(this._selectedCategoryIds.indexOf(categoryId) == -1)
-      // display this category
-      this._selectedCategoryIds.push(categoryId);
-    else
-      // don't display this category
-      this._selectedCategoryIds.splice(this._selectedCategoryIds.indexOf(categoryId), 1);
-
-    this.refreshFilteredEvents();
   }
 
   onEventTap(event: Event): void  {
