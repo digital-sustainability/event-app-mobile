@@ -14,8 +14,7 @@ import { FixHtmlViewDirective } from './directives/fix-html-view.directive';
 @NgModule({
   imports: [NativeScriptCommonModule, HttpClientModule],
   declarations: [
-    ActionBarComponent,
-    FixHtmlViewDirective
+    ActionBarComponent
   ],
   exports: [ActionBarComponent],
   schemas: [NO_ERRORS_SCHEMA],

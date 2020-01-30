@@ -19,6 +19,7 @@ import { SessionService } from './sessions/session.service';
 import { UserFeedbackService } from './presentations/user-feedback.service';
 import { PresentationService } from './presentations/presentation.service';
 import { NativeScriptFormsModule } from 'nativescript-angular';
+import { FixHtmlViewDirective } from '../shared-module/directives/fix-html-view.directive';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { NativeScriptFormsModule } from 'nativescript-angular';
     PresentationDetailComponent,
     SpeakerDetailComponent,
     UserFeedbackComponent,
+    FixHtmlViewDirective
   ],
   providers: [EventService, SessionService, UserFeedbackService, PresentationService],
   schemas: [NO_ERRORS_SCHEMA],
