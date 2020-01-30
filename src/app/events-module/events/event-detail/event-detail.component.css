@@ -6,3 +6,19 @@
     border-color: #E8E8E8;
     border-width: 1;
 }
+
+.category-chip {
+    background-color: #e0e0e0;
+    border-radius: 25;
+    padding: 3;
+    margin-right: 5;
+    margin-bottom: 5;
+}
+.category-chip Image {
+    height: 29;
+}
+.category-chip Label {
+    vertical-align: center;
+    margin-right: 5;
+    margin-left: 5;
+}
