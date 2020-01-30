@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "dev-android": "tns run android --bundle --env.envtype='dev' --env.eventApi='https://14-review-category-o83row.dev.digisus.ch/api/'",
+    "dev-android": "tns run android --bundle --env.envtype='dev' --env.eventApi='https://oscarmeier-event-app-staging.dev.digisus.ch/api/'",
     "dev-ios": "tns run ios --bundle --env.envtype='dev' --env.eventApi='https://oscarmeier-event-app-staging.dev.digisus.ch/api/'"
   },
   "private": true,

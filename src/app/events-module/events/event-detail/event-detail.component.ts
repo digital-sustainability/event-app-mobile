@@ -66,6 +66,17 @@ export class EventDetailComponent implements OnInit {
               this._image_path = event.image_path; // TODO: Cache images
               this._sessions = event.sessions;
 
+              event.categories.forEach((category) => {
+                switch(category.id) {
+                  case 1: category.image_path = '~/images/fdn_logo.png'; break;
+                  case 2: category.image_path = '~/images/chopen.png'; break;
+                  case 3: category.image_path = '~/images/parldigi.png'; break;
+                  case 4: category.image_path = '~/images/digitalimpactnetwork.png'; break;
+                  case 5: category.image_path = '~/images/dinacon.png'; break;
+                  default: category.image_path = '';
+                }
+              });
+
               // add default font to HTML (for iOS)
               if(isIOS && this._event.formatted_description) {
                 this._event.formatted_description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._event.formatted_description + "</span>";

@@ -10,6 +10,12 @@
         <!-- TODO: Add *ngIf for default img and real img once retreived via http -->
         <Image [src]="imagePath" height="150" class="m-b-10" stretch="aspectFill"></Image>
         <StackLayout class="m-x-10">
+          <WrapLayout orientation="horizontal">
+            <StackLayout class="category-chip" *ngFor="let category of event.categories" orientation="horizontal">
+              <Image [src]="category.image_path"></Image>
+              <Label [text]="category.name"></Label>
+            </StackLayout>
+          </WrapLayout>
           <Label
             *ngIf="!isFormattedDescriptionAvailable"
             [text]="event.description"

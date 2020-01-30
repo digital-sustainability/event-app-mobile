@@ -1,4 +1,5 @@
 export interface Category {
     id: number,
-    name: string
+    name: string,
+    image_path?: string
 }
