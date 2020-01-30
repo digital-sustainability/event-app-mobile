@@ -1,7 +1,21 @@
 <!-- Homescreen displays a custom actionbar with logo and no backbutton -->
 <ActionBar class="action-bar">
-    <StackLayout>
-        <Image src="~/images/fdn_logo.png" class="home-icon"></Image>
+    <StackLayout orientation="horizontal">
+        <Ripple [ngClass]="{'active': isCategoryIdSelected(1), 'category-ripple': true}" borderRadius="30" rippleBorderRadius="30" (tap)="onToggleCategoryFilter(1)">
+            <Image src="~/images/fdn_logo.png" class="home-icon"></Image>
+        </Ripple> 
+        <Ripple [ngClass]="{'active': isCategoryIdSelected(2), 'category-ripple': true}" borderRadius="30" rippleBorderRadius="30" (tap)="onToggleCategoryFilter(2)">
+            <Image  src="~/images/chopen.png" class="home-icon"></Image>
+        </Ripple> 
+        <Ripple [ngClass]="{'active': isCategoryIdSelected(3), 'category-ripple': true}" borderRadius="30" rippleBorderRadius="30" (tap)="onToggleCategoryFilter(3)">
+            <Image src="~/images/parldigi.png" class="home-icon"></Image>
+        </Ripple>
+        <Ripple [ngClass]="{'active': isCategoryIdSelected(4), 'category-ripple': true}" borderRadius="30" rippleBorderRadius="30" (tap)="onToggleCategoryFilter(4)">
+            <Image src="~/images/digitalimpactnetwork.png" class="home-icon"></Image>
+        </Ripple>
+        <Ripple [ngClass]="{'active': isCategoryIdSelected(5), 'category-ripple': true}"  borderRadius="30" rippleBorderRadius="30" (tap)="onToggleCategoryFilter(5)">
+            <Image src="~/images/dinacon.png" class="home-icon"></Image>
+        </Ripple> 
     </StackLayout>
     <ActionItem
     ios.position="right"
@@ -18,9 +32,9 @@ tabTextFontSize="14"
 selectedIndex="1"
 androidTabsPosition="bottom">
     <StackLayout *tabItem="{ title: 'Bisherige  Events' }" textWrap="true">
-        <ns-event-list [archive]="true"></ns-event-list>
+        <ns-event-list [archive]="true" [selectedCategoryIds]="selectedCategoryIds"></ns-event-list>
     </StackLayout>
     <StackLayout *tabItem="{ title: 'Kommende  Events'}" textWrap="true">
-        <ns-event-list></ns-event-list>
+        <ns-event-list [selectedCategoryIds]="selectedCategoryIds"></ns-event-list>
     </StackLayout>
 </TabView>

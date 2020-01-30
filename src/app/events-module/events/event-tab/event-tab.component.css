@@ -2,3 +2,14 @@
 TabView {
     
 }
+
+.category-ripple {
+    padding: 2;
+}
+
+.active {
+    border-width: 2;
+    border-color: black;
+    border-radius: 30;
+    padding: 0;
+}
