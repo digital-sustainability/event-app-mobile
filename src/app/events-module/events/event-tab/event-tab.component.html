@@ -2,20 +2,21 @@
 <ActionBar class="action-bar">
     <StackLayout orientation="horizontal">
         <Ripple [ngClass]="{'active': isCategoryIdSelected(1), 'category-ripple': true}" borderRadius="30" rippleBorderRadius="30" (tap)="onToggleCategoryFilter(1)">
-            <Image src="~/images/fdn_logo.png" class="home-icon"></Image>
+            <Image *ngIf="isCategoryIdSelected(1) || selectedCategoryIds.length === 0" src="~/images/fdn_logo.png" class="home-icon"></Image>
+            <Image *ngIf="!(isCategoryIdSelected(1) || selectedCategoryIds.length === 0)" src="~/images/fdn_logo_inactive.png" class="home-icon"></Image>
         </Ripple> 
         <Ripple [ngClass]="{'active': isCategoryIdSelected(2), 'category-ripple': true}" borderRadius="30" rippleBorderRadius="30" (tap)="onToggleCategoryFilter(2)">
-            <Image  src="~/images/chopen.png" class="home-icon"></Image>
+            <Image *ngIf="isCategoryIdSelected(2) || selectedCategoryIds.length === 0" src="~/images/chopen.png" class="home-icon"></Image>
+            <Image *ngIf="!(isCategoryIdSelected(2) || selectedCategoryIds.length === 0)" src="~/images/chopen_inactive.png" class="home-icon"></Image>
         </Ripple> 
         <Ripple [ngClass]="{'active': isCategoryIdSelected(3), 'category-ripple': true}" borderRadius="30" rippleBorderRadius="30" (tap)="onToggleCategoryFilter(3)">
-            <Image src="~/images/parldigi.png" class="home-icon"></Image>
+            <Image *ngIf="isCategoryIdSelected(3) || selectedCategoryIds.length === 0" src="~/images/parldigi.png" class="home-icon"></Image>
+            <Image *ngIf="!(isCategoryIdSelected(3) || selectedCategoryIds.length === 0)" src="~/images/parldigi_inactive.png" class="home-icon"></Image>
         </Ripple>
         <Ripple [ngClass]="{'active': isCategoryIdSelected(4), 'category-ripple': true}" borderRadius="30" rippleBorderRadius="30" (tap)="onToggleCategoryFilter(4)">
-            <Image src="~/images/digitalimpactnetwork.png" class="home-icon"></Image>
+            <Image *ngIf="isCategoryIdSelected(4) || selectedCategoryIds.length === 0" src="~/images/digitalimpactnetwork.png" class="home-icon"></Image>
+            <Image *ngIf="!(isCategoryIdSelected(4) || selectedCategoryIds.length === 0)" src="~/images/digitalimpactnetwork_inactive.png" class="home-icon"></Image>
         </Ripple>
-        <Ripple [ngClass]="{'active': isCategoryIdSelected(5), 'category-ripple': true}"  borderRadius="30" rippleBorderRadius="30" (tap)="onToggleCategoryFilter(5)">
-            <Image src="~/images/dinacon.png" class="home-icon"></Image>
-        </Ripple> 
     </StackLayout>
     <ActionItem
     ios.position="right"
