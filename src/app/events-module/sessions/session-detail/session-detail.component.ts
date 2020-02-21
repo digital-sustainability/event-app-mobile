@@ -46,6 +46,42 @@ export class SessionDetailComponent implements OnInit {
               this._session = session;
               this._sessionTitle = session.title;
 
+              // sort sessions
+              session.presentations.sort((presentationA: Presentation, presentationB: Presentation) => {
+                const positionA = presentationA.position;
+                const idA = presentationA.id;
+                const positionB = presentationB.position;
+                const idB = presentationB.id;
+        
+                let comparatorResult = 0;
+                if (positionA !== 0 && positionB !== 0) {
+                  // Check if one value is greater than the other; if equal, comparatorResult should remain 0.
+                  if (positionA > positionB) {
+                    comparatorResult = 1;
+                  } else if (positionA < positionB) {
+                    comparatorResult = -1;
+                  } else {
+                    if (idA > idB) {
+                      comparatorResult = 1;
+                    } else if (idA < idB) {
+                      comparatorResult = -1;
+                    }
+                  }
+                } else if (positionA !== 0) {
+                  comparatorResult = -1;
+                } else if (positionB !== 0) {
+                  comparatorResult = 1;
+                } else {
+                  if (idA > idB) {
+                    comparatorResult = 1;
+                  } else if (idA < idB) {
+                    comparatorResult = -1;
+                  }
+                }
+        
+                return comparatorResult * 1; // ascending
+              })
+
               // add default font to HTML (for iOS)
               if(isIOS && this._session.formatted_abstract) {
                 this._session.formatted_abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._session.formatted_abstract + "</span>";
