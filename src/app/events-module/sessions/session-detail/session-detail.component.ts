@@ -80,7 +80,7 @@ export class SessionDetailComponent implements OnInit {
                 }
         
                 return comparatorResult * 1; // ascending
-              })
+              });
 
               // add default font to HTML (for iOS)
               if(isIOS && this._session.formatted_abstract) {
@@ -145,7 +145,7 @@ export class SessionDetailComponent implements OnInit {
   }
 
   get presentations(): Presentation[] {
-    return sortBy(this.session.presentations, ['start']);
+    return this.session.presentations;
   }
 
   get labelPresentations(): string {
