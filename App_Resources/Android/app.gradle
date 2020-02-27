@@ -11,6 +11,7 @@
 
 android {  
   defaultConfig {  
+    multiDexEnabled true
     generatedDensities = []
   }  
   aaptOptions {  
