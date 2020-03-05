@@ -49,6 +49,8 @@ export class SettingsComponent implements OnInit {
     },
     error => {
       console.log(`not subscribed: ${error}`);
+      this.feedbackService.show(FeedbackType.Error, 'Fehler', 'Anmelden ist fehlgeschlagen', 5000);
+      this.loading = false;
     })
   }
 
@@ -62,6 +64,8 @@ export class SettingsComponent implements OnInit {
     },
     error => {
       console.log(`not unsubscribed: ${error}`);
+      this.feedbackService.show(FeedbackType.Error, 'Fehler', 'Abmelden ist fehlgeschlagen', 5000);
+      this.loading = false;
     })
   }
 
