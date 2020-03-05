@@ -5,4 +5,10 @@
 	<key>aps-environment</key>
 	<string>development</string>
 </dict>
+<dict>
+    <key>com.apple.keystore.access-keychain-keys</key>
+    <true/>
+    <key>com.apple.keystore.device</key>
+    <true/>
+</dict>
 </plist>
