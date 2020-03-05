@@ -6,6 +6,21 @@ import { RadSideDrawerComponent } from 'nativescript-ui-sidedrawer/angular/side-
 import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
 import { NavigationService } from './shared-module/services/navigation.service';
 import { CardView } from 'nativescript-cardview';
+import { FirebaseService, Topic } from './shared-module/services/firebase.service';
+import { FeedbackService } from './shared-module/services/feedback.service';
+import { FeedbackType } from 'nativescript-feedback';
+import {
+    getBoolean,
+    setBoolean,
+    getNumber,
+    setNumber,
+    getString,
+    setString,
+    hasKey,
+    remove,
+    clear
+} from "tns-core-modules/application-settings";
+import { setBool } from 'nativescript-plugin-firebase/crashlytics/crashlytics';
 registerElement('CardView', () => CardView);
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 registerElement("Ripple", () => require("nativescript-ripple").Ripple);
@@ -26,6 +41,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         private _uiService: UiService,
         private _changeDetectionRef: ChangeDetectorRef,
         private _navigationService: NavigationService,
+        private _firebaseService: FirebaseService,
+        private _feedbackService: FeedbackService
     ) { }
 
     ngOnInit() {
@@ -33,8 +50,22 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
             // prevent drawer to open at initiation, because _drawer exists only after view init
             if (this._drawer) {
                 this._drawer.toggleDrawerState();
-            } 
+            }
         });
+
+        // show in-app push notifications
+        this._firebaseService.onMessageReceived()
+        .subscribe((message) => {
+          this._feedbackService.show(FeedbackType.Info, message.title, message.body,
+            10000);
+        });
+
+        // if first run: subscribe to all topics
+        if(!hasKey('push-default-subscription')) {
+            this.subscribeToAllTopics();
+            
+            setBoolean('push-default-subscription', true);
+        }
     }
     
     // runs after template has been initialized
@@ -54,4 +85,20 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         this.drawerComponent.sideDrawer.toggleDrawerState();
         this._navigationService.navigateTo(`/${destination}`);
     }
+
+    private subscribeToAllTopics(): void {
+        this._firebaseService.getTopics().subscribe((topics: Topic[]) => {
+            topics.forEach((topic) =>
+                this._firebaseService.subscribeToTopic(topic).then(() => {
+                    setBoolean(topic.identifier + '-push-subscribed',true);
+                    console.log("Subscribed", topic);
+                },
+                    error => {
+                    console.log(`not subscribed: ${error}`);
+                })
+            );    
+        }, (error) => {
+            console.log('could not subscribe to all topics');
+        });
+    } 
 }

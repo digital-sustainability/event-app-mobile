@@ -2,6 +2,9 @@ import { Injectable, NgZone } from '@angular/core';
 import * as firebase from 'nativescript-plugin-firebase';
 // import { AuthService } from './auth.service';
 import { Observable, Subject } from 'rxjs';
+import { HttpInterceptorService } from './http-interceptor.service';
+import { HttpClient } from '@angular/common/http';
+import { EnvironmentManagerService } from './environment-manager.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +12,15 @@ import { Observable, Subject } from 'rxjs';
 export class FirebaseService {
 
   private messageSubject$ = new Subject<firebase.Message>();
+  private api: string;
 
-  constructor(private ngZone: NgZone,
-    /*private authService: AuthService*/) { }
+  constructor(
+    private ngZone: NgZone,
+    private http: HttpClient,
+    private _envManager: EnvironmentManagerService,
+    /*private authService: AuthService*/) {
+      this.api = this._envManager.getEventApi();
+    }
 
   initFirebase(): Observable<boolean> {
     return new Observable<boolean>((observer) => {
@@ -45,10 +54,21 @@ export class FirebaseService {
     return this.messageSubject$.asObservable();
   }
 
-  subscribeToTopic(topic: string): Promise<any> {
-    return firebase.subscribeToTopic(topic);
+  subscribeToTopic(topic: Topic): Promise<any> {
+    return firebase.subscribeToTopic(topic.identifier);
   }
-  unsubscribeFromTopic(topic: string): Promise<any> {
-    return firebase.unsubscribeFromTopic(topic);
+  unsubscribeFromTopic(topic: Topic): Promise<any> {
+    return firebase.unsubscribeFromTopic(topic.identifier);
   }
+
+  getTopics(): Observable<Topic[]> {
+    return this.http.get<Topic[]>(`${this.api}topic`);
+  }
+}
+
+export interface Topic {
+  id: number;
+  identifier: string;
+  title: string;
+  description?: string;
 }
