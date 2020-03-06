@@ -21,6 +21,7 @@ import {
     clear
 } from "tns-core-modules/application-settings";
 import { setBool } from 'nativescript-plugin-firebase/crashlytics/crashlytics';
+import { messaging } from "nativescript-plugin-firebase/messaging";
 registerElement('CardView', () => CardView);
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 registerElement("Ripple", () => require("nativescript-ripple").Ripple);
@@ -87,18 +88,22 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private subscribeToAllTopics(): void {
-        this._firebaseService.getTopics().subscribe((topics: Topic[]) => {
-            topics.forEach((topic) =>
-                this._firebaseService.subscribeToTopic(topic).then(() => {
-                    setBoolean(topic.identifier + '-push-subscribed',true);
-                    console.log("Subscribed", topic);
-                },
-                    error => {
-                    console.log(`not subscribed: ${error}`);
-                })
-            );    
-        }, (error) => {
-            console.log('could not subscribe to all topics');
-        });
+        if(messaging.areNotificationsEnabled()) {
+            this._firebaseService.getTopics().subscribe((topics: Topic[]) => {
+                topics.forEach((topic) =>
+                    this._firebaseService.subscribeToTopic(topic).then(() => {
+                        setBoolean(topic.identifier + '-push-subscribed',true);
+                        console.log("Subscribed", topic);
+                    },
+                        error => {
+                        console.log(`not subscribed: ${error}`);
+                    })
+                );    
+            }, (error) => {
+                console.log('could not subscribe to all topics');
+            });
+        } else {
+            console.log('not allowed to subscribe')
+        }
     } 
 }
