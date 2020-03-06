@@ -16,6 +16,7 @@ import { Switch } from 'tns-core-modules/ui/switch/switch';
 import { FeedbackService } from '../../services/feedback.service';
 import { FeedbackType } from 'nativescript-feedback';
 import { setBool } from 'nativescript-plugin-firebase/crashlytics/crashlytics';
+import { messaging, Message } from "nativescript-plugin-firebase/messaging";
 
 @Component({
   selector: 'ns-settings',
@@ -86,5 +87,9 @@ export class SettingsComponent implements OnInit {
       else 
         this.onUnsubscribeFromTopic(topic);
     }
+  }
+
+  get pushEnabled() {
+    return messaging.areNotificationsEnabled();
   }
 }
