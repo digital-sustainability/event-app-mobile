@@ -5,6 +5,8 @@ import { Observable, Subject } from 'rxjs';
 import { HttpInterceptorService } from './http-interceptor.service';
 import { HttpClient } from '@angular/common/http';
 import { EnvironmentManagerService } from './environment-manager.service';
+import { NavigationService } from './navigation.service';
+import { RouterExtensions } from 'nativescript-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +20,7 @@ export class FirebaseService {
     private ngZone: NgZone,
     private http: HttpClient,
     private _envManager: EnvironmentManagerService,
+    private _navigationService: NavigationService,
     /*private authService: AuthService*/) {
       this.api = this._envManager.getEventApi();
     }
@@ -33,6 +36,24 @@ export class FirebaseService {
             console.log('[Firebase] onMessageReceivedCallback:', { message });
             this.ngZone.run(() => {
               this.messageSubject$.next(message);
+
+              // redirection after tap on push notification
+              if(!message.foreground && message.data.redirectPath && message.data.redirectId) {
+                switch (message.data.redirectPath) {
+                  case 'event':
+                    this._navigationService.navigateTo('/event', message.data.redirectId);
+                    break;
+                  case 'session':
+                    this._navigationService.navigateTo('/session', message.data.redirectId);
+                    break;
+                  case 'presentation':
+                    this._navigationService.navigateTo('/presentation', message.data.redirectId);
+                    break;
+                  case 'speaker':
+                    this._navigationService.navigateTo('/speaker', message.data.redirectId);
+                    break;
+                }
+              }
             });
           }
         })

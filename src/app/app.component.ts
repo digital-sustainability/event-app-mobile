@@ -58,7 +58,24 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         this._firebaseService.onMessageReceived()
         .subscribe((message) => {
           this._feedbackService.show(FeedbackType.Info, message.title, message.body,
-            10000);
+            10000, () => {
+                if (message.data.redirectPath && message.data.redirectId) {
+                    switch (message.data.redirectPath) {
+                      case 'event':
+                        this._navigationService.navigateTo('/event', message.data.redirectId);
+                        break;
+                      case 'session':
+                        this._navigationService.navigateTo('/session', message.data.redirectId);
+                        break;
+                      case 'presentation':
+                        this._navigationService.navigateTo('/presentation', message.data.redirectId);
+                        break;
+                      case 'speaker':
+                        this._navigationService.navigateTo('/speaker', message.data.redirectId);
+                        break;
+                    }
+                  }
+            });
         });
 
         // if first run: subscribe to all topics

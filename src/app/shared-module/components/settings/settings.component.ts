@@ -25,6 +25,7 @@ import { messaging, Message } from "nativescript-plugin-firebase/messaging";
 })
 export class SettingsComponent implements OnInit {
   loading = false;
+  pushkey = '';
   topics: Topic[] = [];
 
   constructor(
@@ -33,7 +34,7 @@ export class SettingsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    return this.firebaseService.getTopics().subscribe((topics) => {
+    this.firebaseService.getTopics().subscribe((topics) => {
       this.topics = topics;
     }, (err) => {
       this.feedbackService.show(FeedbackType.Error, 'Fehler', 'Push-Topics konnten nicht geladen werden', 5000);

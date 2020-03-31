@@ -15,10 +15,10 @@
                     ></Label>
                     <Label *ngIf="!isFormattedAbstractAvailable" [text]="presentation.abstract" class="body m-y-10" textWrap="true"></Label>
                     <HtmlView *ngIf="isFormattedAbstractAvailable" nsFixHtmlView [html]="presentation.formatted_abstract" class="body m-y-10 htmlview"></HtmlView>
-                    <Label *ngIf="speakers.length > 0" text="Speakers" class="h2"></Label>
                 </StackLayout>
                 <StackLayout class="m-x-10">
-                    <StackLayout *ngIf="!loading && speakers">
+                    <StackLayout *ngIf="!loading && speakers && speakers.length > 0">
+                        <Label text="Speakers" class="h2"></Label>
                         <StackLayout *ngFor="let sp of speakers">
                             <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
                                 <Image
@@ -27,7 +27,8 @@
                                 [src]="getPhotoUrlOfSpeaker(sp)"
                                 class="img-circle"
                                 rowSpan="2"
-                                stretch="aspectFill">
+                                stretch="aspectFill"
+                                tintColor="#1c7272">
                                 </Image>
                                 <Label
                                 row="0"
@@ -45,7 +46,6 @@
                                 class="list-group-item-text"
                                 ></Label>
                             </GridLayout>
-                            <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Session } from '../shared/models/session';
 import { Observable } from 'rxjs';
 import { EnvironmentManagerService } from '~/app/shared-module/services/environment-manager.service';
+import { Speaker } from '../shared/models/speaker';
 
 @Injectable()
 export class SessionService {
@@ -18,5 +19,9 @@ export class SessionService {
 
   getSession(id: number): Observable<Session> {
     return this._http.get<Session>(`${this._api}session/${id}`);
+  }
+
+  getSpeakers(id: number): Observable<Speaker[]> {
+    return this._http.get<Speaker[]>(`${this._api}session/${id}/speaker`);
   }
 }

@@ -9,6 +9,7 @@ import { NavigationService } from '~/app/shared-module/services/navigation.servi
 import { Presentation } from '../../shared/models/presentation';
 import { sortBy } from 'lodash';
 import * as moment from 'moment';
+import { Speaker } from '../../shared/models/speaker';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class SessionDetailComponent implements OnInit {
   private _session: Session;
   private _sessionTitle = 'Session';
   private _loading = true;
+  speakers: Speaker[];
 
   constructor(
     private _sessionService: SessionService,
@@ -86,6 +88,13 @@ export class SessionDetailComponent implements OnInit {
               if(isIOS && this._session.formatted_abstract) {
                 this._session.formatted_abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._session.formatted_abstract + "</span>";
               }
+
+              // get speakers
+              this._sessionService.getSpeakers(this._session.id).subscribe(
+                (speakers) => {
+                  this.speakers = speakers;
+                }
+              )
 
               this._loading = false;
             },
@@ -160,5 +169,17 @@ export class SessionDetailComponent implements OnInit {
       return true;
     else 
       return false;
+  }
+
+  getPhotoUrlOfSpeaker(speaker: Speaker) {
+    if (!speaker.photo_url) {
+      return '~/images/load_homer.png';
+    }
+    return speaker.photo_url
+  }
+
+  onSpeakerTap(id: number): void {
+    // TODO: Same navigation/animation bug as above!
+    this._navigationService.navigateTo('/speaker', id);
   }
 }
