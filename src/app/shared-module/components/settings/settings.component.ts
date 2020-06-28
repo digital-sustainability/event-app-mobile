@@ -17,6 +17,7 @@ import { FeedbackService } from '../../services/feedback.service';
 import { FeedbackType } from 'nativescript-feedback';
 import { setBool } from 'nativescript-plugin-firebase/crashlytics/crashlytics';
 import { messaging, Message } from "nativescript-plugin-firebase/messaging";
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'ns-settings',
@@ -30,7 +31,8 @@ export class SettingsComponent implements OnInit {
 
   constructor(
     private firebaseService: FirebaseService,
-    private feedbackService: FeedbackService  
+    private feedbackService: FeedbackService,
+    private navigationService: NavigationService
   ) { }
 
   ngOnInit() {
@@ -92,5 +94,19 @@ export class SettingsComponent implements OnInit {
 
   get pushEnabled() {
     return messaging.areNotificationsEnabled();
+  }
+
+  isFirstRun() {
+    return !hasKey('first-run');
+  }
+
+  onContinue() {
+    setBoolean('first-run', true);
+
+    this.navigationService.navigateTo('/home');
+  }
+
+  getTitle(): string {
+    return this.isFirstRun() ? 'Konfiguration' : 'Einstellungen';
   }
 }

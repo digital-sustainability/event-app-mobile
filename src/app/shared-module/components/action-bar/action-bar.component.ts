@@ -26,6 +26,10 @@ export class ActionBarComponent implements OnInit {
     this._routerExtensions.back();
   }
 
+  canGoBack() {
+    return this._routerExtensions.canGoBack();
+  }
+
   onToggleMenu(): void {
     this._uiService.toggleDrawer();
   }

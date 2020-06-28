@@ -78,11 +78,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
             });
         });
 
-        // if first run: subscribe to all topics
-        if(!hasKey('push-default-subscription')) {
-            this.subscribeToAllTopics();
-            
-            setBoolean('push-default-subscription', true);
+        // if first run: show settings
+        if(!hasKey('first-run')) {
+            this._navigationService.navigateTo('/settings');
         }
     }
     
@@ -103,24 +101,4 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         this.drawerComponent.sideDrawer.toggleDrawerState();
         this._navigationService.navigateTo(`/${destination}`);
     }
-
-    private subscribeToAllTopics(): void {
-        if(messaging.areNotificationsEnabled()) {
-            this._firebaseService.getTopics().subscribe((topics: Topic[]) => {
-                topics.forEach((topic) =>
-                    this._firebaseService.subscribeToTopic(topic).then(() => {
-                        setBoolean(topic.identifier + '-push-subscribed',true);
-                        console.log("Subscribed", topic);
-                    },
-                        error => {
-                        console.log(`not subscribed: ${error}`);
-                    })
-                );    
-            }, (error) => {
-                console.log('could not subscribe to all topics');
-            });
-        } else {
-            console.log('not allowed to subscribe')
-        }
-    } 
 }

@@ -12,8 +12,8 @@
     }
   },
   "scripts": {
-    "dev-android": "tns run android --bundle --env.envtype=dev --env.eventApi=https://14-review-event-sess-kaupwb.dev.digisus.ch/api/",
-    "dev-ios": "tns run ios --bundle --env.envtype='dev' --env.eventApi='https://14-review-change-pos-t4ygka.dev.digisus.ch/api/'"
+    "dev-android": "tns run android --bundle --env.envtype=dev --env.eventApi=https://event-app.fdn.iwi.unibe.ch/api/",
+    "dev-ios": "tns run ios --bundle --env.envtype='dev' --env.eventApi='https://event-app.fdn.iwi.unibe.ch/api/'"
   },
   "private": true,
   "description": "NativeScript Application",
