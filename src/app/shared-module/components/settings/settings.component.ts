@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, NgZone } from '@angular/core';
 import { FirebaseService, Topic } from '../../services/firebase.service';
 import {
   getBoolean,
@@ -18,6 +18,7 @@ import { FeedbackType } from 'nativescript-feedback';
 import { setBool } from 'nativescript-plugin-firebase/crashlytics/crashlytics';
 import { messaging, Message } from "nativescript-plugin-firebase/messaging";
 import { NavigationService } from '../../services/navigation.service';
+import * as app from 'tns-core-modules/application';
 
 @Component({
   selector: 'ns-settings',
@@ -27,13 +28,22 @@ import { NavigationService } from '../../services/navigation.service';
 export class SettingsComponent implements OnInit {
   loading = false;
   pushkey = '';
+  pushEnabled: boolean;
   topics: Topic[] = [];
 
   constructor(
     private firebaseService: FirebaseService,
     private feedbackService: FeedbackService,
-    private navigationService: NavigationService
-  ) { }
+    private navigationService: NavigationService,
+    ngZone: NgZone
+  ) {
+    // update push enabled flag after the permission dialog in ios was closed
+    app.on(app.resumeEvent, (args: app.ApplicationEventData) => {
+      ngZone.run(() => {
+        this.pushEnabled = messaging.areNotificationsEnabled();
+      });
+    });
+  }
 
   ngOnInit() {
     this.firebaseService.getTopics().subscribe((topics) => {
@@ -41,6 +51,8 @@ export class SettingsComponent implements OnInit {
     }, (err) => {
       this.feedbackService.show(FeedbackType.Error, 'Fehler', 'Push-Topics konnten nicht geladen werden', 5000);
     });
+
+    this.pushEnabled = messaging.areNotificationsEnabled();
   }
 
   onSubscribeToTopic(topic: Topic) {
@@ -90,10 +102,6 @@ export class SettingsComponent implements OnInit {
       else 
         this.onUnsubscribeFromTopic(topic);
     }
-  }
-
-  get pushEnabled() {
-    return messaging.areNotificationsEnabled();
   }
 
   isFirstRun() {
