@@ -111,7 +111,7 @@ export class SettingsComponent implements OnInit {
   onContinue() {
     setBoolean('first-run', true);
 
-    this.navigationService.navigateTo('/home');
+    this.navigationService.navigateTo('/home', undefined, true);
   }
 
   getTitle(): string {
