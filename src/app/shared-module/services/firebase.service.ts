@@ -38,8 +38,8 @@ export class FirebaseService {
               this.messageSubject$.next(message);
 
               // redirection after tap on push notification
-              if(!message.foreground && message.data.redirectPath && message.data.redirectId) {
-                switch (message.data.redirectPath) {
+              if(!message.foreground && message.data.redirectTo && message.data.redirectId) {
+                switch (message.data.redirectTo) {
                   case 'event':
                     this._navigationService.navigateTo('/event', message.data.redirectId);
                     break;

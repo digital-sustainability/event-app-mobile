@@ -54,19 +54,19 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         });
 
-        // Init firebase
+        //  init firebase
         this._firebaseService.initFirebase()
-        .subscribe((complete) => {
-        if (complete) {
-            console.log('firebase initialized')
-        }
-        }, (err) => {
-        console.log('[Firebase]', err);
-        if (err === 'Firebase already initialized') {
-            
-        } else {
+            .subscribe((complete) => {
+                if (complete) {
+                console.log('firebase initialized')
+                }
+            }, (err) => {
+                console.log('[Firebase]', err);
+                if (err === 'Firebase already initialized') {
+                
+                } else {
 
-        }
+                }
         });
 
         // show in-app push notifications
@@ -74,8 +74,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         .subscribe((message) => {
           this._feedbackService.show(FeedbackType.Info, message.title, message.body,
             10000, () => {
-                if (message.data.redirectPath && message.data.redirectId) {
-                    switch (message.data.redirectPath) {
+                if (message.data.redirectTo && message.data.redirectId) {
+                    switch (message.data.redirectTo) {
                       case 'event':
                         this._navigationService.navigateTo('/event', message.data.redirectId);
                         break;
