@@ -54,6 +54,21 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         });
 
+        // Init firebase
+        this._firebaseService.initFirebase()
+        .subscribe((complete) => {
+        if (complete) {
+            console.log('firebase initialized')
+        }
+        }, (err) => {
+        console.log('[Firebase]', err);
+        if (err === 'Firebase already initialized') {
+            
+        } else {
+
+        }
+        });
+
         // show in-app push notifications
         this._firebaseService.onMessageReceived()
         .subscribe((message) => {

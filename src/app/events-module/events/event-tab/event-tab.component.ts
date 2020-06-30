@@ -17,7 +17,7 @@ export class EventTabComponent {
     private firebaseService: FirebaseService
   ) {
     // Init firebase
-    this.firebaseService.initFirebase()
+    /*this.firebaseService.initFirebase()
       .subscribe((complete) => {
         if (complete) {
           console.log('firebase initialized')
@@ -29,7 +29,7 @@ export class EventTabComponent {
         } else {
 
         }
-      });
+      });*/
   }
 
   onToggleMenu(): void {
