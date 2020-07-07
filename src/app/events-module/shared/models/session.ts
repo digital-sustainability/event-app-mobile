@@ -10,6 +10,7 @@ export interface Session {
     formatted_abstract: string,
     room: string,
     label_presentations: string,
+    position: number,
     event_id: Event,
     presentations: Presentation[]
 }

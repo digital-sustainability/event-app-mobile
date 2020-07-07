@@ -7,6 +7,7 @@ import { FdnModule } from './fdn-module/fdn.module';
 import { EventsModule } from './events-module/events.module';
 
 import { AppComponent } from './app.component';
+import { SettingsComponent } from './shared-module/components/settings/settings.component';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -22,7 +23,7 @@ import { AppComponent } from './app.component';
     FdnModule,
     EventsModule,
     SharedModule.forRoot(),
-    NativeScriptUISideDrawerModule,
+    NativeScriptUISideDrawerModule
   ],
   declarations: [
     AppComponent,

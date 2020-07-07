@@ -10,11 +10,14 @@ import { NavigationService } from './services/navigation.service';
 import { UiService } from './services/ui.service';
 import { EnvironmentManagerService } from './services/environment-manager.service';
 import { FixHtmlViewDirective } from './directives/fix-html-view.directive';
+import { SettingsComponent } from './components/settings/settings.component';
+import { FirebaseService } from './services/firebase.service';
 
 @NgModule({
   imports: [NativeScriptCommonModule, HttpClientModule],
   declarations: [
-    ActionBarComponent
+    ActionBarComponent,
+    SettingsComponent
   ],
   exports: [ActionBarComponent],
   schemas: [NO_ERRORS_SCHEMA],
@@ -27,6 +30,7 @@ export class SharedModule {
         NavigationService,
         UiService,
         FeedbackService,
+        FirebaseService,
         CsrfService,
         {
           provide: HTTP_INTERCEPTORS,

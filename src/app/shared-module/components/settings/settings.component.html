@@ -1,0 +1,20 @@
+<ns-action-bar [title]="getTitle()"></ns-action-bar>
+<GridLayout rows="*, auto" cols="*">
+        <ScrollView height="100%" row="0" column="0">
+            <StackLayout class="p-10">
+                <Label class="h3" text="Benachrichtigungen"></Label>
+                <Label text="Legen Sie fest, welche Benachrichtigungen Sie von uns erhalten möchten." textWrap="true"></Label>
+                <ActivityIndicator [busy]="loading"></ActivityIndicator>
+                <Label *ngIf="!pushEnabled" text="Push-Benachrichtigungen nicht zugelassen. Gehen Sie in die Einstellungen, um Push-Benachrichtigungen für diese App zu aktivieren." textWrap="true" class="warning-label"></Label>
+                <ng-container *ngIf="pushEnabled">
+                    <GridLayout *ngFor="let topic of topics" rows="auto,auto" columns="*, auto" class="m-y-10">
+                        <Label row="0" col="0" class="switch-text" [text]="topic.title"></Label>
+                        <Switch row="0" col="1" [isEnabled]="!loading" [checked]="isSubscribed(topic)" (checkedChange)="onToggleSwitch($event, topic)"></Switch>
+                        <Label row="1" col="0" [text]="topic.description" textWrap="true"></Label>
+                    </GridLayout>
+                </ng-container>
+            </StackLayout>
+        </ScrollView>
+    <Button *ngIf="isFirstRun()" class="btn btn-primary" (tap)="onContinue()" row="1" column="0" text="Weiter"></Button>
+</GridLayout>
+

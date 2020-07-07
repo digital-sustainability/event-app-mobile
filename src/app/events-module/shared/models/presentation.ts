@@ -13,6 +13,7 @@ export interface Presentation {
     start: string | Date,
     end: string | Date,
     access_token: string,
+    position: number,
     room: string,
     speakers: Speaker[],
     feedbacks: any[],

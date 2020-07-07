@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Directive } from '@angular/co
 import { Image } from 'tns-core-modules/ui/image';
 import { RouterExtensions, PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { Event } from '../../shared/models/event';
 import { Speaker } from '../../shared/models/speaker';
 import { EventService } from '../event.service';
@@ -77,6 +77,42 @@ export class EventDetailComponent implements OnInit {
                 }
               });
 
+              // sort sessions
+              event.sessions.sort((sessionA: Session, sessionB: Session) => {
+                const positionA = sessionA.position;
+                const idA = sessionA.id;
+                const positionB = sessionB.position;
+                const idB = sessionB.id;
+        
+                let comparatorResult = 0;
+                if (positionA !== 0 && positionB !== 0) {
+                  // Check if one value is greater than the other; if equal, comparatorResult should remain 0.
+                  if (positionA > positionB) {
+                    comparatorResult = 1;
+                  } else if (positionA < positionB) {
+                    comparatorResult = -1;
+                  } else {
+                    if (idA > idB) {
+                      comparatorResult = 1;
+                    } else if (idA < idB) {
+                      comparatorResult = -1;
+                    }
+                  }
+                } else if (positionA !== 0) {
+                  comparatorResult = -1;
+                } else if (positionB !== 0) {
+                  comparatorResult = 1;
+                } else {
+                  if (idA > idB) {
+                    comparatorResult = 1;
+                  } else if (idA < idB) {
+                    comparatorResult = -1;
+                  }
+                }
+        
+                return comparatorResult * 1; // ascending
+              });
+
               // add default font to HTML (for iOS)
               if(isIOS && this._event.formatted_description) {
                 this._event.formatted_description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._event.formatted_description + "</span>";
@@ -96,7 +132,7 @@ export class EventDetailComponent implements OnInit {
           .subscribe(
             (speakers: Speaker[]) => this._speakers = speakers,
             err => console.error(err)
-          )
+          );
       });
     // instantiate maps plugin
     this.directions = new Directions();
@@ -169,15 +205,7 @@ export class EventDetailComponent implements OnInit {
   }
 
   onSpeakerTap(id: number): void {
-    // TODO: Same navigation/animation bug as above!
-    this._routerExtensions.navigate(['/speaker', id], {
-      animated: false,
-        transition: {
-        name: "slide",
-        duration: 200,
-        curve: "ease"
-      }
-    });
+    this._navigationService.navigateTo('/speaker', id);
   }
 
   get event(): Event {

@@ -81,15 +81,7 @@ export class PresentationDetailComponent implements OnInit {
   // }
 
   onSpeakerTap(id: number): void {
-    // TODO: Same navigation/animation bug as above!
-    this._routerExtensions.navigate(['/speaker', id], {
-      animated: false,
-      transition: {
-        name: "slide",
-        duration: 200,
-        curve: "ease"
-      }
-    });
+    this._navigationService.navigateTo('/speaker', id);
   }
 
   onFabTap(): void {

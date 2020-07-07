@@ -13,14 +13,15 @@ export class NavigationService {
     private activeRoute: ActivatedRoute
   ) { }
 
-  navigateTo(path: string, id?: number): void {
+  navigateTo(path: string, id?: number, clearHistory?:boolean): void {
     const config = {
       animated: true,
       transition: {
         name: "slide",
         duration: 200,
         curve: "ease"
-      }
+      },
+      clearHistory: clearHistory || false
     };
     if (id) {
       this._routerExtensions.navigate([path, id], config);

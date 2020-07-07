@@ -9,6 +9,7 @@ import { NavigationService } from '~/app/shared-module/services/navigation.servi
 import { Presentation } from '../../shared/models/presentation';
 import { sortBy } from 'lodash';
 import * as moment from 'moment';
+import { Speaker } from '../../shared/models/speaker';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class SessionDetailComponent implements OnInit {
   private _session: Session;
   private _sessionTitle = 'Session';
   private _loading = true;
+  speakers: Speaker[];
 
   constructor(
     private _sessionService: SessionService,
@@ -46,10 +48,53 @@ export class SessionDetailComponent implements OnInit {
               this._session = session;
               this._sessionTitle = session.title;
 
+              // sort sessions
+              session.presentations.sort((presentationA: Presentation, presentationB: Presentation) => {
+                const positionA = presentationA.position;
+                const idA = presentationA.id;
+                const positionB = presentationB.position;
+                const idB = presentationB.id;
+        
+                let comparatorResult = 0;
+                if (positionA !== 0 && positionB !== 0) {
+                  // Check if one value is greater than the other; if equal, comparatorResult should remain 0.
+                  if (positionA > positionB) {
+                    comparatorResult = 1;
+                  } else if (positionA < positionB) {
+                    comparatorResult = -1;
+                  } else {
+                    if (idA > idB) {
+                      comparatorResult = 1;
+                    } else if (idA < idB) {
+                      comparatorResult = -1;
+                    }
+                  }
+                } else if (positionA !== 0) {
+                  comparatorResult = -1;
+                } else if (positionB !== 0) {
+                  comparatorResult = 1;
+                } else {
+                  if (idA > idB) {
+                    comparatorResult = 1;
+                  } else if (idA < idB) {
+                    comparatorResult = -1;
+                  }
+                }
+        
+                return comparatorResult * 1; // ascending
+              });
+
               // add default font to HTML (for iOS)
               if(isIOS && this._session.formatted_abstract) {
                 this._session.formatted_abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._session.formatted_abstract + "</span>";
               }
+
+              // get speakers
+              this._sessionService.getSpeakers(this._session.id).subscribe(
+                (speakers) => {
+                  this.speakers = speakers;
+                }
+              )
 
               this._loading = false;
             },
@@ -109,7 +154,7 @@ export class SessionDetailComponent implements OnInit {
   }
 
   get presentations(): Presentation[] {
-    return sortBy(this.session.presentations, ['start']);
+    return this.session.presentations;
   }
 
   get labelPresentations(): string {
@@ -124,5 +169,17 @@ export class SessionDetailComponent implements OnInit {
       return true;
     else 
       return false;
+  }
+
+  getPhotoUrlOfSpeaker(speaker: Speaker) {
+    if (!speaker.photo_url) {
+      return '~/images/load_homer.png';
+    }
+    return speaker.photo_url
+  }
+
+  onSpeakerTap(id: number): void {
+    // TODO: Same navigation/animation bug as above!
+    this._navigationService.navigateTo('/speaker', id);
   }
 }

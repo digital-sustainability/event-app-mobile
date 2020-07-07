@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { isAndroid } from 'tns-core-modules/platform';
 import { UiService } from '~/app/shared-module/services/ui.service';
+import { FirebaseService } from '~/app/shared-module/services/firebase.service';
 
 @Component({
   selector: 'ns-event-tab',
@@ -13,7 +14,23 @@ export class EventTabComponent {
   selectedCategoryIds = [];
   constructor(
     private _uiService: UiService,
-  ) { }
+    private firebaseService: FirebaseService
+  ) {
+    // Init firebase
+    /*this.firebaseService.initFirebase()
+      .subscribe((complete) => {
+        if (complete) {
+          console.log('firebase initialized')
+        }
+      }, (err) => {
+        console.log('[Firebase]', err);
+        if (err === 'Firebase already initialized') {
+          
+        } else {
+
+        }
+      });*/
+  }
 
   onToggleMenu(): void {
     this._uiService.toggleDrawer();
