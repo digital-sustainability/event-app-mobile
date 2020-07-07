@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { EnvironmentManagerService } from './environment-manager.service';
 import { NavigationService } from './navigation.service';
 import { RouterExtensions } from 'nativescript-angular';
+import { isIOS } from 'tns-core-modules/platform';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class FirebaseService {
               this.messageSubject$.next(message);
 
               // redirection after tap on push notification
-              if(!message.foreground && message.data.redirectTo && message.data.redirectId) {
+              if((isIOS || !message.foreground) && message.data.redirectTo && message.data.redirectId) {
                 switch (message.data.redirectTo) {
                   case 'event':
                     this._navigationService.navigateTo('/event', message.data.redirectId);

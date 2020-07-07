@@ -9,6 +9,7 @@ import { CardView } from 'nativescript-cardview';
 import { FirebaseService, Topic } from './shared-module/services/firebase.service';
 import { FeedbackService } from './shared-module/services/feedback.service';
 import { FeedbackType } from 'nativescript-feedback';
+import { isAndroid } from 'tns-core-modules/platform'
 import {
     getBoolean,
     setBoolean,
@@ -22,6 +23,7 @@ import {
 } from "tns-core-modules/application-settings";
 import { setBool } from 'nativescript-plugin-firebase/crashlytics/crashlytics';
 import { messaging } from "nativescript-plugin-firebase/messaging";
+import { PlatformLocation } from '@angular/common';
 registerElement('CardView', () => CardView);
 registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
 registerElement("Ripple", () => require("nativescript-ripple").Ripple);
@@ -70,28 +72,30 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         });
 
         // show in-app push notifications
-        this._firebaseService.onMessageReceived()
-        .subscribe((message) => {
-          this._feedbackService.show(FeedbackType.Info, message.title, message.body,
-            10000, () => {
-                if (message.data.redirectTo && message.data.redirectId) {
-                    switch (message.data.redirectTo) {
-                      case 'event':
-                        this._navigationService.navigateTo('/event', message.data.redirectId);
-                        break;
-                      case 'session':
-                        this._navigationService.navigateTo('/session', message.data.redirectId);
-                        break;
-                      case 'presentation':
-                        this._navigationService.navigateTo('/presentation', message.data.redirectId);
-                        break;
-                      case 'speaker':
-                        this._navigationService.navigateTo('/speaker', message.data.redirectId);
-                        break;
+        if (isAndroid) {
+            this._firebaseService.onMessageReceived().subscribe((message) => {
+                this._feedbackService.show(FeedbackType.Info, message.title, message.body,
+                        10000, () => {
+                    if (message.data.redirectTo && message.data.redirectId) {
+                        switch (message.data.redirectTo) {
+                            case 'event':
+                                this._navigationService.navigateTo('/event', message.data.redirectId);
+                                break;
+                            case 'session':
+                                this._navigationService.navigateTo('/session', message.data.redirectId);
+                                break;
+                            case 'presentation':
+                                this._navigationService.navigateTo('/presentation', message.data.redirectId);
+                                break;
+                            case 'speaker':
+                                this._navigationService.navigateTo('/speaker', message.data.redirectId);
+                                break;
+                        }
                     }
-                  }
+                });
             });
-        });
+        }
+        
 
         // if first run: show settings
         if(!hasKey('first-run')) {
