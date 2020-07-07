@@ -4,16 +4,16 @@
       "android": "ch.digisus.event",
       "ios": "ch.digisus.events"
     },
-    "tns-ios": {
-      "version": "6.1.0"
-    },
     "tns-android": {
       "version": "6.2.0"
+    },
+    "tns-ios": {
+      "version": "6.3.0"
     }
   },
   "scripts": {
     "dev-android": "tns run android --bundle --env.envtype=dev --env.eventApi=https://oscarmeier-event-app-staging.dev.digisus.ch/api/",
-    "dev-ios": "tns run ios --bundle --env.envtype='dev' --env.eventApi='https://oscarmeier-event-app-staging.dev.digisus.ch/api/' --provision='event-app'"
+    "dev-ios": "tns run ios --bundle --env.envtype='dev' --env.eventApi='https://oscarmeier-event-app-staging.dev.digisus.ch/api/' --provision='EventApp Dev'"
   },
   "private": true,
   "description": "NativeScript Application",
