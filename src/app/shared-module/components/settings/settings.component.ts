@@ -19,6 +19,8 @@ import { setBool } from 'nativescript-plugin-firebase/crashlytics/crashlytics';
 import { messaging, Message } from "nativescript-plugin-firebase/messaging";
 import { NavigationService } from '../../services/navigation.service';
 import * as app from 'tns-core-modules/application';
+import { isIOS, isAndroid } from 'tns-core-modules/platform';
+import { EnvironmentManagerService } from '../../services/environment-manager.service';
 
 @Component({
   selector: 'ns-settings',
@@ -116,5 +118,9 @@ export class SettingsComponent implements OnInit {
 
   getTitle(): string {
     return this.isFirstRun() ? 'Konfiguration' : 'Einstellungen';
+  }
+
+  forceCrash() {
+    throw 'asdf';
   }
 }

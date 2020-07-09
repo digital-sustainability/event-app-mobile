@@ -7,7 +7,7 @@
     <ScrollView height="100%">
       <StackLayout>
         <StackLayout class="m-x-10">
-          <Label [text]="sessionTitle" class="h1 m-t-10" textWrap="true"></Label>
+          <Label [text]="sessionTitle" class="h2 m-t-10" textWrap="true"></Label>
           <Label
             *ngIf="!isFormattedAbstractAvailable"
             [text]="session.abstract"
@@ -20,12 +20,11 @@
             [html]="session.formatted_abstract"
             class="body m-b-10 htmlview"
           ></HtmlView>
-          <GridLayout rows="auto,auto,auto" columns="auto, *">
+          <GridLayout *ngIf="session.room" rows="auto,auto,auto" columns="auto, *">
             <Label text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="2"></Label>
             <Label [text]="session.room" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
           </GridLayout>
-          <StackLayout row="1" class="hr-light m-t-15 m-b-15"></StackLayout>
-          <Label [text]="labelPresentations" class="h2" textWrap="true"></Label>
+          <Label *ngIf="presentations.length" [text]="labelPresentations" class="h3" textWrap="true"></Label>
         </StackLayout>
         <StackLayout *ngFor="let p of presentations">
           <GridLayout
@@ -59,8 +58,8 @@
           </GridLayout>
         </StackLayout>
 
-        <StackLayout class="m-x-10" *ngIf="speakers && speakers.length > 0">
-          <Label text="Speakers" class="h2 m-t-15"></Label>
+        <StackLayout class="m-x-10 m-b-20" *ngIf="speakers && speakers.length > 0">
+          <Label text="Speakers" class="h3 m-t-15"></Label>
           <StackLayout *ngFor="let sp of speakers">
             <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
               <Image

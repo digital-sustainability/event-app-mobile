@@ -103,7 +103,7 @@
         </StackLayout>
 
         <StackLayout *ngIf="event.sessions.length > 0">
-          <Label text="Sessions" class="h2 m-x-10 m-t-15"></Label>
+          <Label text="Sessions" class="h3 m-x-10 m-t-15"></Label>
           <StackLayout *ngFor="let s of event.sessions">
             <GridLayout
               columns="*, auto"
@@ -126,8 +126,8 @@
           </StackLayout>
         </StackLayout>
 
-        <StackLayout *ngIf="speakers && speakers.length > 0" class="m-x-10">
-          <Label text="Speakers" class="h2 m-t-15"></Label>
+        <StackLayout *ngIf="speakers && speakers.length > 0" class="m-x-10 m-b-20">
+          <Label text="Speakers" class="h3 m-t-15"></Label>
           <StackLayout *ngFor="let sp of speakers">
             <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
               <Image
