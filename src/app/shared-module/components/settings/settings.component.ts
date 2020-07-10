@@ -51,6 +51,7 @@ export class SettingsComponent implements OnInit {
     this.firebaseService.getTopics().subscribe((topics) => {
       this.topics = topics;
     }, (err) => {
+      console.log(err);
       this.feedbackService.show(FeedbackType.Error, 'Fehler', 'Push-Topics konnten nicht geladen werden', 5000);
     });
 
