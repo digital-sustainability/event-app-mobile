@@ -13,6 +13,7 @@
   },
   "scripts": {
     "dev-android": "tns run android --bundle --env.envtype=dev --env.eventApi='https://event-app.fdn.iwi.unibe.ch/api/'",
+    "dev-android-windows": "tns run android --bundle --env.envtype=dev --env.eventApi=https://447d30fe685d.ngrok.io/api/",
     "dev-ios": "tns run ios --bundle --env.envtype='dev' --env.eventApi='https://oscarmeier-event-app-staging.dev.digisus.ch/api/' --provision='EventApp Dev'"
   },
   "private": true,
