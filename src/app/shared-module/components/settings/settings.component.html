@@ -13,7 +13,7 @@
                         <Label row="1" col="0" [text]="topic.description" textWrap="true"></Label>
                     </GridLayout>
                 </ng-container>
-                <Button class="btn btn-primary" (tap)="forceCrash()" row="1" column="0" text="Force Crash"></Button>
+                <!--<Button class="btn btn-primary" (tap)="forceCrash()" row="1" column="0" text="Force Crash"></Button>-->
             </StackLayout>
         </ScrollView>
     <Button *ngIf="isFirstRun()" class="btn btn-primary" (tap)="onContinue()" row="1" column="0" text="Weiter"></Button>
