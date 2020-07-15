@@ -9,6 +9,8 @@ import { isIOS } from 'tns-core-modules/platform';
 import { NavigationService } from '~/app//shared-module/services/navigation.service';
 import { PresentationService } from '../presentation.service';
 import * as moment from 'moment';
+import { Event } from '../../shared/models/event';
+import { Session } from '../../shared/models/session';
 
 @Component({
   selector: 'ns-speaker-detail',
@@ -33,8 +35,7 @@ export class SpeakerDetailComponent implements OnInit {
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
         const speakerId = params.id;
-        // const speakerId = 1; // TODO: Remove – Testing only
-        this._presentationService.getSpeaker(speakerId)
+        this._presentationService.getSpeaker(speakerId, true)
           .pipe(
             catchError(err => {
               // TODO: Create generally shared error handler
@@ -60,7 +61,7 @@ export class SpeakerDetailComponent implements OnInit {
   }
 
   onPresentationTap(id: number): void {
-    this._navigationService.navigateTo('/presentation', id);
+    this._navigationService.navigateTo('/presentation', id, false, true);
   }
 
   getStartTime(time: string | Date): string {
@@ -79,6 +80,10 @@ export class SpeakerDetailComponent implements OnInit {
       return `, ${room}`;
     }
     return '';
+  }
+
+  getEventInfo(presentation: Presentation): string {
+    return (<Session>presentation.session_id).event_id.title;
   }
 
   get speaker(): Speaker {

@@ -86,7 +86,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
                                         this._navigationService.navigateTo('/session', message.data.redirectId);
                                         break;
                                     case 'presentation':
-                                        this._navigationService.navigateTo('/presentation', message.data.redirectId);
+                                        this._navigationService.navigateTo('/presentation', message.data.redirectId, false, true);
                                         break;
                                     case 'speaker':
                                         this._navigationService.navigateTo('/speaker', message.data.redirectId);

@@ -14,5 +14,9 @@ export class FixHtmlViewDirective implements AfterViewInit {
         this.htmlView.nativeElement.requestLayout();
       }, 0);
     }
+
+    if (this.htmlView && this.htmlView.nativeElement.android) {
+      this.htmlView.nativeElement.android.setAutoLinkMask(0);
+    }
   }
 }

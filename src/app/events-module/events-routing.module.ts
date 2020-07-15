@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'event/:id', component: EventDetailComponent },
   { path: 'session/:id', component: SessionDetailComponent },
   { path: 'presentation/:id', component: PresentationDetailComponent },
+  { path: 'presentation/:id/:nonHierarchical', component: PresentationDetailComponent },
   { path: 'speaker/:id', component: SpeakerDetailComponent },
   { path: 'feedback/:id', component: UserFeedbackComponent },
 ];

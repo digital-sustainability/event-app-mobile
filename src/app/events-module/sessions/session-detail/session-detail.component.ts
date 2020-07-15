@@ -153,6 +153,14 @@ export class SessionDetailComponent implements OnInit {
     return this._sessionTitle;
   }
 
+  get eventTitle(): string {
+    if(this._session) {
+      return this._session.event_id.title;
+    } else {
+      return '';
+    }
+  }
+
   get presentations(): Presentation[] {
     return this.session.presentations;
   }
