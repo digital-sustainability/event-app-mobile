@@ -44,6 +44,10 @@ export class SettingsComponent implements OnInit {
     app.on(app.resumeEvent, (args: app.ApplicationEventData) => {
       ngZone.run(() => {
         this.pushEnabled = messaging.areNotificationsEnabled();
+
+        if(isIOS && this.isFirstRun()) {
+          this.subscribeToAllTopics()
+        }
       });
     });
   }
@@ -52,7 +56,7 @@ export class SettingsComponent implements OnInit {
     this.firebaseService.getTopics().subscribe((topics) => {
       this.topics = topics;
 
-      if(this.isFirstRun() && this.pushEnabled) {
+      if(isAndroid && this.isFirstRun()) {
         this.subscribeToAllTopics();
       }
     }, (err) => {
