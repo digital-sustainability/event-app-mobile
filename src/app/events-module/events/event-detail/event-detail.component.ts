@@ -208,6 +208,25 @@ export class EventDetailComponent implements OnInit {
     this._navigationService.navigateTo('/speaker', id);
   }
 
+  getDuration(start: string | Date, end: string | Date): string {
+    if (start && end) {
+      return `${moment.utc(start).locale('de').format('HH:mm')} Uhr – ${moment.utc(end).locale('de').format('HH:mm')} Uhr`;
+    } else {
+      return 'tbd'
+    }
+  }
+
+  concatRoom(room: string): string {
+    if (room) {
+      return `, ${room}`;
+    }
+    return '';
+  }
+
+  onPresentationTap(id: number): void {
+    this._navigationService.navigateTo('/presentation', id);
+  }
+
   get event(): Event {
     return this._event;
   }

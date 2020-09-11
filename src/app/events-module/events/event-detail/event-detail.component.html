@@ -103,7 +103,7 @@
         </StackLayout>
 
         <StackLayout *ngIf="event.sessions.length > 0">
-          <Label text="Sessions" class="h2 m-x-10 m-t-15"></Label>
+          <Label text="Sessions" class="h3 m-x-10 m-t-15"></Label>
           <StackLayout *ngFor="let s of event.sessions">
             <GridLayout
               columns="*, auto"
@@ -126,8 +126,62 @@
           </StackLayout>
         </StackLayout>
 
+        <StackLayout *ngIf="event.presentations.length > 0">
+          <Label text="Präsentationen" class="h3 m-x-10 m-t-15"></Label>
+          <StackLayout *ngFor="let p of event.presentations">
+            <GridLayout
+              columns="*, auto"
+              rows="auto, auto"
+              class="occasion-item"
+              orientation="vertical"
+              (tap)="onPresentationTap(p.id)"
+            >
+              <Label col="0" row="0" [text]="p.title" class="h4" textWrap="true"></Label>
+              <Label
+                col="0"
+                row="1"
+                [text]="getDuration(p.start, p.end) + concatRoom(p.room)"
+                class="body"
+                textWrap="true"
+              ></Label>
+              <Label
+                text="&#xf054;"
+                col="1"
+                rowspan="2"
+                class="fa ic-arrow-right goright-icon"
+                horizontalAlignment="center"
+              ></Label>
+            </GridLayout>
+          </StackLayout>
+        </StackLayout>
+
+        <StackLayout *ngIf="event.speakers && event.speakers.length > 0" class="m-x-10">
+          <Label text="Moderation" class="h3 m-t-15"></Label>
+          <StackLayout *ngFor="let sp of event.speakers">
+            <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
+              <Image
+                row="0"
+                col="0"
+                [src]="getPhotoUrlOfSpeaker(sp)"
+                class="img-circle"
+                rowSpan="2"
+                stretch="aspectFill"
+              ></Image>
+              <Label
+                row="0"
+                col="1"
+                [text]="sp.first_name + ' ' + sp.last_name"
+                textWrap="true"
+                class="list-group-item-heading speaker-title"
+                verticalAlignment="bottom"
+              ></Label>
+              <Label row="1" col="1" [text]="sp.position" textWrap="true" class="list-group-item-text"></Label>
+            </GridLayout>
+          </StackLayout>
+        </StackLayout>
+
         <StackLayout *ngIf="speakers && speakers.length > 0" class="m-x-10">
-          <Label text="Speakers" class="h2 m-t-15"></Label>
+          <Label text="Speakers" class="h3 m-t-15"></Label>
           <StackLayout *ngFor="let sp of speakers">
             <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
               <Image

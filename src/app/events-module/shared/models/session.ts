@@ -1,5 +1,6 @@
 import { Presentation } from './presentation';
 import { Event } from './event';
+import { Speaker } from './speaker';
 
 export interface Session {
     createdAt: string | Date,
@@ -12,5 +13,6 @@ export interface Session {
     label_presentations: string,
     position: number,
     event_id: Event,
-    presentations: Presentation[]
+    presentations: Presentation[],
+    speakers?: Speaker[]
 }

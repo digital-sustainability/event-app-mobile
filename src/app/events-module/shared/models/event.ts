@@ -1,5 +1,7 @@
 import { Session } from './session';
 import { Category } from './category';
+import { Speaker } from './speaker';
+import { Presentation } from './presentation';
 
 export interface Event {
     createdAt: string | Date,
@@ -17,5 +19,7 @@ export interface Event {
     published: boolean,
     image_path: string,
     sessions: Session[],
-    categories: Category[]
+    categories: Category[],
+    speakers?: Speaker[],
+    presentations?: Presentation[];
 }
