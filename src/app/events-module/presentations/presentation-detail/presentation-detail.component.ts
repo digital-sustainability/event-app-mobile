@@ -58,8 +58,14 @@ export class PresentationDetailComponent implements OnInit {
           )
           .subscribe(
             (presentation: Presentation) => {
+              console.log(presentation)
               this._presentation = presentation;
-              this._event = (<Session>presentation.session_id).event_id;
+              if(this._presentation.event_id) {
+                this._event = (<Event>presentation.event_id);
+              } else {
+                this._event = (<Session>presentation.session_id).event_id;
+              }
+              
               this._presentationTitle = presentation.title;
               this._speakers = presentation.speakers;
               this.checkSpeakerPhoto();
