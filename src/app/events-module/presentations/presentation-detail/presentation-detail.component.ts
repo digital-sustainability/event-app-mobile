@@ -58,7 +58,6 @@ export class PresentationDetailComponent implements OnInit {
           )
           .subscribe(
             (presentation: Presentation) => {
-              console.log(presentation)
               this._presentation = presentation;
               if(this._presentation.event_id) {
                 this._event = (<Event>presentation.event_id);

@@ -9,8 +9,8 @@
         <!-- src="https://cdn4.explainthatstuff.com/www-conceptual-representation.png" -->
         <!-- TODO: Add *ngIf for default img and real img once retreived via http -->
         <Image [src]="imagePath" height="150" class="m-b-10" stretch="aspectFill"></Image>
-        <StackLayout class="m-x-10">
-          <WrapLayout orientation="horizontal">
+        <GridLayout class="m-x-10" rows="auto, auto, auto, auto, auto, auto" columns="*">
+          <WrapLayout row="0" col="0" orientation="horizontal">
             <StackLayout class="category-chip" *ngFor="let category of event.categories" orientation="horizontal">
               <Image [src]="category.image_path"></Image>
               <Label [text]="category.name"></Label>
@@ -22,13 +22,12 @@
             class="body m-b-10"
             textWrap="true"
           ></Label>
-          <HtmlView
-            *ngIf="isFormattedDescriptionAvailable"
-            nsFixHtmlView
-            [html]="event.formatted_description"
-            class="body m-b-10 htmlview"
-          ></HtmlView>
-          <StackLayout *ngIf="isOneDayEvent(event.start, event.end)">
+          <WebView row="1" col="0"  #webview *ngIf="isFormattedDescriptionAvailable" [src]="event.formatted_description"
+            class="body m-b-10 htmlview" [height]="descriptionHeight" (layoutChanged)="onDescriptionLayoutChanged($event)"
+            (loaded)="onWebViewLoaded($event)">
+          </WebView>
+          <Button row="2" col="0" *ngIf="descriptionHeight !== 'auto'" (tap)="expandDescription()" text="Alles anzeigen" class="-outline"></Button>
+          <StackLayout row="3" col="0" *ngIf="isOneDayEvent(event.start, event.end)">
             <GridLayout rows="auto,auto,auto" columns="auto, *">
               <Label text="Zeit" class="p-l-15 m-r-20 font-weight-bold"></Label>
               <Label
@@ -56,7 +55,7 @@
               ></Label>
             </GridLayout>
           </StackLayout>
-          <StackLayout *ngIf="!isOneDayEvent(event.start, event.end)">
+          <StackLayout row="4" col="0" *ngIf="!isOneDayEvent(event.start, event.end)">
             <GridLayout rows="*,*,*,*" columns="auto, auto">
               <Label text="Beginn" class="p-l-15 m-r-20 font-weight-bold"></Label>
               <Label
@@ -92,7 +91,7 @@
               ></Label>
             </GridLayout>
           </StackLayout>
-          <StackLayout *ngIf="mapsAvailable && event.location">
+          <StackLayout row="5" col="0" *ngIf="mapsAvailable && event.location">
             <Button class="btn btn-outline m-t-30" height="50" text="Maps öffnen" (tap)="onOpenMaps(event.location)">
               <FormattedString>
                 <Span text="Adresse in Maps öffnen" style="font-size: 18;"></Span>
@@ -100,7 +99,7 @@
               </FormattedString>
             </Button>
           </StackLayout>
-        </StackLayout>
+        </GridLayout>
 
         <StackLayout *ngIf="event.sessions.length > 0">
           <Label text="Sessions" class="h3 m-x-10 m-t-15"></Label>
