@@ -39,7 +39,7 @@ export class FirebaseService {
               this.messageSubject$.next(message);
 
               // redirection after tap on push notification
-              if((isIOS || !message.foreground) && message.data.redirectTo && message.data.redirectId) {
+              if(!message.foreground && message.data.redirectTo && message.data.redirectId) {
                 switch (message.data.redirectTo) {
                   case 'event':
                     this._navigationService.navigateTo('/event', message.data.redirectId);
@@ -48,7 +48,7 @@ export class FirebaseService {
                     this._navigationService.navigateTo('/session', message.data.redirectId);
                     break;
                   case 'presentation':
-                    this._navigationService.navigateTo('/presentation', message.data.redirectId);
+                    this._navigationService.navigateTo('/presentation', message.data.redirectId, false, true);
                     break;
                   case 'speaker':
                     this._navigationService.navigateTo('/speaker', message.data.redirectId);

@@ -17,11 +17,19 @@ export class PresentationService {
     this._api = this._evnManager.getEventApi();
   }
 
-  getPresentation(id: number): Observable<Presentation> {
-    return this._http.get<Presentation>(`${this._api}presentation/${id}`);
+  getPresentation(id: number, populated?:boolean): Observable<Presentation> {
+    if(populated) {
+      return this._http.get<Presentation>(`${this._api}presentation/${id}/populated`);
+    } else {
+      return this._http.get<Presentation>(`${this._api}presentation/${id}`);
+    }
   }
 
-  getSpeaker(id: number): Observable<Speaker> {
-    return this._http.get<Speaker>(`${this._api}speaker/${id}`);
+  getSpeaker(id: number, populated?: boolean): Observable<Speaker> {
+    if(populated) {
+      return this._http.get<Speaker>(`${this._api}speaker/${id}/populated`);
+    } else {
+      return this._http.get<Speaker>(`${this._api}speaker/${id}`);
+    }
   }
 }

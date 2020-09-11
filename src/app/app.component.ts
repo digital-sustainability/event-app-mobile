@@ -74,25 +74,27 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         // show in-app push notifications
         if (isAndroid) {
             this._firebaseService.onMessageReceived().subscribe((message) => {
-                this._feedbackService.show(FeedbackType.Info, message.title, message.body,
+                if(message.foreground) {
+                    this._feedbackService.show(FeedbackType.Info, message.title, message.body,
                         10000, () => {
-                    if (message.data.redirectTo && message.data.redirectId) {
-                        switch (message.data.redirectTo) {
-                            case 'event':
-                                this._navigationService.navigateTo('/event', message.data.redirectId);
-                                break;
-                            case 'session':
-                                this._navigationService.navigateTo('/session', message.data.redirectId);
-                                break;
-                            case 'presentation':
-                                this._navigationService.navigateTo('/presentation', message.data.redirectId);
-                                break;
-                            case 'speaker':
-                                this._navigationService.navigateTo('/speaker', message.data.redirectId);
-                                break;
-                        }
-                    }
-                });
+                            if (message.data.redirectTo && message.data.redirectId) {
+                                switch (message.data.redirectTo) {
+                                    case 'event':
+                                        this._navigationService.navigateTo('/event', message.data.redirectId);
+                                        break;
+                                    case 'session':
+                                        this._navigationService.navigateTo('/session', message.data.redirectId);
+                                        break;
+                                    case 'presentation':
+                                        this._navigationService.navigateTo('/presentation', message.data.redirectId, false, true);
+                                        break;
+                                    case 'speaker':
+                                        this._navigationService.navigateTo('/speaker', message.data.redirectId);
+                                        break;
+                                }
+                            }
+                        });
+                }
             });
         }
         

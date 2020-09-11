@@ -147,14 +147,16 @@ export class EventDetailComponent implements OnInit {
     // this._navigationService.navigateTo('/session', tappedSession.id);
     // TODO: Somehow the code above does not work for (ONLY!) this component -> check
     // Routing does not work if animation is enabled!?
-    this._routerExtensions.navigate(['/session', id], {
+    /*this._routerExtensions.navigate(['/session', id], {
       animated: false,
       transition: {
         name: "slide",
         duration: 200,
         curve: "ease"
       }
-    });
+    });*/
+
+    this._navigationService.navigateTo('/session', id);
 
   }
   

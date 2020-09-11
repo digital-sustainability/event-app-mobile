@@ -8,6 +8,8 @@ import { EventsModule } from './events-module/events.module';
 
 import { AppComponent } from './app.component';
 import { SettingsComponent } from './shared-module/components/settings/settings.component';
+import { SentryModule } from 'nativescript-sentry/angular';
+
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -23,7 +25,8 @@ import { SettingsComponent } from './shared-module/components/settings/settings.
     FdnModule,
     EventsModule,
     SharedModule.forRoot(),
-    NativeScriptUISideDrawerModule
+    NativeScriptUISideDrawerModule,
+    SentryModule.forRoot({dsn: 'https://ec68f07ae7524d90aa2c963b29d1c457:bd75313a4cfd44a49273dfc8310836c4@sentry.fdn-tools.inf.unibe.ch/5'})
   ],
   declarations: [
     AppComponent,

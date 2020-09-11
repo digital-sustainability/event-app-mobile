@@ -11,7 +11,7 @@ import {
   remove,
   clear
 } from "tns-core-modules/application-settings";
-import { EventData } from 'tns-core-modules/data/observable/observable';
+import { EventData, Observable } from 'tns-core-modules/data/observable/observable';
 import { Switch } from 'tns-core-modules/ui/switch/switch';
 import { FeedbackService } from '../../services/feedback.service';
 import { FeedbackType } from 'nativescript-feedback';
@@ -19,6 +19,9 @@ import { setBool } from 'nativescript-plugin-firebase/crashlytics/crashlytics';
 import { messaging, Message } from "nativescript-plugin-firebase/messaging";
 import { NavigationService } from '../../services/navigation.service';
 import * as app from 'tns-core-modules/application';
+import { isIOS, isAndroid } from 'tns-core-modules/platform';
+import { EnvironmentManagerService } from '../../services/environment-manager.service';
+import { forkJoin, zip, from } from 'rxjs';
 
 @Component({
   selector: 'ns-settings',
@@ -41,6 +44,10 @@ export class SettingsComponent implements OnInit {
     app.on(app.resumeEvent, (args: app.ApplicationEventData) => {
       ngZone.run(() => {
         this.pushEnabled = messaging.areNotificationsEnabled();
+
+        if(isIOS && this.isFirstRun()) {
+          this.subscribeToAllTopics()
+        }
       });
     });
   }
@@ -48,17 +55,47 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.firebaseService.getTopics().subscribe((topics) => {
       this.topics = topics;
+
+      if(isAndroid && this.isFirstRun()) {
+        this.subscribeToAllTopics();
+      }
     }, (err) => {
+      console.log(err);
       this.feedbackService.show(FeedbackType.Error, 'Fehler', 'Push-Topics konnten nicht geladen werden', 5000);
     });
 
     this.pushEnabled = messaging.areNotificationsEnabled();
   }
 
+  subscribeToAllTopics() {
+    this.loading = true;
+
+    const prom = [];
+    this.topics.forEach((topic: Topic) => {
+      prom.push(this.subscribeToTopic(topic));
+    });
+
+    Promise.all(prom).then(() => {
+      console.log("Subscribed to all topics");
+      this.topics.forEach((topic: Topic) => {
+        setBoolean(topic.identifier + '-push-subscribed', true);
+      });
+
+      this.loading = false;
+    }, (error) => {
+      console.log(`not subscribed: ${error}`);
+      this.loading = false;
+    })
+  }
+
+  subscribeToTopic(topic: Topic): Promise<Topic> {
+    return this.firebaseService.subscribeToTopic(topic);
+  }
+
   onSubscribeToTopic(topic: Topic) {
     this.loading = true;
 
-    this.firebaseService.subscribeToTopic(topic).then(() => {
+    this.subscribeToTopic(topic).then(() => {
       console.log("Subscribed");
       setBoolean(topic.identifier + '-push-subscribed', true);
       this.loading = false;
@@ -116,5 +153,9 @@ export class SettingsComponent implements OnInit {
 
   getTitle(): string {
     return this.isFirstRun() ? 'Konfiguration' : 'Einstellungen';
+  }
+
+  forceCrash() {
+    throw 'asdf';
   }
 }

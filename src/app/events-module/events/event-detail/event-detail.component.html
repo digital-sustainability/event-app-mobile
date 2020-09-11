@@ -113,7 +113,7 @@
               (tap)="onSessionTap(s.id)"
             >
               <Label column="0" row="0" class="h4" textWrap="true" [text]="s.title"></Label>
-              <Label column="0" row="1" class="body" textWrap="true" [text]="s.room"></Label>
+              <Label *ngIf="s.room" column="0" row="1" class="body" textWrap="true" [text]="s.room"></Label>
               <Label
                 column="1"
                 rowspan="2"
@@ -155,7 +155,7 @@
           </StackLayout>
         </StackLayout>
 
-        <StackLayout *ngIf="event.speakers && event.speakers.length > 0" class="m-x-10">
+        <StackLayout *ngIf="event.speakers && event.speakers.length > 0" class="m-x-10 m-b-20">
           <Label text="Moderation" class="h3 m-t-15"></Label>
           <StackLayout *ngFor="let sp of event.speakers">
             <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
@@ -180,7 +180,7 @@
           </StackLayout>
         </StackLayout>
 
-        <StackLayout *ngIf="speakers && speakers.length > 0" class="m-x-10">
+        <StackLayout *ngIf="speakers && speakers.length > 0" class="m-x-10 m-b-20">
           <Label text="Speakers" class="h3 m-t-15"></Label>
           <StackLayout *ngFor="let sp of speakers">
             <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">

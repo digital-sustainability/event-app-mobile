@@ -12,8 +12,9 @@
     }
   },
   "scripts": {
-    "dev-android": "tns run android --bundle --env.envtype=dev --env.eventApi=https://oscarmeier-event-app-staging.dev.digisus.ch/api/",
-    "dev-ios": "tns run ios --bundle --env.envtype='dev' --env.eventApi='https://oscarmeier-event-app-staging.dev.digisus.ch/api/' --provision='EventApp Dev'"
+    "dev-android": "tns run android --bundle --env.envtype=dev --env.eventApi='https://event-app.fdn.iwi.unibe.ch/api/'",
+    "dev-android-windows": "tns run android --bundle --env.envtype=dev --env.eventApi=https://447d30fe685d.ngrok.io/api/",
+    "dev-ios": "tns run ios --bundle --env.envtype='dev' --env.eventApi='https://event-app.fdn.iwi.unibe.ch/api/' --provision='EventApp Dev'"
   },
   "private": true,
   "description": "NativeScript Application",
@@ -40,6 +41,7 @@
     "nativescript-iqkeyboardmanager": "^1.5.1",
     "nativescript-plugin-firebase": "^10.4.0",
     "nativescript-ripple": "^2.2.1",
+    "nativescript-sentry": "^1.9.1",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-ui-dataform": "5.0.0",
     "nativescript-ui-listview": "^7.1.0",

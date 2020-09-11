@@ -13,20 +13,24 @@ export class NavigationService {
     private activeRoute: ActivatedRoute
   ) { }
 
-  navigateTo(path: string, id?: number, clearHistory?:boolean): void {
+  navigateTo(path: string, id?: number, clearHistory?:boolean, nonHierarchical?:boolean): void {
     const config = {
       animated: true,
       transition: {
         name: "slide",
-        duration: 200,
+        duration: 150,
         curve: "ease"
       },
       clearHistory: clearHistory || false
     };
-    if (id) {
+    if (id && !nonHierarchical) {
       this._routerExtensions.navigate([path, id], config);
     } else {
       this._routerExtensions.navigate([path], config);
+    }
+
+    if (id && nonHierarchical) {
+      this._routerExtensions.navigate([path, id, true], config);
     }
   }
 

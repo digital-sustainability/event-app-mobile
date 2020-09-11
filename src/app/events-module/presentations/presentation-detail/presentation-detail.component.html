@@ -1,55 +1,87 @@
-<ns-action-bar [title]="presentationTitle"></ns-action-bar>
+<ns-action-bar [title]="eventTitle"></ns-action-bar>
 <GridLayout>
     <StackLayout visibility="{{ loading ? 'visible' : 'collapsed' }}" verticalAlignment="center">
         <ActivityIndicator class="m-t-20" rowSpan="3" busy="true"></ActivityIndicator>
     </StackLayout>
     <StackLayout *ngIf="!loading && presentation && speakers">
-        <ScrollView height="100%" class="m-x-10">
+        <ScrollView height="100%">
             <StackLayout>
-                <StackLayout>
-                    <Label [text]="presentation.title" class="h1 m-y-10" textWrap="true"></Label>
-                    <Label
-                    [text]="getStartTime(presentation.start) + concatRoom(presentation.room)"
-                    class="text m-y-10"
-                    textWrap="true"
-                    ></Label>
+                <StackLayout class="p-x-10">
+                    <Label [text]="presentation.title" class="h3 m-y-10" textWrap="true"></Label>
                     <Label *ngIf="!isFormattedAbstractAvailable" [text]="presentation.abstract" class="body m-y-10" textWrap="true"></Label>
                     <HtmlView *ngIf="isFormattedAbstractAvailable" nsFixHtmlView [html]="presentation.formatted_abstract" class="body m-y-10 htmlview"></HtmlView>
                 </StackLayout>
-                <StackLayout class="m-x-10">
-                    <StackLayout *ngIf="!loading && speakers && speakers.length > 0">
-                        <Label text="Speakers" class="h2"></Label>
-                        <StackLayout *ngFor="let sp of speakers">
-                            <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
-                                <Image
-                                row="0"
-                                col="0"
-                                [src]="getPhotoUrlOfSpeaker(sp)"
-                                class="img-circle"
-                                rowSpan="2"
-                                stretch="aspectFill">
-                                </Image>
-                                <Label
-                                row="0"
-                                col="1"
-                                [text]="sp.first_name + ' ' + sp.last_name"
-                                textWrap="true"
-                                verticalAlignment="bottom"
-                                class="list-group-item-heading"
-                                ></Label>
-                                <Label
-                                row="1"
-                                col="1"
-                                [text]="sp.position"
-                                textWrap="true"
-                                class="list-group-item-text"
-                                ></Label>
-                            </GridLayout>
-                        </StackLayout>
-                    </StackLayout>
+                <StackLayout *ngIf="nonHierarchical">
+                    <GridLayout
+                        columns="*, auto"
+                        rows="auto, auto, auto"
+                        class="occasion-item"
+                        orientation="vertical"
+                        (tap)="onNavigateToEvent()">
+                        <Label col="0" row="0" [text]="eventTitle" class="h4" textWrap="true"></Label>
+                        <Label
+                        col="0"
+                        row="1"
+                        *ngIf="hasEventDate()"
+                        [text]="getEventDate()"
+                        class="body"
+                        textWrap="true"
+                        ></Label>
+                        <Label
+                        col="0"
+                        row="2"
+                        *ngIf="hasEventLocation()"
+                        [text]="getEventLocation()"
+                        class="body"
+                        textWrap="true"
+                        ></Label>
+                        <Label
+                        text="&#xf054;"
+                        col="1"
+                        rowspan="3"
+                        class="fa ic-arrow-right goright-icon"
+                        horizontalAlignment="center"
+                        ></Label>
+                    </GridLayout>
                 </StackLayout>
-                <StackLayout *ngIf="isUrl(presentation.slides)">
+                <GridLayout class="p-x-10" rows="auto, auto" columns="auto, *">
+                    <Label text="Zeit" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="0" col="0"></Label>
+                    <Label [text]="getDateString(presentation.start, presentation.end)" class="text p-b-10" textWrap="true" row="0" col="1"></Label>
+                    <Label *ngIf="presentation.room" text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="1" col="0"></Label>
+                    <Label *ngIf="presentation.room" [text]="presentation.room" row="0" col="0" class="text p-b-10" textWrap="true" row="1" col="1"></Label>
+                </GridLayout>
+                <StackLayout class="p-x-10" *ngIf="isUrl(presentation.slides)">
                     <Button (tap)="onShowSlides(presentation.slides)" class="btn btn-primary" text="Slides anschauen"></Button>
+                </StackLayout>
+                <StackLayout *ngIf="!loading && speakers && speakers.length > 0" class="p-x-10 m-b-20">
+                    <Label text="Speakers" class="h3"></Label>
+                    <StackLayout *ngFor="let sp of speakers">
+                        <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
+                            <Image
+                            row="0"
+                            col="0"
+                            [src]="getPhotoUrlOfSpeaker(sp)"
+                            class="img-circle"
+                            rowSpan="2"
+                            stretch="aspectFill">
+                            </Image>
+                            <Label
+                            row="0"
+                            col="1"
+                            [text]="sp.first_name + ' ' + sp.last_name"
+                            textWrap="true"
+                            verticalAlignment="bottom"
+                            class="list-group-item-heading"
+                            ></Label>
+                            <Label
+                            row="1"
+                            col="1"
+                            [text]="sp.position"
+                            textWrap="true"
+                            class="list-group-item-text"
+                            ></Label>
+                        </GridLayout>
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

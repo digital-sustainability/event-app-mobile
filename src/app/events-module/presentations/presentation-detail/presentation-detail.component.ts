@@ -14,6 +14,8 @@ import { openUrl } from 'tns-core-modules/utils/utils'
 import { orderBy } from 'lodash';
 import * as moment from 'moment';
 import * as dialogs from "tns-core-modules/ui/dialogs";
+import { Session } from '../../shared/models/session';
+import { Event } from '../../shared/models/event';
 // Second argument is optional.
 
 @Component({
@@ -26,7 +28,9 @@ export class PresentationDetailComponent implements OnInit {
   private _presentationTitle = 'Präsentation'
   private _loading = true;
   private _presentation: Presentation;
+  private _event: Event;
   private _speakers: Speaker[];
+  nonHierarchical: boolean = false;
   
   constructor(
     private _presentationService: PresentationService,
@@ -40,8 +44,12 @@ export class PresentationDetailComponent implements OnInit {
       .pipe(switchMap(activatedRoute => activatedRoute.params))
       .forEach(params => {
         const presentationId = params.id;
-        // const presentationId = 1; // TODO: Remove – Testing only
-        this._presentationService.getPresentation(presentationId)
+
+        if(params.nonHierarchical) {
+          this.nonHierarchical = true;
+        } 
+
+        this._presentationService.getPresentation(presentationId, true)
         .pipe(
           catchError(err => {
             // TODO: Create generally shared error handler
@@ -51,6 +59,7 @@ export class PresentationDetailComponent implements OnInit {
           .subscribe(
             (presentation: Presentation) => {
               this._presentation = presentation;
+              this._event = (<Session>presentation.session_id).event_id;
               this._presentationTitle = presentation.title;
               this._speakers = presentation.speakers;
               this.checkSpeakerPhoto();
@@ -115,22 +124,15 @@ export class PresentationDetailComponent implements OnInit {
     return speaker.photo_url
   }
 
-  getStartTime(time: string | Date): string {
-    if (time) {
-      if (moment(time).isSame(moment(), 'day')) {
-        return 'Heute, ' + moment.utc(time).format('HH:mm') + ' Uhr';
+  getDateString(start: string | Date, end: string | Date): string {
+    if (start && end) {
+      if (moment(start).isSame(moment(), 'day')) {
+        return 'Heute, ' + moment.utc(start).format('HH:mm') + '-' + moment.utc(end).format('HH:mm') + ' Uhr';
       }
-      return moment.utc(time).locale('de').format('D. MMMM YYYY, HH:mm') + ' Uhr';
+      return moment.utc(start).locale('de').format('D. MMMM YYYY, HH:mm') + '-' + moment.utc(end).format('HH:mm') + ' Uhr';
     } else {
       return ' - '
     }
-  }
-
-  concatRoom(room: string): string {
-    if (room) {
-      return `, ${room}`;
-    }
-    return '';
   }
 
   // TODO: CHECK BEFORE NEXT EVENT!
@@ -145,6 +147,36 @@ export class PresentationDetailComponent implements OnInit {
     return str && str.length && regex.test(str);
   }
 
+  hasEventDate(): boolean {
+    if (this._event && this._event.start && this._event.end) {
+      return true 
+    } else {
+      return false;
+    }
+  }
+  hasEventLocation(): boolean {
+    if (this._event.location) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  getEventDate(): string {
+    const beginning = moment.utc(this._event.start).locale('de');
+    const ending = moment.utc(this._event.end).locale('de');
+    return `${beginning.format('dddd, D. MMMM YYYY von H')}h bis ${ending.format('H')}h`;
+  }
+  getEventLocation(): string {
+    return this._event.location;
+  }
+
+  concatRoom(room: string): string {
+    if (room) {
+      return `, ${room}`;
+    }
+    return '';
+  }
+
   get speakers(): Speaker[] {
     return orderBy(this._speakers, ['first_name']);
   }
@@ -157,6 +189,14 @@ export class PresentationDetailComponent implements OnInit {
     return this._presentationTitle;
   }
 
+  get eventTitle(): string {
+    if(this._event) {
+      return this._event.title;
+    } else {
+      return '';
+    }
+  }
+
   get loading(): boolean {
     return this._loading;
   }
@@ -166,6 +206,10 @@ export class PresentationDetailComponent implements OnInit {
       return true;
     else 
       return false;
+  }
+
+  onNavigateToEvent() {
+    this._navigationService.navigateTo('/event', this._event.id);
   }
 
 }

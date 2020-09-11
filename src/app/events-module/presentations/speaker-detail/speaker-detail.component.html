@@ -22,7 +22,7 @@
         <StackLayout *ngFor="let p of speaker.presentations">
           <GridLayout
             columns="*, auto"
-            rows="auto, auto"
+            rows="auto, auto, auto"
             class="occasion-item"
             orientation="vertical"
             (tap)="onPresentationTap(p.id)"
@@ -31,6 +31,13 @@
             <Label
               col="0"
               row="1"
+              class="body"
+              textWrap="true"
+              [text]="getEventInfo(p)"
+            ></Label>
+            <Label
+              col="0"
+              row="2"
               class="body"
               textWrap="true"
               [text]="getStartTime(p.start) + concatRoom(p.room)"
