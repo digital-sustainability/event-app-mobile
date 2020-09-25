@@ -10,6 +10,7 @@ import { Presentation } from '../../shared/models/presentation';
 import { sortBy } from 'lodash';
 import * as moment from 'moment';
 import { Speaker } from '../../shared/models/speaker';
+import { EventData, View } from 'tns-core-modules/ui/page';
 
 
 @Component({
@@ -23,6 +24,9 @@ export class SessionDetailComponent implements OnInit {
   private _sessionTitle = 'Session';
   private _loading = true;
   speakers: Speaker[];
+
+  abstractHeight: string = 'auto';
+  abstractExpanded: boolean = false;
 
   constructor(
     private _sessionService: SessionService,
@@ -117,6 +121,19 @@ export class SessionDetailComponent implements OnInit {
   //   }
   //   return '';
   // }
+
+
+  onAbstractLayoutChanged(args: EventData) {
+    const view = <View>args.object;
+    if (!this.abstractExpanded && view.height === 'auto' && view.getActualSize().height > 100) {
+      this.abstractHeight = '100';
+    }
+  }
+
+  onExpandAbstract() {
+    this.abstractHeight = 'auto';
+    this.abstractExpanded = true;
+  }
 
   getDuration(start: string | Date, end: string | Date): string {
     if (start && end) {

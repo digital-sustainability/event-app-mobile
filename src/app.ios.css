@@ -34,3 +34,8 @@ TextView, TextField {
     border-bottom-width: 1;
     border-bottom-color: black;
 }
+
+.btn-white {
+    background-color: white;
+    border-top: 1 solid gray;
+}

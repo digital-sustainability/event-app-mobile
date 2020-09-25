@@ -16,6 +16,7 @@ import * as moment from 'moment';
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { Session } from '../../shared/models/session';
 import { Event } from '../../shared/models/event';
+import { View } from 'tns-core-modules/ui/page';
 // Second argument is optional.
 
 @Component({
@@ -31,6 +32,9 @@ export class PresentationDetailComponent implements OnInit {
   private _event: Event;
   private _speakers: Speaker[];
   nonHierarchical: boolean = false;
+
+  abstractHeight: string = 'auto';
+  abstractExpanded: boolean = false;
   
   constructor(
     private _presentationService: PresentationService,
@@ -120,6 +124,19 @@ export class PresentationDetailComponent implements OnInit {
   onShowSlides(url: string): void {
     console.log('|==>', url);
     openUrl(url);
+  }
+
+
+  onAbstractLayoutChanged(args: EventData) {
+    const view = <View>args.object;
+    if (!this.abstractExpanded && view.height === 'auto' && view.getActualSize().height > 100) {
+      this.abstractHeight = '100';
+    }
+  }
+
+  onExpandAbstract() {
+    this.abstractHeight = 'auto';
+    this.abstractExpanded = true;
   }
 
   getPhotoUrlOfSpeaker(speaker: Speaker) {

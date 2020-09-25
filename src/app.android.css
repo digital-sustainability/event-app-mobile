@@ -20,3 +20,9 @@ Place Android specific styles below
     margin-top: 20;
     padding-top: 20;
 }
+
+.btn-white {
+    background-color: white;
+    margin-top: 0;
+    android-elevation: 0;
+}

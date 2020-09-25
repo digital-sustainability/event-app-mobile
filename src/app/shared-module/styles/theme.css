@@ -73,7 +73,7 @@
 }
 
 .list-group-item-text {
-    font-size: 14;
+    font-size: 15;
 }
 
 .img-rounded {
@@ -81,19 +81,19 @@
 }
 
 .body {
-    font-size: 14;
+    font-size: 15;
 }
 
 .h1 {
-    font-size: 36;
-}
-
-.h2 {
     font-size: 30;
 }
 
-.h3 {
+.h2 {
     font-size: 24;
+}
+
+.h3 {
+    font-size: 20;
 }
 
 .h4 {

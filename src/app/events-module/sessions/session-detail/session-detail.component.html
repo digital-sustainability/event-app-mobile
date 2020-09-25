@@ -6,26 +6,30 @@
   <StackLayout *ngIf="!loading && session">
     <ScrollView height="100%">
       <StackLayout>
-        <StackLayout class="m-x-10">
-          <Label [text]="sessionTitle" class="h2 m-t-10" textWrap="true"></Label>
-          <Label
+        <Label [text]="sessionTitle" class="h2 m-t-10 m-x-10" textWrap="true"></Label>
+        <GridLayout class="m-x-10" rows="auto, auto, auto" columns="*">  
+          <Label  row="0" col="0" 
             *ngIf="!isFormattedAbstractAvailable"
             [text]="session.abstract"
             class="body m-b-10"
             textWrap="true"
           ></Label>
-          <HtmlView
+          <HtmlView row="0" col="0" 
             *ngIf="isFormattedAbstractAvailable"
             nsFixHtmlView
             [html]="session.formatted_abstract"
             class="body m-b-10 htmlview"
+            [height]="abstractHeight" (layoutChanged)="onAbstractLayoutChanged($event)"
           ></HtmlView>
-          <GridLayout *ngIf="session.room" rows="auto,auto,auto" columns="auto, *">
+          <Button row="1" col="0" *ngIf="abstractHeight !== 'auto'" (tap)="onExpandAbstract()" text="Alles anzeigen" class="btn btn-white"></Button>
+          <GridLayout row="2" col="0" *ngIf="session.room" rows="auto,auto,auto" columns="auto, *">
             <Label text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="2"></Label>
             <Label [text]="session.room" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
           </GridLayout>
-          <Label *ngIf="presentations.length" [text]="labelPresentations" class="h3" textWrap="true"></Label>
-        </StackLayout>
+        </GridLayout>
+
+        <Label *ngIf="presentations.length" [text]="labelPresentations" class="h3 m-x-10" textWrap="true"></Label>
+
         <StackLayout *ngFor="let p of presentations">
           <GridLayout
             columns="*, auto"

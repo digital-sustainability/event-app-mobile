@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Directive } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Directive, AfterViewInit } from '@angular/core';
 import { Image } from 'tns-core-modules/ui/image';
 import { RouterExtensions, PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
@@ -14,6 +14,7 @@ import { openUrl } from 'tns-core-modules/utils/utils';
 import { Directions } from 'nativescript-directions';
 import * as moment from 'moment';
 import { EventData, View } from 'tns-core-modules/ui/page';
+import { LoadEventData, WebView } from 'tns-core-modules/ui/web-view';
 
 @Component({
   selector: 'ns-event-detail',
@@ -32,6 +33,7 @@ export class EventDetailComponent implements OnInit {
 
   descriptionHeight: string = 'auto';
   descriptionExpanded: boolean = false;
+
 
   // TODO: What is better: Default image or empty?
   // private _image_path: string;
@@ -235,42 +237,16 @@ export class EventDetailComponent implements OnInit {
 
   onDescriptionLayoutChanged(args: EventData) {
     const view = <View>args.object;
-    console.log(view.height === 'auto', view.getActualSize().height > 10, view.height, view.getActualSize().height)
     if (!this.descriptionExpanded && view.height === 'auto' && view.getActualSize().height > 100) {
       this.descriptionHeight = '100';
     }
   }
 
-  onWebViewLoaded(webargs: EventData) {
-    var webview = <View>webargs.object;  
-/*
-    var TNSWebViewClient =
-        android.webkit.WebViewClient.extend({
-            shouldOverrideUrlLoading: function(view, url) {
-                console.log('Show url parameters: '+url);   
-                // utilityModule.openUrl(url); // for API below 24
-                utilityModule.openUrl(parseInt(device.sdkVersion) < 24 ? 
-    url : url.getUrl().toString()); 
-                return true; 
-            } 
-        });
-    } else { 
-        // else iOS
-        console.log("ios webview preocessing"); 
-    }
-    if (isAndroid) {
-          console.log("for android platform");
-      webview.android.getSettings().setDisplayZoomControls(false);
-      webview.android.getSettings().setBuiltInZoomControls(false);
-      webview.android.setWebViewClient(new TNSWebViewClient());
-    } 
-    if(isIOS){
-        console.log("for ios platform");
-        webview.ios.scrollView.scrollEnabled = true; 
-        webview.ios.scrollView.bounces = true;
-        //webview.ios.setWebViewClient(new TNSWebViewClient());
-    } */
+  onExpandDescription() {
+    this.descriptionHeight = 'auto';
+    this.descriptionExpanded = true;
   }
+
 
   get event(): Event {
     return this._event;
@@ -313,10 +289,4 @@ export class EventDetailComponent implements OnInit {
       }
       return speaker.photo_url
   }
-
-  expandDescription() {
-    this.descriptionHeight = 'auto';
-    this.descriptionExpanded = true;
-  }
-
 }

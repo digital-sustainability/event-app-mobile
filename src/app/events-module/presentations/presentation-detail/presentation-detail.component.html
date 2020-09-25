@@ -6,11 +6,13 @@
     <StackLayout *ngIf="!loading && presentation && speakers">
         <ScrollView height="100%">
             <StackLayout>
-                <StackLayout class="p-x-10">
-                    <Label [text]="presentation.title" class="h3 m-y-10" textWrap="true"></Label>
-                    <Label *ngIf="!isFormattedAbstractAvailable" [text]="presentation.abstract" class="body m-y-10" textWrap="true"></Label>
-                    <HtmlView *ngIf="isFormattedAbstractAvailable" nsFixHtmlView [html]="presentation.formatted_abstract" class="body m-y-10 htmlview"></HtmlView>
-                </StackLayout>
+                <Label [text]="presentation.title" class="h3 m-y-10 m-x-10" textWrap="true"></Label>
+                <GridLayout class="m-x-10" rows="auto, auto" columns="*">
+                    <Label row="0" col="0" *ngIf="!isFormattedAbstractAvailable" [text]="presentation.abstract" class="body m-y-10" textWrap="true"></Label>
+                    <HtmlView row="0" col="0" *ngIf="isFormattedAbstractAvailable" nsFixHtmlView [html]="presentation.formatted_abstract" 
+                        class="body m-y-10 htmlview" [height]="abstractHeight" (layoutChanged)="onAbstractLayoutChanged($event)"></HtmlView>
+                    <Button row="1" col="0" *ngIf="abstractHeight !== 'auto'" (tap)="onExpandAbstract()" text="Alles anzeigen" class="btn btn-white"></Button>
+                </GridLayout>
                 <StackLayout *ngIf="nonHierarchical">
                     <GridLayout
                         columns="*, auto"

@@ -11,6 +11,7 @@ import { PresentationService } from '../presentation.service';
 import * as moment from 'moment';
 import { Event } from '../../shared/models/event';
 import { Session } from '../../shared/models/session';
+import { EventData, View } from 'tns-core-modules/ui/page';
 
 @Component({
   selector: 'ns-speaker-detail',
@@ -23,6 +24,9 @@ export class SpeakerDetailComponent implements OnInit {
   private _speaker: Speaker;
   private _presentations: Presentation[];
   private _fullName = 'Speaker'
+
+  shortBioHeight: string = 'auto';
+  shortBioExpanded: boolean = false;
   
   constructor(
     private _presentationService: PresentationService,
@@ -62,6 +66,19 @@ export class SpeakerDetailComponent implements OnInit {
 
   onPresentationTap(id: number): void {
     this._navigationService.navigateTo('/presentation', id, false, true);
+  }
+
+
+  onShortBioLayoutChanged(args: EventData) {
+    const view = <View>args.object;
+    if (!this.shortBioExpanded && view.height === 'auto' && view.getActualSize().height > 100) {
+      this.shortBioHeight = '100';
+    }
+  }
+
+  onExpandShortBio() {
+    this.shortBioHeight = 'auto';
+    this.shortBioExpanded = true;
   }
 
   getStartTime(time: string | Date): string {
