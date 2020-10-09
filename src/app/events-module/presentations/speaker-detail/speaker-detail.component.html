@@ -19,7 +19,7 @@
             class="body m-y-20 htmlview"
             [height]="shortBioHeight" (layoutChanged)="onShortBioLayoutChanged($event)"
           ></HtmlView>
-          <Button row="5" col="0" *ngIf="shortBioHeight !== 'auto'" (tap)="onExpandShortBio()" text="Alles anzeigen" class="btn btn-white"></Button>
+          <Button row="5" col="0" *ngIf="shortBioHeight !== 'auto'" (tap)="onExpandShortBio()" text="Alles anzeigen" class="btn btn-white" style="margin-top:0; margin-bottom: 10;"></Button>
         </GridLayout>
         <StackLayout *ngFor="let p of speaker.presentations">
           <GridLayout

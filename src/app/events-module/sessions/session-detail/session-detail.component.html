@@ -21,7 +21,8 @@
             class="body m-b-10 htmlview"
             [height]="abstractHeight" (layoutChanged)="onAbstractLayoutChanged($event)"
           ></HtmlView>
-          <Button row="1" col="0" *ngIf="abstractHeight !== 'auto'" (tap)="onExpandAbstract()" text="Alles anzeigen" class="btn btn-white"></Button>
+          <Button row="1" col="0" *ngIf="abstractHeight !== 'auto'" (tap)="onExpandAbstract()" text="Alles anzeigen"
+            class="btn btn-white" style="margin-top:0; margin-bottom: 10;"></Button>
           <GridLayout row="2" col="0" *ngIf="session.room" rows="auto,auto,auto" columns="auto, *">
             <Label text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="2"></Label>
             <Label [text]="session.room" row="2" col="1" class="text p-b-10" textWrap="true"></Label>

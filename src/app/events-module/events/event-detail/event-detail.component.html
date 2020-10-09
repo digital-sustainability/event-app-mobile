@@ -25,7 +25,7 @@
           ></Label>
           <HtmlView row="1" col="0" *ngIf="isFormattedDescriptionAvailable" nsFixHtmlView [html]="event.formatted_description"
             class="body m-y-10 htmlview" [height]="descriptionHeight" (layoutChanged)="onDescriptionLayoutChanged($event)"></HtmlView>
-          <Button row="2" col="0" *ngIf="descriptionHeight !== 'auto'" (tap)="onExpandDescription()" text="Alles anzeigen" class="btn btn-white"></Button>
+          <Button row="2" col="0" *ngIf="descriptionHeight !== 'auto'" (tap)="onExpandDescription()" text="Alles anzeigen" class="btn btn-white" style="margin-top:0; margin-bottom: 10;"></Button>
           <StackLayout row="3" col="0" *ngIf="isOneDayEvent(event.start, event.end)">
             <GridLayout rows="auto,auto,auto" columns="auto, *">
               <Label text="Zeit" class="p-l-15 m-r-20 font-weight-bold"></Label>

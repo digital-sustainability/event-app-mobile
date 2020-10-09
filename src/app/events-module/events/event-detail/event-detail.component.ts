@@ -240,6 +240,12 @@ export class EventDetailComponent implements OnInit {
     if (!this.descriptionExpanded && view.height === 'auto' && view.getActualSize().height > 100) {
       this.descriptionHeight = '100';
     }
+
+    if (isIOS) {
+      setTimeout(() => {
+        view.requestLayout();
+      }, 200);
+    }
   }
 
   onExpandDescription() {

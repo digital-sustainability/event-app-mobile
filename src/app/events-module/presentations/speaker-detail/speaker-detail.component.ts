@@ -74,6 +74,12 @@ export class SpeakerDetailComponent implements OnInit {
     if (!this.shortBioExpanded && view.height === 'auto' && view.getActualSize().height > 100) {
       this.shortBioHeight = '100';
     }
+
+    if (isIOS) {
+      setTimeout(() => {
+        view.requestLayout();
+      }, 200);
+    }
   }
 
   onExpandShortBio() {
@@ -100,7 +106,15 @@ export class SpeakerDetailComponent implements OnInit {
   }
 
   getEventInfo(presentation: Presentation): string {
-    return (<Session>presentation.session_id).event_id.title;
+    console.log(presentation.session_id, presentation.event_id)
+    if (presentation.session_id) {
+      console.log((<Session>presentation.session_id).event_id.title, 'first')
+      return (<Session>presentation.session_id).event_id.title;
+    } else {
+      console.log((<Event>presentation.event_id).title, 'second')
+      return (<Event>presentation.event_id).title;
+    }
+
   }
 
   get speaker(): Speaker {

@@ -132,6 +132,12 @@ export class PresentationDetailComponent implements OnInit {
     if (!this.abstractExpanded && view.height === 'auto' && view.getActualSize().height > 100) {
       this.abstractHeight = '100';
     }
+
+    if (isIOS) {
+      setTimeout(() => {
+        view.requestLayout();
+      }, 200);
+    }
   }
 
   onExpandAbstract() {

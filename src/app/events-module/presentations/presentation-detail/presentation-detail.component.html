@@ -11,7 +11,7 @@
                     <Label row="0" col="0" *ngIf="!isFormattedAbstractAvailable" [text]="presentation.abstract" class="body m-y-10" textWrap="true"></Label>
                     <HtmlView row="0" col="0" *ngIf="isFormattedAbstractAvailable" nsFixHtmlView [html]="presentation.formatted_abstract" 
                         class="body m-y-10 htmlview" [height]="abstractHeight" (layoutChanged)="onAbstractLayoutChanged($event)"></HtmlView>
-                    <Button row="1" col="0" *ngIf="abstractHeight !== 'auto'" (tap)="onExpandAbstract()" text="Alles anzeigen" class="btn btn-white"></Button>
+                    <Button row="1" col="0" *ngIf="abstractHeight !== 'auto'" (tap)="onExpandAbstract()" text="Alles anzeigen" class="btn btn-white" style="margin-top:0; margin-bottom: 10;"></Button>
                 </GridLayout>
                 <StackLayout *ngIf="nonHierarchical">
                     <GridLayout
