@@ -4,11 +4,11 @@
       "android": "ch.digisus.event",
       "ios": "ch.digisus.events"
     },
-    "tns-android": {
-      "version": "6.2.0"
-    },
     "tns-ios": {
       "version": "6.3.0"
+    },
+    "tns-android": {
+      "version": "6.2.0"
     }
   },
   "scripts": {

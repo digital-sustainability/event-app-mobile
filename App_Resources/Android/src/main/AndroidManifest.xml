@@ -41,5 +41,6 @@
 			</intent-filter>
 		</activity>
 		<activity android:name="com.tns.ErrorReportActivity"/>
+		<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_stat_icon" />
 	</application>
 </manifest>
