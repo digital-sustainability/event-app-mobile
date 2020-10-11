@@ -12,8 +12,8 @@
                             <Label class="h3" textWrap="true" [text]="event.title"></Label>
                             <Label class="h4 m-b-0" [text]="displayEventInfo(event.start)" textWrap="true"></Label>
                             <Label class="h4 m-b-15 m-t-0 location" [text]="event.location" textWrap="true"></Label>
-                            <Label *ngIf="!event.formatted_description" class="body" textWrap="true" [text]="event.description"></Label>
-                            <HtmlView *ngIf="event.formatted_description" (tap)="onEventTap(event)" class="body htmlview" [html]="event.formatted_description"></HtmlView>
+                            <Label *ngIf="!event.fromatted_lead && !event.formatted_description" class="body" textWrap="true" [text]="event.description"></Label>
+                            <HtmlView *ngIf="event.formatted_description || event.formatted_lead" (tap)="onEventTap(event)" class="body htmlview" [html]="event.formatted_lead? event.formatted_lead : event.formatted_description"></HtmlView>
                         </StackLayout>
                     </StackLayout>
                 </CardView>

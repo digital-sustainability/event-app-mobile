@@ -10,6 +10,7 @@ export interface Event {
     title: string,
     description: string,
     formatted_description: string,
+    formated_lead: string,
     start: string | Date,
     end: string | Date,
     location: string,
