@@ -22,3 +22,14 @@
     margin-right: 5;
     margin-left: 5;
 }
+
+.full-width {
+    margin: 10;
+    padding: 10;
+    border-radius: 5;
+}
+
+.button-icon {
+    font-size: 30;
+    padding: 6;
+}

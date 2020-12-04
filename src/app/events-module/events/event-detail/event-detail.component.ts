@@ -15,6 +15,7 @@ import { Directions } from 'nativescript-directions';
 import * as moment from 'moment';
 import { EventData, View } from 'tns-core-modules/ui/page';
 import { LoadEventData, WebView } from 'tns-core-modules/ui/web-view';
+import { EnvironmentManagerService } from '~/app/shared-module/services/environment-manager.service';
 
 @Component({
   selector: 'ns-event-detail',
@@ -43,7 +44,8 @@ export class EventDetailComponent implements OnInit {
     private _pageRoute: PageRoute,
     private _eventService: EventService,
     private _navigationService: NavigationService,
-    private _routerExtensions: RouterExtensions
+    private _routerExtensions: RouterExtensions,
+    private _envManager: EnvironmentManagerService,
   ) { }
 
   ngOnInit(): void {
@@ -182,6 +184,11 @@ export class EventDetailComponent implements OnInit {
 
   onOpenUrl(url: string): void {
     openUrl(url);
+  }
+
+  onDownloadICS(id: number): void {
+    const api = this._envManager.getEventApi();
+    openUrl(`${api}event/${id}/ics`);
   }
 
   onOpenMaps(address: string): void {

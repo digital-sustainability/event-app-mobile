@@ -24,9 +24,9 @@
             textWrap="true"
           ></Label>
           <HtmlView row="1" col="0" *ngIf="isFormattedDescriptionAvailable" nsFixHtmlView [html]="event.formatted_description"
-            class="body m-y-10 htmlview" [height]="descriptionHeight" (layoutChanged)="onDescriptionLayoutChanged($event)"></HtmlView>
+            class="body m-y-10 htmlview" [height]="descriptionHeight" (layoutChanged)="onDescriptionLayoutChanged($event)" style="margin-bottom: 0;"></HtmlView>
           <Button row="2" col="0" *ngIf="descriptionHeight !== 'auto'" (tap)="onExpandDescription()" text="Alles anzeigen" class="btn btn-white" style="margin-top:0; margin-bottom: 10;"></Button>
-          <StackLayout row="3" col="0" *ngIf="isOneDayEvent(event.start, event.end)">
+          <StackLayout row="3" col="0" *ngIf="isOneDayEvent(event.start, event.end)" class="m-y-10">
             <GridLayout rows="auto,auto,auto" columns="auto, *">
               <Label text="Zeit" class="p-l-15 m-r-20 font-weight-bold"></Label>
               <Label
@@ -90,14 +90,20 @@
               ></Label>
             </GridLayout>
           </StackLayout>
-          <StackLayout row="5" col="0" *ngIf="mapsAvailable && event.location">
-            <Button class="btn btn-outline m-t-30" height="50" text="Maps öffnen" (tap)="onOpenMaps(event.location)">
+          <GridLayout row="5" col="0" rows="auto" columns="auto,auto">
+            <Button row="0" col="0" height="80" class="btn btn-outline full-width" (tap)="onOpenMaps(event.location)" *ngIf="mapsAvailable && event.location" horizontalAlignment="center" >
               <FormattedString>
-                <Span text="Adresse in Maps öffnen" style="font-size: 18;"></Span>
-                <Span class="fa ic-map-pin" text=" &#xf3c5;"></Span>
+                <Span class="fa button-icon" text="&#xf5eb; &#xa;"></Span>
+                <Span text="Navigation starten"></Span>
               </FormattedString>
             </Button>
-          </StackLayout>
+            <Button row="0" col="1" height="80" class="btn btn-outline full-width" (tap)="onDownloadICS(event.id)" horizontalAlignment="center" >
+              <FormattedString>
+                <Span class="fa button-icon" text="&#xf271; &#xa;"></Span>
+                <Span text="Zu Kalender hinzufügen"></Span>
+              </FormattedString>
+            </Button>
+          </GridLayout>
         </GridLayout>
 
         <StackLayout *ngIf="event.sessions.length > 0">
