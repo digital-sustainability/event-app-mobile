@@ -2,3 +2,13 @@
     color: #939393;
     font-size: 18;
 }
+
+.fab-button {
+    height: 70;
+    width: 70; 
+     /* required on iOS */
+    margin: 15;
+    background-color: #FFC107;
+    vertical-align: bottom;
+    horizontal-align: right;
+}

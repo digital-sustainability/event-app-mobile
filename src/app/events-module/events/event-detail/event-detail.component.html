@@ -5,7 +5,7 @@
   </StackLayout>
   <StackLayout *ngIf="!loading && event">
     <ScrollView height="100%">
-      <StackLayout>
+      <StackLayout style="padding-bottom: 100;">
         <!-- src="https://cdn4.explainthatstuff.com/www-conceptual-representation.png" -->
         <!-- TODO: Add *ngIf for default img and real img once retreived via http -->
         <Image [src]="imagePath" height="150" class="m-b-10" stretch="aspectFill"></Image>
@@ -16,91 +16,57 @@
               <Label [text]="category.name"></Label>
             </StackLayout>
           </WrapLayout>
-          <Label
-            row="1" col="0"
-            *ngIf="!isFormattedDescriptionAvailable"
-            [text]="event.description"
-            class="body m-b-10"
-            textWrap="true"
-          ></Label>
-          <HtmlView row="1" col="0" *ngIf="isFormattedDescriptionAvailable" nsFixHtmlView [html]="event.formatted_description"
-            class="body m-y-10 htmlview" [height]="descriptionHeight" (layoutChanged)="onDescriptionLayoutChanged($event)" style="margin-bottom: 0;"></HtmlView>
-          <Button row="2" col="0" *ngIf="descriptionHeight !== 'auto'" (tap)="onExpandDescription()" text="Alles anzeigen" class="btn btn-white" style="margin-top:0; margin-bottom: 10;"></Button>
+          <Label row="1" col="0" *ngIf="!isFormattedDescriptionAvailable" [text]="event.description" class="body m-b-10"
+            textWrap="true"></Label>
+          <HtmlView row="1" col="0" *ngIf="isFormattedDescriptionAvailable" nsFixHtmlView
+            [html]="event.formatted_description" class="body m-t-10 htmlview" [height]="descriptionHeight"
+            (layoutChanged)="onDescriptionLayoutChanged($event)"></HtmlView>
+          <Button row="2" col="0" *ngIf="descriptionHeight !== 'auto'" (tap)="onExpandDescription()"
+            text="Alles anzeigen" class="btn btn-white m-b-10"></Button>
           <StackLayout row="3" col="0" *ngIf="isOneDayEvent(event.start, event.end)" class="m-y-10">
             <GridLayout rows="auto,auto,auto" columns="auto, *">
               <Label text="Zeit" class="p-l-15 m-r-20 font-weight-bold"></Label>
-              <Label
-                [text]="transformEventInfo(event.start, event.end)"
-                col="1"
-                class="text p-b-10"
-                textWrap="true"
-              ></Label>
+              <Label [text]="transformEventInfo(event.start, event.end)" col="1" class="text p-b-10"
+                textWrap="true"></Label>
               <Label text="Ort" row="1" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
-              <Label
-                text="{{ event.location_details ? event.location_details + ' ' : '' }}{{ event.location }}"
-                row="1"
-                col="1"
-                class="text p-b-10"
-                textWrap="true"
-              ></Label>
+              <Label text="{{ event.location_details ? event.location_details + ' ' : '' }}{{ event.location }}" row="1"
+                col="1" class="text p-b-10" textWrap="true"></Label>
               <Label text="Webseite" row="2" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
-              <Label
-                [text]="event.url_label"
-                row="2"
-                col="1"
-                class="text p-b-10 link"
-                (tap)="onOpenUrl(event.url)"
-                textWrap="true"
-              ></Label>
+              <Label [text]="event.url_label" row="2" col="1" class="text p-b-10 link" (tap)="onOpenUrl(event.url)"
+                textWrap="true"></Label>
             </GridLayout>
           </StackLayout>
           <StackLayout row="4" col="0" *ngIf="!isOneDayEvent(event.start, event.end)">
-            <GridLayout rows="*,*,*,*" columns="auto, auto">
+            <GridLayout rows="auto,auto,auto,auto" columns="auto, *">
               <Label text="Beginn" class="p-l-15 m-r-20 font-weight-bold"></Label>
-              <Label
-                [text]="event.start | date: 'dd.MM.y, HH:mm \'Uhr\'':'UTC'"
-                col="1"
-                class="text p-b-10"
-                textWrap="true"
-              ></Label>
+              <Label [text]="event.start | date: 'dd.MM.y, HH:mm \'Uhr\'':'UTC'" col="1" class="text p-b-10"
+                textWrap="true"></Label>
               <Label text="Ende" row="1" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
-              <Label
-                [text]="event.end | date: 'dd.MM.y, HH:mm \'Uhr\'':'UTC'"
-                row="1"
-                col="1"
-                class="text p-b-10"
-                textWrap="true"
-              ></Label>
+              <Label [text]="event.end | date: 'dd.MM.y, HH:mm \'Uhr\'':'UTC'" row="1" col="1" class="text p-b-10"
+                textWrap="true"></Label>
               <Label text="Ort" row="2" class="p-l-15 p-b-10 m-r-20 font-weight-bold" textWrap="true"></Label>
-              <Label
-                text="{{ event.location_details }} {{ event.location }}"
-                row="2"
-                col="1"
-                class="text p-b-10"
-                textWrap="true"
-              ></Label>
+              <Label text="{{ event.location_details }} {{ event.location }}" row="2" col="1" class="text p-b-10"
+                textWrap="true"></Label>
               <Label text="Webseite" row="3" class="p-l-15 p-b-10 m-r-20 font-weight-bold"></Label>
-              <Label
-                [text]="event.url_label"
-                row="3"
-                col="1"
-                class="text p-b-10 link"
-                (tap)="onOpenUrl(event.url)"
-                textWrap="true"
-              ></Label>
+              <Label [text]="event.url_label" row="3" col="1" class="text p-b-10 link" (tap)="onOpenUrl(event.url)"
+                textWrap="true"></Label>
             </GridLayout>
           </StackLayout>
           <GridLayout row="5" col="0" rows="auto" columns="auto,auto">
-            <Button row="0" col="0" height="80" class="btn btn-outline full-width" (tap)="onOpenMaps(event.location)" *ngIf="mapsAvailable && event.location" horizontalAlignment="center" >
+            <Button row="0" col="0" height="80" class="btn btn-outline full-width" (tap)="onOpenMaps(event.location)"
+              *ngIf="mapsAvailable && event.location" horizontalAlignment="center">
               <FormattedString>
                 <Span class="fa button-icon" text="&#xf5eb; &#xa;"></Span>
+                <Span class="button-icon-delimiter" text="&#xa;"></Span>
                 <Span text="Navigation starten"></Span>
               </FormattedString>
             </Button>
-            <Button row="0" col="1" height="80" class="btn btn-outline full-width" (tap)="onDownloadICS(event.id)" horizontalAlignment="center" >
+            <Button row="0" col="1" height="80" class="btn btn-outline full-width" (tap)="onDownloadICS(event.id)"
+              horizontalAlignment="center">
               <FormattedString>
                 <Span class="fa button-icon" text="&#xf271; &#xa;"></Span>
-                <Span text="Zu Kalender hinzufügen"></Span>
+                <Span class="button-icon-delimiter" text="&#xa;"></Span>
+                <Span text="Zum Kalender hinzufügen"></Span>
               </FormattedString>
             </Button>
           </GridLayout>
@@ -109,23 +75,12 @@
         <StackLayout *ngIf="event.sessions.length > 0">
           <Label text="Sessions" class="h3 m-x-10 m-t-15"></Label>
           <StackLayout *ngFor="let s of event.sessions">
-            <GridLayout
-              columns="*, auto"
-              rows="auto, auto"
-              class="session"
-              orientation="vertical"
-              (tap)="onSessionTap(s.id)"
-            >
+            <GridLayout columns="*, auto" rows="auto, auto" class="session" orientation="vertical"
+              (tap)="onSessionTap(s.id)">
               <Label column="0" row="0" class="h4" textWrap="true" [text]="s.title"></Label>
               <Label *ngIf="s.room" column="0" row="1" class="body" textWrap="true" [text]="s.room"></Label>
-              <Label
-                column="1"
-                rowspan="2"
-                text="&#xf054;"
-                row="0"
-                class="fa ic-arrow-right goright-icon"
-                horizontalAlignment="center"
-              ></Label>
+              <Label column="1" rowspan="2" text="&#xf054;" row="0" class="fa ic-arrow-right goright-icon"
+                horizontalAlignment="center"></Label>
             </GridLayout>
           </StackLayout>
         </StackLayout>
@@ -133,28 +88,13 @@
         <StackLayout *ngIf="event.presentations.length > 0">
           <Label text="Präsentationen" class="h3 m-x-10 m-t-15"></Label>
           <StackLayout *ngFor="let p of event.presentations">
-            <GridLayout
-              columns="*, auto"
-              rows="auto, auto"
-              class="occasion-item"
-              orientation="vertical"
-              (tap)="onPresentationTap(p.id)"
-            >
+            <GridLayout columns="*, auto" rows="auto, auto" class="occasion-item" orientation="vertical"
+              (tap)="onPresentationTap(p.id)">
               <Label col="0" row="0" [text]="p.title" class="h4" textWrap="true"></Label>
-              <Label
-                col="0"
-                row="1"
-                [text]="getDuration(p.start, p.end) + concatRoom(p.room)"
-                class="body"
-                textWrap="true"
-              ></Label>
-              <Label
-                text="&#xf054;"
-                col="1"
-                rowspan="2"
-                class="fa ic-arrow-right goright-icon"
-                horizontalAlignment="center"
-              ></Label>
+              <Label col="0" row="1" [text]="getDuration(p.start, p.end) + concatRoom(p.room)" class="body"
+                textWrap="true"></Label>
+              <Label text="&#xf054;" col="1" rowspan="2" class="fa ic-arrow-right goright-icon"
+                horizontalAlignment="center"></Label>
             </GridLayout>
           </StackLayout>
         </StackLayout>
@@ -163,22 +103,10 @@
           <Label text="Moderation" class="h3 m-t-15"></Label>
           <StackLayout *ngFor="let sp of event.speakers">
             <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
-              <Image
-                row="0"
-                col="0"
-                [src]="getPhotoUrlOfSpeaker(sp)"
-                class="img-circle"
-                rowSpan="2"
-                stretch="aspectFill"
-              ></Image>
-              <Label
-                row="0"
-                col="1"
-                [text]="sp.first_name + ' ' + sp.last_name"
-                textWrap="true"
-                class="list-group-item-heading speaker-title"
-                verticalAlignment="bottom"
-              ></Label>
+              <Image row="0" col="0" [src]="getPhotoUrlOfSpeaker(sp)" class="img-circle" rowSpan="2"
+                stretch="aspectFill"></Image>
+              <Label row="0" col="1" [text]="sp.first_name + ' ' + sp.last_name" textWrap="true"
+                class="list-group-item-heading speaker-title" verticalAlignment="bottom"></Label>
               <Label row="1" col="1" [text]="sp.position" textWrap="true" class="list-group-item-text"></Label>
             </GridLayout>
           </StackLayout>
@@ -188,22 +116,10 @@
           <Label text="Speakers" class="h3 m-t-15"></Label>
           <StackLayout *ngFor="let sp of speakers">
             <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
-              <Image
-                row="0"
-                col="0"
-                [src]="getPhotoUrlOfSpeaker(sp)"
-                class="img-circle"
-                rowSpan="2"
-                stretch="aspectFill"
-              ></Image>
-              <Label
-                row="0"
-                col="1"
-                [text]="sp.first_name + ' ' + sp.last_name"
-                textWrap="true"
-                class="list-group-item-heading speaker-title"
-                verticalAlignment="bottom"
-              ></Label>
+              <Image row="0" col="0" [src]="getPhotoUrlOfSpeaker(sp)" class="img-circle" rowSpan="2"
+                stretch="aspectFill"></Image>
+              <Label row="0" col="1" [text]="sp.first_name + ' ' + sp.last_name" textWrap="true"
+                class="list-group-item-heading speaker-title" verticalAlignment="bottom"></Label>
               <Label row="1" col="1" [text]="sp.position" textWrap="true" class="list-group-item-text"></Label>
             </GridLayout>
           </StackLayout>
@@ -211,4 +127,6 @@
       </StackLayout>
     </ScrollView>
   </StackLayout>
+  <FAB *ngIf="event && event.video_conferencing_link" (tap)="onOpenVideoConferencingLink(event.video_conferencing_link)"
+    icon="~/images/video-solid.png" rippleColor="#f1f1f1" class="fab-button"></FAB>
 </GridLayout>

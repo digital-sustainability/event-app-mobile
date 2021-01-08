@@ -15,6 +15,8 @@ export interface Presentation {
     end: string | Date,
     access_token: string,
     position: number,
+    video_conferencing_link?: string,
+    video_conferencing_label?: string,
     room: string,
     speakers: Speaker[],
     feedbacks: any[],

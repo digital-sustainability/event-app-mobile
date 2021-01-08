@@ -182,6 +182,10 @@ export class EventDetailComponent implements OnInit {
     return `${beginning.format('dddd, D. MMMM YYYY von H')}h bis ${ending.format('H')}h`
   }
 
+  onOpenVideoConferencingLink(url: string): void {
+    openUrl(url);
+  }
+
   onOpenUrl(url: string): void {
     openUrl(url);
   }

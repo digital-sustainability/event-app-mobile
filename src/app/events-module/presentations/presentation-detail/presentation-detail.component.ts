@@ -126,6 +126,9 @@ export class PresentationDetailComponent implements OnInit {
     openUrl(url);
   }
 
+  onOpenVideoConferencingLink(url: string): void {
+    openUrl(url);
+  }
 
   onAbstractLayoutChanged(args: EventData) {
     const view = <View>args.object;

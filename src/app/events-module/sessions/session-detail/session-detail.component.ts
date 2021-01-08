@@ -11,6 +11,7 @@ import { sortBy } from 'lodash';
 import * as moment from 'moment';
 import { Speaker } from '../../shared/models/speaker';
 import { EventData, View } from 'tns-core-modules/ui/page';
+import { openUrl } from 'tns-core-modules/utils/utils';
 
 
 @Component({
@@ -212,5 +213,9 @@ export class SessionDetailComponent implements OnInit {
   onSpeakerTap(id: number): void {
     // TODO: Same navigation/animation bug as above!
     this._navigationService.navigateTo('/speaker', id);
+  }
+
+  onOpenVideoConferencingLink(url: string): void {
+    openUrl(url);
   }
 }

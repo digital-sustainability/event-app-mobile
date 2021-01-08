@@ -11,3 +11,18 @@
 .call-to-action {
   background-color: #FFC107;
 }
+
+.full-width {
+  margin-right: 0;
+  margin-left: 10;
+  padding: 10;
+  border-radius: 5;
+}
+
+.button-icon {
+  font-size: 30;
+}
+
+.button-icon-delimiter {
+  font-size: 5;
+}

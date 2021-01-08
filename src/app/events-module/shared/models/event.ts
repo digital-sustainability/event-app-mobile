@@ -17,6 +17,8 @@ export interface Event {
     location_details: string,
     url: string,
     url_label: string,
+    video_conferencing_link?: string,
+    video_conferencing_label?: string,
     published: boolean,
     image_path: string,
     sessions: Session[],
