@@ -42,5 +42,6 @@
 		</activity>
 		<activity android:name="com.tns.ErrorReportActivity"/>
 		<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_stat_icon" />
+		<meta-data android:name="io.sentry.dsn" android:value="https://ec68f07ae7524d90aa2c963b29d1c457:bd75313a4cfd44a49273dfc8310836c4@sentry.fdn-tools.inf.unibe.ch/5" />
 	</application>
 </manifest>
