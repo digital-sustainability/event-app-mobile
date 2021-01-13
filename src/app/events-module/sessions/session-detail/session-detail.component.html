@@ -12,9 +12,9 @@
             textWrap="true"></Label>
           <HtmlView row="0" col="0" *ngIf="isFormattedAbstractAvailable" nsFixHtmlView
             [html]="session.formatted_abstract" class="body htmlview" [height]="abstractHeight"
-            (layoutChanged)="onAbstractLayoutChanged($event)"></HtmlView>
+            (layoutChanged)="onAbstractLayoutChanged($event)" style="margin-bottom: 0;"></HtmlView>
           <Button row="1" col="0" *ngIf="abstractHeight !== 'auto'" (tap)="onExpandAbstract()" text="Alles anzeigen"
-            class="btn btn-white m-b-10"></Button>
+            class="btn btn-white m-b-10" style="margin-top: 0;"></Button>
           <GridLayout row="2" col="0" *ngIf="session.room" rows="auto,auto,auto" columns="auto, *" class="m-y-10">
             <Label text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="2"></Label>
             <Label [text]="session.room" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
