@@ -123,7 +123,7 @@ export class EventDetailComponent implements OnInit {
 
               // add default font to HTML (for iOS)
               if(isIOS && this._event.formatted_description) {
-                this._event.formatted_description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._event.formatted_description + "</span>";
+                this._event.formatted_description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 15;\">" + this._event.formatted_description + "</span>";
               }
 
               this._loading = false;

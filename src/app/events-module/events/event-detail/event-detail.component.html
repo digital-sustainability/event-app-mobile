@@ -20,9 +20,9 @@
             textWrap="true"></Label>
           <HtmlView row="1" col="0" *ngIf="isFormattedDescriptionAvailable" nsFixHtmlView
             [html]="event.formatted_description" class="body m-t-10 htmlview" [height]="descriptionHeight"
-            (layoutChanged)="onDescriptionLayoutChanged($event)"></HtmlView>
+            (layoutChanged)="onDescriptionLayoutChanged($event)" style="margin-bottom: 0;"></HtmlView>
           <Button row="2" col="0" *ngIf="descriptionHeight !== 'auto'" (tap)="onExpandDescription()"
-            text="Alles anzeigen" class="btn btn-white m-b-10"></Button>
+            text="Alles anzeigen" class="btn btn-white m-b-10" style="margin-top: 0;"></Button>
           <StackLayout row="3" col="0" *ngIf="isOneDayEvent(event.start, event.end)" class="m-y-10">
             <GridLayout rows="auto,auto,auto" columns="auto, *">
               <Label text="Zeit" class="p-l-15 m-r-20 font-weight-bold"></Label>
@@ -54,15 +54,15 @@
           </StackLayout>
           <GridLayout row="5" col="0" rows="auto" columns="auto,auto">
             <Button row="0" col="0" height="80" class="btn btn-outline full-width" (tap)="onOpenMaps(event.location)"
-              *ngIf="mapsAvailable && event.location" horizontalAlignment="center">
+              *ngIf="mapsAvailable && event.location" horizontalAlignment="center" textWrap="true">
               <FormattedString>
                 <Span class="fa button-icon" text="&#xf5eb; &#xa;"></Span>
                 <Span class="button-icon-delimiter" text="&#xa;"></Span>
                 <Span text="Navigation starten"></Span>
               </FormattedString>
             </Button>
-            <Button row="0" col="1" height="80" class="btn btn-outline full-width" (tap)="onDownloadICS(event.id)"
-              horizontalAlignment="center">
+            <Button row="0" col="1" class="btn btn-outline full-width" (tap)="onDownloadICS(event.id)"
+              horizontalAlignment="center" textWrap="true">
               <FormattedString>
                 <Span class="fa button-icon" text="&#xf271; &#xa;"></Span>
                 <Span class="button-icon-delimiter" text="&#xa;"></Span>

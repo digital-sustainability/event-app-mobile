@@ -5,7 +5,7 @@
       "ios": "ch.digisus.events"
     },
     "tns-ios": {
-      "version": "6.3.0"
+      "version": "6.5.3"
     },
     "tns-android": {
       "version": "6.2.0"
@@ -14,7 +14,7 @@
   "scripts": {
     "dev-android": "tns run android --bundle --env.envtype=dev --env.eventApi='https://oscarmeier-event-app-staging.dev.digisus.ch/api/'",
     "dev-android-windows": "tns run android --bundle --env.envtype=dev --env.eventApi=https://event-app.fdn.iwi.unibe.ch/api/",
-    "dev-ios": "tns run ios --bundle --env.envtype='dev' --env.eventApi='https://event-app.fdn.iwi.unibe.ch/api/' --provision='EventApp Dev'"
+    "dev-ios": "tns run ios --bundle --env.envtype='dev' --env.eventApi='https://oscarmeier-event-app-staging.dev.digisus.ch/api/' --provision='EventApp Dev'"
   },
   "private": true,
   "description": "NativeScript Application",
@@ -57,8 +57,9 @@
     "@nativescript/schematics": "~0.5.0",
     "@ngtools/webpack": "^8.3.23",
     "@types/jasmine": "^3.3.9",
-    "nativescript-dev-webpack": "^1.2.0",
+    "nativescript-dev-webpack": "^1.5.1",
     "prettier": "^1.19.1",
+    "tns-ios": "6.5.3",
     "tns-platform-declarations": "^6.5.15",
     "typescript": "~3.5.3"
   },

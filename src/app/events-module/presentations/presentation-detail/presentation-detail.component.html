@@ -31,7 +31,7 @@
                 <GridLayout rows="auto" columns="auto,auto">
                     <Button row="0" col="0" height="80" class="btn btn-outline full-width"
                         (tap)="onShowSlides(presentation.slides)" *ngIf="isUrl(presentation.slides)"
-                        horizontalAlignment="center">
+                        horizontalAlignment="center" textWrap="true">
                         <FormattedString>
                             <Span class="fa button-icon" text="&#xf51b;&#xa;"></Span>
                             <Span class="button-icon-delimiter" text="&#xa;"></Span>
@@ -40,7 +40,7 @@
                     </Button>
                     <Button row="0" col="1" height="80" class="btn btn-outline full-width"
                         (tap)="onUserFeedbackTap($event)" *ngIf="presentation && presentationStarted()"
-                        horizontalAlignment="center">
+                        horizontalAlignment="center" textWrap="true">
                         <FormattedString>
                             <Span class="fa button-icon" text="&#xf27a;&#xa;"></Span>
                             <Span class="button-icon-delimiter" text="&#xa;"></Span>
