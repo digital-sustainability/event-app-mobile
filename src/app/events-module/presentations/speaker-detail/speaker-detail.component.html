@@ -16,10 +16,11 @@
             *ngIf="isFormattedShortBioAvailable"
             nsFixHtmlView
             [html]="formattedShortBio"
-            class="body m-t-20 htmlview"
+            class="body m-t-20 htmlview" style="margin-bottom: 0;" 
             [height]="shortBioHeight" (layoutChanged)="onShortBioLayoutChanged($event)"
           ></HtmlView>
-          <Button row="5" col="0" *ngIf="shortBioHeight !== 'auto'" (tap)="onExpandShortBio()" text="Alles anzeigen" class="btn btn-white m-b-10"></Button>
+          <Button row="5" col="0" *ngIf="shortBioHeight !== 'auto'" (tap)="onExpandShortBio()" text="Alles anzeigen"
+            class="btn btn-white m-b-10" style="margin-top: 0;"></Button>
         </GridLayout>
         <StackLayout *ngFor="let p of speaker.presentations" class="m-t-10">
           <GridLayout

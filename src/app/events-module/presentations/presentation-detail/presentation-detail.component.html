@@ -12,9 +12,9 @@
                         class="body m-y-10" textWrap="true"></Label>
                     <HtmlView row="0" col="0" *ngIf="isFormattedAbstractAvailable" nsFixHtmlView
                         [html]="presentation.formatted_abstract" class="body m-t-10 htmlview" [height]="abstractHeight"
-                        (layoutChanged)="onAbstractLayoutChanged($event)"></HtmlView>
+                        (layoutChanged)="onAbstractLayoutChanged($event)" style="margin-bottom: 0;"></HtmlView>
                     <Button row="1" col="0" *ngIf="abstractHeight !== 'auto'" (tap)="onExpandAbstract()"
-                        text="Alles anzeigen" class="btn btn-white m-b-10"></Button>
+                        text="Alles anzeigen" class="btn btn-white m-b-10" style="margin-top: 0;"></Button>
                 </GridLayout>
                 <StackLayout *ngIf="nonHierarchical" class="m-t-10">
                     <GridLayout columns="*, auto" rows="auto, auto, auto" class="occasion-item" orientation="vertical"
