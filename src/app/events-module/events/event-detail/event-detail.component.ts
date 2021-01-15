@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Directive } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Directive, AfterViewInit } from '@angular/core';
 import { Image } from 'tns-core-modules/ui/image';
 import { RouterExtensions, PageRoute } from 'nativescript-angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
@@ -7,12 +7,15 @@ import { Event } from '../../shared/models/event';
 import { Speaker } from '../../shared/models/speaker';
 import { EventService } from '../event.service';
 import { TouchGestureEventData } from 'tns-core-modules/ui/gestures/gestures';
-import { isIOS } from 'tns-core-modules/platform';
+import { isIOS, isAndroid, device } from 'tns-core-modules/platform';
 import { NavigationService } from '~/app/shared-module/services/navigation.service';
 import { Session } from '../../shared/models/session';
 import { openUrl } from 'tns-core-modules/utils/utils';
 import { Directions } from 'nativescript-directions';
 import * as moment from 'moment';
+import { EventData, View } from 'tns-core-modules/ui/page';
+import { LoadEventData, WebView } from 'tns-core-modules/ui/web-view';
+import { EnvironmentManagerService } from '~/app/shared-module/services/environment-manager.service';
 
 @Component({
   selector: 'ns-event-detail',
@@ -29,6 +32,10 @@ export class EventDetailComponent implements OnInit {
   private _speakers: Speaker[];
   public directions: any;
 
+  descriptionHeight: string = 'auto';
+  descriptionExpanded: boolean = false;
+
+
   // TODO: What is better: Default image or empty?
   // private _image_path: string;
   private _image_path = '~/images/load.png';
@@ -37,7 +44,8 @@ export class EventDetailComponent implements OnInit {
     private _pageRoute: PageRoute,
     private _eventService: EventService,
     private _navigationService: NavigationService,
-    private _routerExtensions: RouterExtensions
+    private _routerExtensions: RouterExtensions,
+    private _envManager: EnvironmentManagerService,
   ) { }
 
   ngOnInit(): void {
@@ -115,7 +123,7 @@ export class EventDetailComponent implements OnInit {
 
               // add default font to HTML (for iOS)
               if(isIOS && this._event.formatted_description) {
-                this._event.formatted_description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._event.formatted_description + "</span>";
+                this._event.formatted_description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 15;\">" + this._event.formatted_description + "</span>";
               }
 
               this._loading = false;
@@ -174,8 +182,17 @@ export class EventDetailComponent implements OnInit {
     return `${beginning.format('dddd, D. MMMM YYYY von H')}h bis ${ending.format('H')}h`
   }
 
+  onOpenVideoConferencingLink(url: string): void {
+    openUrl(url);
+  }
+
   onOpenUrl(url: string): void {
     openUrl(url);
+  }
+
+  onDownloadICS(id: number): void {
+    const api = this._envManager.getEventApi();
+    openUrl(`${api}event/${id}/ics`);
   }
 
   onOpenMaps(address: string): void {
@@ -209,6 +226,44 @@ export class EventDetailComponent implements OnInit {
   onSpeakerTap(id: number): void {
     this._navigationService.navigateTo('/speaker', id);
   }
+
+  getDuration(start: string | Date, end: string | Date): string {
+    if (start && end) {
+      return `${moment.utc(start).locale('de').format('HH:mm')} Uhr – ${moment.utc(end).locale('de').format('HH:mm')} Uhr`;
+    } else {
+      return 'tbd'
+    }
+  }
+
+  concatRoom(room: string): string {
+    if (room) {
+      return `, ${room}`;
+    }
+    return '';
+  }
+
+  onPresentationTap(id: number): void {
+    this._navigationService.navigateTo('/presentation', id);
+  }
+
+  onDescriptionLayoutChanged(args: EventData) {
+    const view = <View>args.object;
+    if (!this.descriptionExpanded && view.height === 'auto' && view.getActualSize().height > 100) {
+      this.descriptionHeight = '100';
+    }
+
+    if (isIOS) {
+      setTimeout(() => {
+        view.requestLayout();
+      }, 200);
+    }
+  }
+
+  onExpandDescription() {
+    this.descriptionHeight = 'auto';
+    this.descriptionExpanded = true;
+  }
+
 
   get event(): Event {
     return this._event;
@@ -251,5 +306,4 @@ export class EventDetailComponent implements OnInit {
       }
       return speaker.photo_url
   }
-
 }

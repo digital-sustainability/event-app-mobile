@@ -6,20 +6,23 @@
   <StackLayout *ngIf="!loading && speaker">
     <ScrollView height="100%">
       <StackLayout>
-        <StackLayout class="m-x-10">
-          <Image [src]="imagePath" class="m-b-10 speaker-img" stretch="aspectFill"></Image>
-          <Label [text]="fullName" class="h1 text-center" textWrap="true"></Label>
-          <Label [text]="position" class="h3 text-center" textWrap="true"></Label>
-          <Label [text]="organization" class="h3 text-center company" textWrap="true"></Label>
-          <Label *ngIf="!isFormattedShortBioAvailable" [text]="shortBio" class="body m-y-20" textWrap="true"></Label>
-          <HtmlView
+        <GridLayout class="m-x-10" rows="auto, auto, auto, auto, auto, auto" columns="*">
+          <Image row="0" col="0" [src]="imagePath" class="m-b-10 speaker-img" stretch="aspectFill"></Image>
+          <Label row="1" col="0"  [text]="fullName" class="h1 text-center" textWrap="true"></Label>
+          <Label row="2" col="0"  [text]="position" class="h3 text-center" textWrap="true"></Label>
+          <Label row="3" col="0"  [text]="organization" class="h3 text-center company" textWrap="true"></Label>
+          <Label row="4" col="0"  *ngIf="!isFormattedShortBioAvailable" [text]="shortBio" class="body m-y-20" textWrap="true"></Label>
+          <HtmlView row="4" col="0" 
             *ngIf="isFormattedShortBioAvailable"
             nsFixHtmlView
             [html]="formattedShortBio"
-            class="body m-y-20 htmlview"
+            class="body m-t-20 htmlview" style="margin-bottom: 0;" 
+            [height]="shortBioHeight" (layoutChanged)="onShortBioLayoutChanged($event)"
           ></HtmlView>
-        </StackLayout>
-        <StackLayout *ngFor="let p of speaker.presentations">
+          <Button row="5" col="0" *ngIf="shortBioHeight !== 'auto'" (tap)="onExpandShortBio()" text="Alles anzeigen"
+            class="btn btn-white m-b-10" style="margin-top: 0;"></Button>
+        </GridLayout>
+        <StackLayout *ngFor="let p of speaker.presentations" class="m-t-10">
           <GridLayout
             columns="*, auto"
             rows="auto, auto, auto"

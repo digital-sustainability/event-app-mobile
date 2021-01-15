@@ -5,35 +5,27 @@
   </StackLayout>
   <StackLayout *ngIf="!loading && session">
     <ScrollView height="100%">
-      <StackLayout>
-        <StackLayout class="m-x-10">
-          <Label [text]="sessionTitle" class="h2 m-t-10" textWrap="true"></Label>
-          <Label
-            *ngIf="!isFormattedAbstractAvailable"
-            [text]="session.abstract"
-            class="body m-b-10"
-            textWrap="true"
-          ></Label>
-          <HtmlView
-            *ngIf="isFormattedAbstractAvailable"
-            nsFixHtmlView
-            [html]="session.formatted_abstract"
-            class="body m-b-10 htmlview"
-          ></HtmlView>
-          <GridLayout *ngIf="session.room" rows="auto,auto,auto" columns="auto, *">
+      <StackLayout style="padding-bottom: 100;">
+        <Label [text]="sessionTitle" class="h2 m-t-10 m-x-10" textWrap="true"></Label>
+        <GridLayout class="m-x-10" rows="auto, auto, auto" columns="*">
+          <Label row="0" col="0" *ngIf="!isFormattedAbstractAvailable" [text]="session.abstract" class="body m-b-10"
+            textWrap="true"></Label>
+          <HtmlView row="0" col="0" *ngIf="isFormattedAbstractAvailable" nsFixHtmlView
+            [html]="session.formatted_abstract" class="body htmlview" [height]="abstractHeight"
+            (layoutChanged)="onAbstractLayoutChanged($event)" style="margin-bottom: 0;"></HtmlView>
+          <Button row="1" col="0" *ngIf="abstractHeight !== 'auto'" (tap)="onExpandAbstract()" text="Alles anzeigen"
+            class="btn btn-white m-b-10" style="margin-top: 0;"></Button>
+          <GridLayout row="2" col="0" *ngIf="session.room" rows="auto,auto,auto" columns="auto, *" class="m-y-10">
             <Label text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="2"></Label>
             <Label [text]="session.room" row="2" col="1" class="text p-b-10" textWrap="true"></Label>
           </GridLayout>
-          <Label *ngIf="presentations.length" [text]="labelPresentations" class="h3" textWrap="true"></Label>
-        </StackLayout>
+        </GridLayout>
+
+        <Label *ngIf="presentations.length" [text]="labelPresentations" class="h3 m-x-10" textWrap="true"></Label>
+
         <StackLayout *ngFor="let p of presentations">
-          <GridLayout
-            columns="*, auto"
-            rows="auto, auto"
-            class="occasion-item"
-            orientation="vertical"
-            (tap)="onPresentationTap(p.id)"
-          >
+          <GridLayout columns="*, auto" rows="auto, auto" class="occasion-item" orientation="vertical"
+            (tap)="onPresentationTap(p.id)">
             <!-- TODO: On hold: Implement in V0.2 -->
             <!-- <Label
                 [text]="getFullName(p.first_name, p.last_name) + concatOrganization(p.organization)"
@@ -41,48 +33,42 @@
                 textWrap="true"
                 ></Label> -->
             <Label col="0" row="0" [text]="p.title" class="h4" textWrap="true"></Label>
-            <Label
-              col="0"
-              row="1"
-              [text]="getDuration(p.start, p.end) + concatRoom(p.room)"
-              class="body"
-              textWrap="true"
-            ></Label>
-            <Label
-              text="&#xf054;"
-              col="1"
-              rowspan="2"
-              class="fa ic-arrow-right goright-icon"
-              horizontalAlignment="center"
-            ></Label>
+            <Label col="0" row="1" [text]="getDuration(p.start, p.end) + concatRoom(p.room)" class="body"
+              textWrap="true"></Label>
+            <Label text="&#xf054;" col="1" rowspan="2" class="fa ic-arrow-right goright-icon"
+              horizontalAlignment="center"></Label>
           </GridLayout>
         </StackLayout>
 
-        <StackLayout class="m-x-10 m-b-20" *ngIf="speakers && speakers.length > 0">
-          <Label text="Speakers" class="h3 m-t-15"></Label>
-          <StackLayout *ngFor="let sp of speakers">
+        <StackLayout class="m-x-10" *ngIf="session.speakers && session.speakers.length > 0">
+          <Label text="Moderation" class="h3 m-t-15"></Label>
+          <StackLayout *ngFor="let sp of session.speakers">
             <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
-              <Image
-                row="0"
-                col="0"
-                [src]="getPhotoUrlOfSpeaker(sp)"
-                class="img-circle"
-                rowSpan="2"
-                stretch="aspectFill"
-              ></Image>
-              <Label
-                row="0"
-                col="1"
-                [text]="sp.first_name + ' ' + sp.last_name"
-                textWrap="true"
-                class="list-group-item-heading speaker-title"
-                verticalAlignment="bottom"
-              ></Label>
+              <Image row="0" col="0" [src]="getPhotoUrlOfSpeaker(sp)" class="img-circle" rowSpan="2"
+                stretch="aspectFill"></Image>
+              <Label row="0" col="1" [text]="sp.first_name + ' ' + sp.last_name" textWrap="true"
+                class="list-group-item-heading speaker-title" verticalAlignment="bottom"></Label>
               <Label row="1" col="1" [text]="sp.position" textWrap="true" class="list-group-item-text"></Label>
             </GridLayout>
           </StackLayout>
         </StackLayout>
+
+        <StackLayout class="m-x-10" *ngIf="speakers && speakers.length > 0">
+          <Label text="Speakers" class="h3 m-t-15"></Label>
+          <StackLayout *ngFor="let sp of speakers">
+            <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
+              <Image row="0" col="0" [src]="getPhotoUrlOfSpeaker(sp)" class="img-circle" rowSpan="2"
+                stretch="aspectFill"></Image>
+              <Label row="0" col="1" [text]="sp.first_name + ' ' + sp.last_name" textWrap="true"
+                class="list-group-item-heading speaker-title" verticalAlignment="bottom"></Label>
+              <Label row="1" col="1" [text]="sp.position" textWrap="true" class="list-group-item-text"></Label>
+            </GridLayout>
+          </StackLayout>
+        </StackLayout>
+
       </StackLayout>
     </ScrollView>
   </StackLayout>
+  <FAB *ngIf="session && session.video_conferencing_link" (tap)="onOpenVideoConferencingLink(session.video_conferencing_link)"
+    icon="~/images/video-solid.png" rippleColor="#f1f1f1" class="fab-button"></FAB>
 </GridLayout>

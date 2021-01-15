@@ -11,6 +11,7 @@ import { PresentationService } from '../presentation.service';
 import * as moment from 'moment';
 import { Event } from '../../shared/models/event';
 import { Session } from '../../shared/models/session';
+import { EventData, View } from 'tns-core-modules/ui/page';
 
 @Component({
   selector: 'ns-speaker-detail',
@@ -23,6 +24,9 @@ export class SpeakerDetailComponent implements OnInit {
   private _speaker: Speaker;
   private _presentations: Presentation[];
   private _fullName = 'Speaker'
+
+  shortBioHeight: string = 'auto';
+  shortBioExpanded: boolean = false;
   
   constructor(
     private _presentationService: PresentationService,
@@ -50,7 +54,7 @@ export class SpeakerDetailComponent implements OnInit {
 
               // add default font to HTML (for iOS)
               if(isIOS && this._speaker.formatted_short_bio) {
-                this._speaker.formatted_short_bio = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._speaker.formatted_short_bio + "</span>";
+                this._speaker.formatted_short_bio = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 15;\">" + this._speaker.formatted_short_bio + "</span>";
               }
 
               this._loading = false;
@@ -62,6 +66,25 @@ export class SpeakerDetailComponent implements OnInit {
 
   onPresentationTap(id: number): void {
     this._navigationService.navigateTo('/presentation', id, false, true);
+  }
+
+
+  onShortBioLayoutChanged(args: EventData) {
+    const view = <View>args.object;
+    if (!this.shortBioExpanded && view.height === 'auto' && view.getActualSize().height > 100) {
+      this.shortBioHeight = '100';
+    }
+
+    if (isIOS) {
+      setTimeout(() => {
+        view.requestLayout();
+      }, 200);
+    }
+  }
+
+  onExpandShortBio() {
+    this.shortBioHeight = 'auto';
+    this.shortBioExpanded = true;
   }
 
   getStartTime(time: string | Date): string {
@@ -83,7 +106,15 @@ export class SpeakerDetailComponent implements OnInit {
   }
 
   getEventInfo(presentation: Presentation): string {
-    return (<Session>presentation.session_id).event_id.title;
+    console.log(presentation.session_id, presentation.event_id)
+    if (presentation.session_id) {
+      console.log((<Session>presentation.session_id).event_id.title, 'first')
+      return (<Session>presentation.session_id).event_id.title;
+    } else {
+      console.log((<Event>presentation.event_id).title, 'second')
+      return (<Event>presentation.event_id).title;
+    }
+
   }
 
   get speaker(): Speaker {

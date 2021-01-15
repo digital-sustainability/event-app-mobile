@@ -25,12 +25,12 @@ Place iOS specific styles below
     border-radius: 10;
 }
 
-.htmlview {
-    margin-left: -5;
-    margin-right: -5;
-}
-
 TextView, TextField {
     border-bottom-width: 1;
     border-bottom-color: black;
+}
+
+.btn-white {
+    background-color: white;
+    border-top: 1 solid gray;
 }

@@ -16,6 +16,7 @@ import * as moment from 'moment';
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { Session } from '../../shared/models/session';
 import { Event } from '../../shared/models/event';
+import { View } from 'tns-core-modules/ui/page';
 // Second argument is optional.
 
 @Component({
@@ -31,6 +32,9 @@ export class PresentationDetailComponent implements OnInit {
   private _event: Event;
   private _speakers: Speaker[];
   nonHierarchical: boolean = false;
+
+  abstractHeight: string = 'auto';
+  abstractExpanded: boolean = false;
   
   constructor(
     private _presentationService: PresentationService,
@@ -59,14 +63,19 @@ export class PresentationDetailComponent implements OnInit {
           .subscribe(
             (presentation: Presentation) => {
               this._presentation = presentation;
-              this._event = (<Session>presentation.session_id).event_id;
+              if(this._presentation.event_id) {
+                this._event = (<Event>presentation.event_id);
+              } else {
+                this._event = (<Session>presentation.session_id).event_id;
+              }
+              
               this._presentationTitle = presentation.title;
               this._speakers = presentation.speakers;
               this.checkSpeakerPhoto();
 
               // add default font to HTML (for iOS)
               if(isIOS && this._presentation.formatted_abstract) {
-                this._presentation.formatted_abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._presentation.formatted_abstract + "</span>";
+                this._presentation.formatted_abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 15;\">" + this._presentation.formatted_abstract + "</span>";
               }
 
               this._loading = false;
@@ -115,6 +124,28 @@ export class PresentationDetailComponent implements OnInit {
   onShowSlides(url: string): void {
     console.log('|==>', url);
     openUrl(url);
+  }
+
+  onOpenVideoConferencingLink(url: string): void {
+    openUrl(url);
+  }
+
+  onAbstractLayoutChanged(args: EventData) {
+    const view = <View>args.object;
+    if (!this.abstractExpanded && view.height === 'auto' && view.getActualSize().height > 100) {
+      this.abstractHeight = '100';
+    }
+
+    if (isIOS) {
+      setTimeout(() => {
+        view.requestLayout();
+      }, 200);
+    }
+  }
+
+  onExpandAbstract() {
+    this.abstractHeight = 'auto';
+    this.abstractExpanded = true;
   }
 
   getPhotoUrlOfSpeaker(speaker: Speaker) {

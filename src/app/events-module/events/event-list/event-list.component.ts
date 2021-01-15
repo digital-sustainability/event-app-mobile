@@ -54,7 +54,10 @@ export class EventListComponent implements OnInit, OnChanges {
             this._unfilteredEvents.forEach(event => {
               if(event.formatted_description) {
                 event.formatted_description = event.formatted_description.replace(/<a[^>]*>/gi, ''); // remove all links
-                event.formatted_description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + event.formatted_description + "</span>";
+                event.formatted_description = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 15;\">" + event.formatted_description + "</span>";
+              }
+              if(event.formatted_lead) {
+                event.formatted_lead = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 15;\">" + event.formatted_lead + "</span>";
               }
             });
           } else {

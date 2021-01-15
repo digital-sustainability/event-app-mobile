@@ -1,5 +1,7 @@
 import { Session } from './session';
 import { Category } from './category';
+import { Speaker } from './speaker';
+import { Presentation } from './presentation';
 
 export interface Event {
     createdAt: string | Date,
@@ -8,14 +10,19 @@ export interface Event {
     title: string,
     description: string,
     formatted_description: string,
+    formatted_lead: string,
     start: string | Date,
     end: string | Date,
     location: string,
     location_details: string,
     url: string,
     url_label: string,
+    video_conferencing_link?: string,
+    video_conferencing_label?: string,
     published: boolean,
     image_path: string,
     sessions: Session[],
-    categories: Category[]
+    categories: Category[],
+    speakers?: Speaker[],
+    presentations?: Presentation[];
 }

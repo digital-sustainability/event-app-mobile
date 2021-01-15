@@ -1,5 +1,6 @@
 import { Presentation } from './presentation';
 import { Event } from './event';
+import { Speaker } from './speaker';
 
 export interface Session {
     createdAt: string | Date,
@@ -10,7 +11,10 @@ export interface Session {
     formatted_abstract: string,
     room?: string,
     label_presentations?: string,
+    video_conferencing_link?: string,
+    video_conferencing_label?: string,
     position: number,
     event_id: Event,
-    presentations: Presentation[]
+    presentations: Presentation[],
+    speakers?: Speaker[]
 }

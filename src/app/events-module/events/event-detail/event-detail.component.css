@@ -22,3 +22,29 @@
     margin-right: 5;
     margin-left: 5;
 }
+
+.full-width {
+    margin-left: 0;
+    margin-right: 10;
+    padding: 10;
+    border-radius: 5;
+    text-align: center;
+}
+
+.button-icon {
+    font-size: 30;
+}
+
+.button-icon-delimiter {
+    font-size: 5;
+}
+
+.fab-button {
+    height: 70;
+    width: 70; 
+        /* required on iOS */
+    margin: 15;
+    background-color: #FFC107;
+    vertical-align: bottom;
+    horizontal-align: right;
+}

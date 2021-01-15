@@ -10,6 +10,8 @@ import { Presentation } from '../../shared/models/presentation';
 import { sortBy } from 'lodash';
 import * as moment from 'moment';
 import { Speaker } from '../../shared/models/speaker';
+import { EventData, View } from 'tns-core-modules/ui/page';
+import { openUrl } from 'tns-core-modules/utils/utils';
 
 
 @Component({
@@ -23,6 +25,9 @@ export class SessionDetailComponent implements OnInit {
   private _sessionTitle = 'Session';
   private _loading = true;
   speakers: Speaker[];
+
+  abstractHeight: string = 'auto';
+  abstractExpanded: boolean = false;
 
   constructor(
     private _sessionService: SessionService,
@@ -86,7 +91,7 @@ export class SessionDetailComponent implements OnInit {
 
               // add default font to HTML (for iOS)
               if(isIOS && this._session.formatted_abstract) {
-                this._session.formatted_abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 14;\">" + this._session.formatted_abstract + "</span>";
+                this._session.formatted_abstract = "<span style=\"font-family:-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,Helvetica,sans-serif; font-size: 15;\">" + this._session.formatted_abstract + "</span>";
               }
 
               // get speakers
@@ -117,6 +122,25 @@ export class SessionDetailComponent implements OnInit {
   //   }
   //   return '';
   // }
+
+
+  onAbstractLayoutChanged(args: EventData) {
+    const view = <View>args.object;
+    if (!this.abstractExpanded && view.height === 'auto' && view.getActualSize().height > 100) {
+      this.abstractHeight = '100';
+    }
+
+    if (isIOS) {
+      setTimeout(() => {
+        view.requestLayout();
+      }, 200);
+    }
+  }
+
+  onExpandAbstract() {
+    this.abstractHeight = 'auto';
+    this.abstractExpanded = true;
+  }
 
   getDuration(start: string | Date, end: string | Date): string {
     if (start && end) {
@@ -189,5 +213,9 @@ export class SessionDetailComponent implements OnInit {
   onSpeakerTap(id: number): void {
     // TODO: Same navigation/animation bug as above!
     this._navigationService.navigateTo('/speaker', id);
+  }
+
+  onOpenVideoConferencingLink(url: string): void {
+    openUrl(url);
   }
 }

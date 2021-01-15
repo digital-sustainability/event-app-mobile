@@ -3,7 +3,7 @@ import { registerElement } from 'nativescript-angular/element-registry';
 import { UiService } from './shared-module/services/ui.service';
 import { Subscription } from 'rxjs';
 import { RadSideDrawerComponent } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
-import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
+import { RadSideDrawer, SideDrawerLocation } from 'nativescript-ui-sidedrawer';
 import { NavigationService } from './shared-module/services/navigation.service';
 import { CardView } from 'nativescript-cardview';
 import { FirebaseService, Topic } from './shared-module/services/firebase.service';
@@ -39,6 +39,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(RadSideDrawerComponent, { static: true}) drawerComponent: RadSideDrawerComponent;
     private _drawerSub: Subscription;
     private _drawer: RadSideDrawer;
+
+    location = SideDrawerLocation.Right;
 
     constructor(
         private _uiService: UiService,

@@ -5,92 +5,77 @@
     </StackLayout>
     <StackLayout *ngIf="!loading && presentation && speakers">
         <ScrollView height="100%">
-            <StackLayout>
-                <StackLayout class="p-x-10">
-                    <Label [text]="presentation.title" class="h3 m-y-10" textWrap="true"></Label>
-                    <Label *ngIf="!isFormattedAbstractAvailable" [text]="presentation.abstract" class="body m-y-10" textWrap="true"></Label>
-                    <HtmlView *ngIf="isFormattedAbstractAvailable" nsFixHtmlView [html]="presentation.formatted_abstract" class="body m-y-10 htmlview"></HtmlView>
-                </StackLayout>
-                <StackLayout *ngIf="nonHierarchical">
-                    <GridLayout
-                        columns="*, auto"
-                        rows="auto, auto, auto"
-                        class="occasion-item"
-                        orientation="vertical"
+            <StackLayout style="padding-bottom: 100;">
+                <Label [text]="presentation.title" class="h3 m-y-10 m-x-10" textWrap="true"></Label>
+                <GridLayout class="m-x-10" rows="auto, auto" columns="*">
+                    <Label row="0" col="0" *ngIf="!isFormattedAbstractAvailable" [text]="presentation.abstract"
+                        class="body m-y-10" textWrap="true"></Label>
+                    <HtmlView row="0" col="0" *ngIf="isFormattedAbstractAvailable" nsFixHtmlView
+                        [html]="presentation.formatted_abstract" class="body m-t-10 htmlview" [height]="abstractHeight"
+                        (layoutChanged)="onAbstractLayoutChanged($event)" style="margin-bottom: 0;"></HtmlView>
+                    <Button row="1" col="0" *ngIf="abstractHeight !== 'auto'" (tap)="onExpandAbstract()"
+                        text="Alles anzeigen" class="btn btn-white m-b-10" style="margin-top: 0;"></Button>
+                </GridLayout>
+                <StackLayout *ngIf="nonHierarchical" class="m-t-10">
+                    <GridLayout columns="*, auto" rows="auto, auto, auto" class="occasion-item" orientation="vertical"
                         (tap)="onNavigateToEvent()">
                         <Label col="0" row="0" [text]="eventTitle" class="h4" textWrap="true"></Label>
-                        <Label
-                        col="0"
-                        row="1"
-                        *ngIf="hasEventDate()"
-                        [text]="getEventDate()"
-                        class="body"
-                        textWrap="true"
-                        ></Label>
-                        <Label
-                        col="0"
-                        row="2"
-                        *ngIf="hasEventLocation()"
-                        [text]="getEventLocation()"
-                        class="body"
-                        textWrap="true"
-                        ></Label>
-                        <Label
-                        text="&#xf054;"
-                        col="1"
-                        rowspan="3"
-                        class="fa ic-arrow-right goright-icon"
-                        horizontalAlignment="center"
-                        ></Label>
+                        <Label col="0" row="1" *ngIf="hasEventDate()" [text]="getEventDate()" class="body"
+                            textWrap="true"></Label>
+                        <Label col="0" row="2" *ngIf="hasEventLocation()" [text]="getEventLocation()" class="body"
+                            textWrap="true"></Label>
+                        <Label text="&#xf054;" col="1" rowspan="3" class="fa ic-arrow-right goright-icon"
+                            horizontalAlignment="center"></Label>
                     </GridLayout>
                 </StackLayout>
+                <GridLayout rows="auto" columns="auto,auto">
+                    <Button row="0" col="0" height="80" class="btn btn-outline full-width"
+                        (tap)="onShowSlides(presentation.slides)" *ngIf="isUrl(presentation.slides)"
+                        horizontalAlignment="center" textWrap="true">
+                        <FormattedString>
+                            <Span class="fa button-icon" text="&#xf51b;&#xa;"></Span>
+                            <Span class="button-icon-delimiter" text="&#xa;"></Span>
+                            <Span text="Slides anschauen"></Span>
+                        </FormattedString>
+                    </Button>
+                    <Button row="0" col="1" height="80" class="btn btn-outline full-width"
+                        (tap)="onUserFeedbackTap($event)" *ngIf="presentation && presentationStarted()"
+                        horizontalAlignment="center" textWrap="true">
+                        <FormattedString>
+                            <Span class="fa button-icon" text="&#xf27a;&#xa;"></Span>
+                            <Span class="button-icon-delimiter" text="&#xa;"></Span>
+                            <Span text="Feedback geben"></Span>
+                        </FormattedString>
+                    </Button>
+                </GridLayout>
                 <GridLayout class="p-x-10" rows="auto, auto" columns="auto, *">
                     <Label text="Zeit" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="0" col="0"></Label>
-                    <Label [text]="getDateString(presentation.start, presentation.end)" class="text p-b-10" textWrap="true" row="0" col="1"></Label>
-                    <Label *ngIf="presentation.room" text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="1" col="0"></Label>
-                    <Label *ngIf="presentation.room" [text]="presentation.room" row="0" col="0" class="text p-b-10" textWrap="true" row="1" col="1"></Label>
+                    <Label [text]="getDateString(presentation.start, presentation.end)" class="text p-b-10"
+                        textWrap="true" row="0" col="1"></Label>
+                    <Label *ngIf="presentation.room" text="Raum" class="p-l-15 p-b-10 m-r-20 font-weight-bold" row="1"
+                        col="0"></Label>
+                    <Label *ngIf="presentation.room" [text]="presentation.room" row="0" col="0" class="text p-b-10"
+                        textWrap="true" row="1" col="1"></Label>
                 </GridLayout>
-                <StackLayout class="p-x-10" *ngIf="isUrl(presentation.slides)">
-                    <Button (tap)="onShowSlides(presentation.slides)" class="btn btn-primary" text="Slides anschauen"></Button>
-                </StackLayout>
-                <StackLayout *ngIf="!loading && speakers && speakers.length > 0" class="p-x-10 m-b-20">
+                <StackLayout *ngIf="!loading && speakers && speakers.length > 0" class="p-x-10">
                     <Label text="Speakers" class="h3"></Label>
                     <StackLayout *ngFor="let sp of speakers">
-                        <GridLayout class="list-group-item" rows="auto, *" columns="auto, *" (tap)="onSpeakerTap(sp.id)">
-                            <Image
-                            row="0"
-                            col="0"
-                            [src]="getPhotoUrlOfSpeaker(sp)"
-                            class="img-circle"
-                            rowSpan="2"
-                            stretch="aspectFill">
+                        <GridLayout class="list-group-item" rows="auto, *" columns="auto, *"
+                            (tap)="onSpeakerTap(sp.id)">
+                            <Image row="0" col="0" [src]="getPhotoUrlOfSpeaker(sp)" class="img-circle" rowSpan="2"
+                                stretch="aspectFill">
                             </Image>
-                            <Label
-                            row="0"
-                            col="1"
-                            [text]="sp.first_name + ' ' + sp.last_name"
-                            textWrap="true"
-                            verticalAlignment="bottom"
-                            class="list-group-item-heading"
-                            ></Label>
-                            <Label
-                            row="1"
-                            col="1"
-                            [text]="sp.position"
-                            textWrap="true"
-                            class="list-group-item-text"
-                            ></Label>
+                            <Label row="0" col="1" [text]="sp.first_name + ' ' + sp.last_name" textWrap="true"
+                                verticalAlignment="bottom" class="list-group-item-heading"></Label>
+                            <Label row="1" col="1" [text]="sp.position" textWrap="true"
+                                class="list-group-item-text"></Label>
                         </GridLayout>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
         </ScrollView>
     </StackLayout>
-    <FAB
-    *ngIf="presentation && presentationStarted()"
-    (tap)="onUserFeedbackTap($event)"
-    icon="~/images/userFeedback.png"
-    rippleColor="#f1f1f1"
-    class="fab-button"
-    ></FAB>
+    <FAB *ngIf="presentation && presentation.video_conferencing_link"
+        (tap)="onOpenVideoConferencingLink(presentation.video_conferencing_link)" icon="~/images/video-solid.png"
+        rippleColor="#f1f1f1" class="fab-button"></FAB>
 </GridLayout>
