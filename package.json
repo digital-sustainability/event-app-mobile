@@ -32,7 +32,7 @@
     "@angular/router": "~8.2.0",
     "@types/lodash": "^4.14.123",
     "ics": "^2.24.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "nativescript-angular": "^8.2.1",
     "nativescript-cardview": "^3.2.0",
