@@ -26,7 +26,7 @@
         "@angular/router": "8.0.0",
         "@types/lodash": "^4.14.123",
         "lodash": "^4.17.11",
-        "moment": "^2.24.0",
+        "moment": "^2.29.2",
         "nativescript-angular": "8.0.2",
         "nativescript-cardview": "^3.2.0",
         "nativescript-directions": "^1.3.0",
