@@ -33,7 +33,7 @@
     "@types/lodash": "^4.14.123",
     "ics": "^2.24.0",
     "lodash": "^4.17.20",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "nativescript-angular": "^8.2.1",
     "nativescript-cardview": "^3.2.0",
     "nativescript-directions": "^1.3.0",
